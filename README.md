@@ -24,11 +24,36 @@
 
 ---
 
-## 🚀 Tech Stack
+## 🚀 Tech Stack & Architecture
 
-- **Frontend**: React 18, TypeScript, Tailwind CSS, Lucide Icons
-- **Bundler & Tooling**: Vite, PostCSS, Autoprefixer
-- **Stand-alone Mode**: Single-file self-contained distribution available at \standalone.html\
+- **Backend REST API**: Node.js, Express, CORS, Persistent JSON File Engine (`server/data/db.json`)
+- **Frontend Client**: React 18, TypeScript, Tailwind CSS, Vite
+- **Stand-alone Mode**: Single-file self-contained distribution available at `standalone.html`
+
+---
+
+## 📡 Backend REST API Endpoints
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/api/health` | Service healthcheck & active metrics |
+| `GET` | `/api/state` | Full application database state |
+| `POST` | `/api/auth/login` | Authenticate as House Owner or Tenant |
+| `POST` | `/api/auth/register` | Register resident with NID & DMP clearance |
+| `GET` / `POST` | `/api/units` | List units & add vacant units to portfolio |
+| `POST` | `/api/rent/pay` | Process digital rent payment via bKash/Nagad |
+| `GET` | `/api/receipts` | Ledger of all verified rent receipts |
+| `GET` | `/api/telemetry` | DWASA & DESCO IoT submeter telemetry feeds |
+| `POST` | `/api/telemetry/resolve-gas` | Emergency solenoid shutoff for Flat 2B |
+| `POST` | `/api/telemetry/resolve-water` | Resolve water leak & dispatch emergency plumber |
+| `GET` | `/api/security` | Security status, rooftop lock, visitor logs |
+| `POST` | `/api/security/rooftop/toggle` | Toggle smart rooftop door access |
+| `POST` | `/api/security/guest-pass` | Generate visitor QR gate pass |
+| `POST` | `/api/security/sos` | Broadcast emergency SOS alarm |
+| `GET` / `POST` | `/api/messages` | Direct chat with instant landlord response |
+| `GET` / `POST` | `/api/broadcasts` | Building announcements board |
+| `GET` / `POST` | `/api/services/book` | Book technician service slot (AC/Plumbing) |
+| `GET` / `POST` | `/api/marketplace` | Resident marketplace & parking sublets |
 
 ---
 
@@ -38,26 +63,35 @@
 - Node.js (v18 or higher)
 - npm or yarn
 
-### Installation
+### Running Frontend + Backend Together
 
-\\\ash
-# 1. Clone the repository
-git clone https://github.com/your-username/rent-connect.git
-cd rent-connect
-
-# 2. Install dependencies
+```bash
+# 1. Install dependencies
 npm install
 
-# 3. Start development server
+# 2. Start both Backend Server (port 5000) and Frontend (port 5173) concurrently
+npm run dev:all
+```
+
+> **Frontend**: `http://localhost:5173`  
+> **Backend API**: `http://localhost:5000/api/health`
+
+### Running Backend or Frontend Separately
+
+```bash
+# Run Backend API Server only
+npm run server
+
+# Run Frontend Vite Client only
 npm run dev
-\\\
+```
 
 ### Production Build
 
-\\\ash
+```bash
 npm run build
 npm run preview
-\\\
+```
 
 ---
 

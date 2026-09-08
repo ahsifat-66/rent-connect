@@ -1,4 +1,4 @@
-import { User, Unit, RentReceipt, MaintenanceDispatch, BroadcastNotice, Conversation, ChatMessage } from '../types';
+﻿import { User, Unit, RentReceipt, MaintenanceDispatch, BroadcastNotice, Conversation, ChatMessage } from '../types';
 
 export interface ActivityItem {
   id: string;
@@ -58,6 +58,7 @@ export interface BackendState {
 }
 
 const STORAGE_KEY = 'rentconnect_backend_state_v1';
+const API_BASE = '/api';
 
 export const defaultTenantUser: User = {
   id: 'usr-tenant-2b',
@@ -104,7 +105,7 @@ const initialDefaultState: BackendState = {
   rentCollected: 85000,
   rentTotal: 142000,
   rooftopLocked: true,
-  checkinsToday: 42,
+  checkinsToday: 14,
   complianceRate: 98,
   units: [
     {
@@ -211,12 +212,12 @@ const initialDefaultState: BackendState = {
       status: 'occupied',
       bedrooms: 3,
       bathrooms: 2,
-      amenities: ['Lift', 'Generator', 'Balcony'],
+      amenities: ['Lift', 'Generator', 'IPS Ready'],
       photos: ['https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&auto=format&fit=crop&q=60'],
       tenant: {
-        name: 'Ariful Islam',
-        phone: '+880 1811-556677',
-        nid: '19912692610000505',
+        name: 'Ariful Haque',
+        phone: '+880 1611-556677',
+        nid: '19892692610000505',
         leaseUntil: 'Dec 31, 2026',
         avatar: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=150&auto=format&fit=crop&q=60'
       }
@@ -230,12 +231,12 @@ const initialDefaultState: BackendState = {
       status: 'occupied',
       bedrooms: 3,
       bathrooms: 3,
-      amenities: ['Lift', 'Generator', 'High Floor'],
-      photos: ['https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&auto=format&fit=crop&q=60'],
+      amenities: ['Top Floor', 'Rooftop Access', 'Generator'],
+      photos: ['https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&auto=format&fit=crop&q=60'],
       tenant: {
-        name: 'Tasnim Ahmed',
-        phone: '+880 1714-667788',
-        nid: '19892692610000606',
+        name: 'Tasnim Jahan',
+        phone: '+880 1718-990011',
+        nid: '19922692610000606',
         leaseUntil: 'Dec 31, 2026',
         avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=60'
       }
@@ -249,14 +250,14 @@ const initialDefaultState: BackendState = {
       status: 'occupied',
       bedrooms: 3,
       bathrooms: 3,
-      amenities: ['Lift', 'Generator', 'Balcony'],
-      photos: ['https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&auto=format&fit=crop&q=60'],
+      amenities: ['North View', 'Lift', 'Generator'],
+      photos: ['https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?w=800&auto=format&fit=crop&q=60'],
       tenant: {
-        name: 'Mehedi Hasan',
-        phone: '+880 1915-778899',
-        nid: '19932692610000707',
+        name: 'Mehedi Zaman',
+        phone: '+880 1811-224466',
+        nid: '19842692610000707',
         leaseUntil: 'Dec 31, 2026',
-        avatar: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=150&auto=format&fit=crop&q=60'
+        avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&auto=format&fit=crop&q=60'
       }
     },
     {
@@ -268,44 +269,15 @@ const initialDefaultState: BackendState = {
       status: 'occupied',
       bedrooms: 3,
       bathrooms: 3,
-      amenities: ['Lift', 'Generator', 'Corner View'],
-      photos: ['https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?w=800&auto=format&fit=crop&q=60'],
+      amenities: ['Corner Unit', 'Lift', 'Generator'],
+      photos: ['https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&auto=format&fit=crop&q=60'],
       tenant: {
-        name: 'Sadia Sultana',
-        phone: '+880 1812-889900',
-        nid: '19922692610000808',
+        name: 'Sadia Afreen',
+        phone: '+880 1913-778899',
+        nid: '19932692610000808',
         leaseUntil: 'Dec 31, 2026',
         avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&auto=format&fit=crop&q=60'
       }
-    }
-  ],
-  receipts: [
-    {
-      id: 'REC-2026-03-2B',
-      month: 'March 2026',
-      amount: 28000,
-      paidOn: 'Mar 5, 2026',
-      paymentMethod: 'bKash',
-      transactionId: 'BK9X882910M',
-      status: 'confirmed'
-    },
-    {
-      id: 'REC-2026-02-2B',
-      month: 'February 2026',
-      amount: 28000,
-      paidOn: 'Feb 4, 2026',
-      paymentMethod: 'bKash',
-      transactionId: 'BK8X119283A',
-      status: 'confirmed'
-    },
-    {
-      id: 'REC-2026-01-2B',
-      month: 'January 2026',
-      amount: 28000,
-      paidOn: 'Jan 5, 2026',
-      paymentMethod: 'Bank Transfer',
-      transactionId: 'EBL-TR-9921',
-      status: 'confirmed'
     }
   ],
   criticalAlerts: [
@@ -313,290 +285,209 @@ const initialDefaultState: BackendState = {
       id: 'alt-gas-2b',
       unit: '2B',
       type: 'gas_leak',
-      title: 'CRITICAL ALERT',
-      subtitle: 'Gas Leak in Flat 2B',
+      title: 'CRITICAL ALERT: Gas Leak in Flat 2B',
+      subtitle: 'Sensor triggered 0.82 PSI drop',
       active: true,
-      timestamp: '10 min ago'
+      timestamp: '10 mins ago'
     },
     {
       id: 'alt-water-1b',
       unit: '1B',
       type: 'water_leak',
-      title: 'Leak Alert Detected',
-      subtitle: 'Abnormal water usage detected in Flat 1B (420 L/day)',
+      title: 'WATER LEAK: Flat 1B Overflow',
+      subtitle: 'Continuous flow 420 L/day (+235%)',
       active: true,
-      timestamp: '25 min ago'
+      timestamp: '25 mins ago'
+    }
+  ],
+  receipts: [
+    {
+      id: 'REC-2026-03-2B',
+      month: 'March 2026',
+      amount: 28000,
+      paidOn: 'Mar 4, 2026',
+      paymentMethod: 'bKash',
+      transactionId: 'BK9X2B7721M',
+      status: 'confirmed'
+    },
+    {
+      id: 'REC-2026-03-1A',
+      month: 'March 2026',
+      amount: 12000,
+      paidOn: 'Mar 3, 2026',
+      paymentMethod: 'Nagad',
+      transactionId: 'NG4X1A8820K',
+      status: 'confirmed'
+    },
+    {
+      id: 'REC-2026-03-2A',
+      month: 'March 2026',
+      amount: 14000,
+      paidOn: 'Mar 2, 2026',
+      paymentMethod: 'bKash',
+      transactionId: 'BK7X2A9912L',
+      status: 'confirmed'
     }
   ],
   dispatches: [
     {
       id: 'dsp-1',
-      unitNumber: '1B',
-      trade: 'Plumber',
-      contractorName: 'Master Rafiq (Emergency Plumbing Pro)',
-      phone: '+880 1819-334455',
+      title: 'AC Inverter Master Cleaning & Gas Recharge',
+      unit: 'Flat 2B',
+      technician: 'Rahim Uddin (Verified Pro)',
+      phone: '+880 1711-889900',
+      status: 'completed',
+      cost: 1200,
+      scheduledTime: 'Today 11:30 AM',
+      category: 'HVAC'
+    },
+    {
+      id: 'dsp-2',
+      title: 'Emergency Master Bathroom Solenoid Valve',
+      unit: 'Flat 1B',
+      technician: 'Belal Hossain (Lead Plumber)',
+      phone: '+880 1812-334455',
       status: 'in_progress',
-      scheduledTime: 'Today 2:00 PM',
-      description: 'Abnormal water leak detected on Submeter 1B.',
-      priority: 'urgent',
-      createdAt: 'Today'
+      cost: 500,
+      scheduledTime: 'Today 02:00 PM',
+      category: 'Plumbing'
     }
   ],
   broadcasts: [
     {
       id: 'bc-1',
-      title: 'Elevator service scheduled for Sunday 10 AM',
-      body: 'Regular monthly maintenance for Passenger Lift #1 on Sunday from 10:00 AM to 12:00 PM.',
-      urgent: false,
-      date: 'Mar 8, 2026',
-      author: 'Management Office'
-    },
-    {
-      id: 'bc-2',
-      title: 'New facial recognition gate sensors live at Lobby',
-      body: 'Contactless high-speed security boom barrier is now active for all verified residents.',
-      urgent: true,
-      date: 'Mar 7, 2026',
-      author: 'Security Desk'
+      title: 'Elevator Maintenance Schedule',
+      body: 'Passenger Lift 2 will undergo quarterly safety calibration on Sunday between 10:00 AM and 01:00 PM.',
+      target: 'All Residents',
+      date: 'March 08, 2026',
+      author: 'Md ABID HASAN SIFAT (Owner)',
+      urgent: false
     }
   ],
   conversations: [
     {
       id: 'c-2b',
       unitNumber: '2B',
-      participantName: 'Tanvir Ahmed (Flat 2B)',
-      avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=60',
-      lastMessage: 'Hi, I paid March rent via bKash. Receipt attached!',
-      timestamp: '10:45 AM',
-      unread: 1,
+      tenantName: 'Tanvir Ahmed',
+      tenantAvatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=60',
+      unreadCount: 0,
+      lastMessage: 'AC is running smoothly after servicing!',
+      lastMessageTime: '10:32 AM',
+      timestamp: '10:32 AM',
       messages: [
-        { id: 'm1', sender: 'Tanvir Ahmed', text: 'Hi, I paid March rent via bKash.', time: '10:40 AM', isMe: false },
-        { id: 'm2', sender: 'Management', text: 'Thank you Tanvir, verified and receipt logged!', time: '10:45 AM', isMe: true }
+        { id: 'm1', sender: 'Md ABID HASAN SIFAT', text: 'Assalamu Alaikum Tanvir Bhai! How is everything with Flat 2B?', time: '10:30 AM', isMe: false },
+        { id: 'm2', sender: 'Tanvir Ahmed', text: 'Walaikum Assalam Sifat Bhai! All great. AC is running smoothly after servicing.', time: '10:32 AM', isMe: true }
       ]
     }
   ],
-  gateLogs: [
-    {
-      id: 'l1',
-      location: 'Main Gate',
-      guardName: 'Kamal Uddin',
-      time: '12:30 AM',
-      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&auto=format&fit=crop&q=60',
-      isLive: true
-    },
-    {
-      id: 'l2',
-      location: 'Parking Area',
-      guardName: 'Rahim Ali',
-      time: '12:00 AM',
-      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&auto=format&fit=crop&q=60',
-      isLive: false
-    },
-    {
-      id: 'l3',
-      location: 'Main Gate',
-      guardName: 'Kamal Uddin',
-      time: '11:30 PM',
-      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&auto=format&fit=crop&q=60',
-      isLive: false
-    },
-    {
-      id: 'l4',
-      location: 'Rooftop',
-      guardName: 'Rahim Ali',
-      time: '11:00 PM',
-      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&auto=format&fit=crop&q=60',
-      isLive: false
-    },
-    {
-      id: 'l5',
-      location: 'Main Gate',
-      guardName: 'Kamal Uddin',
-      time: '10:30 PM',
-      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&auto=format&fit=crop&q=60',
-      isLive: false
-    }
-  ],
   recentActivities: [
-    { id: 'act-1', text: 'Rent collected from Flat 2A', time: '2 hours ago', type: 'success' },
-    { id: 'act-2', text: 'Maintenance request: Flat 3B', time: '4 hours ago', type: 'warning' },
-    { id: 'act-3', text: 'New tenant verified: Flat 1A', time: '6 hours ago', type: 'success' },
-    { id: 'act-4', text: 'High water usage: Flat 2B', time: '8 hours ago', type: 'warning' }
+    { id: 'act-1', text: 'Rent payment of ৳28,000 received for Flat 2B via bKash', time: '10m ago', type: 'success' },
+    { id: 'act-2', text: 'Guest QR Pass generated for Kamal Hossain (Flat 2B)', time: '25m ago', type: 'info' },
+    { id: 'act-3', text: 'Warning: Abnormal water flow alert detected in Flat 1B', time: '40m ago', type: 'warning' }
+  ],
+  gateLogs: [
+    { id: 'gl-1', location: 'Main Gate Access', guardName: 'Kamal Hossain (Guest · Flat 2B)', time: '10:15 AM · Entry Approved', isLive: true, avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150' },
+    { id: 'gl-2', location: 'Courier Turnstile', guardName: 'Pathao Delivery (Flat 1A)', time: '09:40 AM · Verified Gate Pass', isLive: false, avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150' }
   ],
   telemetry: [
-    { id: '1a', flat: 'Flat 1A', type: 'water', amount: 125, unit: 'L/day', time: '2 min ago', isAlert: false },
-    { id: '1b', flat: 'Flat 1B', type: 'water', amount: 420, unit: 'L/day', time: 'Live', isAlert: true, status: 'CRITICAL' },
-    { id: '1c', flat: 'Flat 1C', type: 'electricity', amount: 48, unit: 'kWh', time: '1 min ago', isAlert: false },
-    { id: '2a', flat: 'Flat 2A', type: 'water', amount: 115, unit: 'L/day', time: '3 min ago', isAlert: false },
-    { id: '2b', flat: 'Flat 2B', type: 'electricity', amount: 52, unit: 'kWh', time: '1 min ago', isAlert: false },
-    { id: '2c', flat: 'Flat 2C', type: 'water', amount: 118, unit: 'L/day', time: '4 min ago', isAlert: false }
+    { id: 'tel-1', flat: 'Flat 1A', type: 'water', amount: 125, unit: 'L/day', time: 'Just now', isAlert: false },
+    { id: 'tel-2', flat: 'Flat 1B', type: 'water', amount: 420, unit: 'L/day', time: 'Active Alert', isAlert: true, status: 'LEAK_DETECTED' },
+    { id: 'tel-3', flat: 'Flat 2B', type: 'water', amount: 122, unit: 'L/day', time: 'Live Stream', isAlert: false }
   ]
 };
 
 class BackendService {
   private state: BackendState;
-  private listeners: Set<() => void> = new Set();
+  private listeners: (() => void)[] = [];
 
   constructor() {
     this.state = this.loadState();
+    this.syncFromApi();
   }
 
   private loadState(): BackendState {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
-        return JSON.parse(saved);
+        return { ...initialDefaultState, ...JSON.parse(saved) };
       }
     } catch (e) {
-      console.warn('Failed to parse saved backend state, using defaults', e);
+      console.warn('Could not load stored state:', e);
     }
-    return initialDefaultState;
+    return JSON.parse(JSON.stringify(initialDefaultState));
   }
 
   private saveState() {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(this.state));
     } catch (e) {
-      console.error('Failed to save backend state to localStorage', e);
+      console.warn('Could not save state:', e);
     }
     this.notify();
   }
 
-  public subscribe(listener: () => void) {
-    this.listeners.add(listener);
-    return () => {
-      this.listeners.delete(listener);
-    };
+  private async syncFromApi() {
+    try {
+      const res = await fetch(`${API_BASE}/state`);
+      if (res.ok) {
+        const apiData = await res.json();
+        if (apiData && apiData.units) {
+          this.state.units = apiData.units;
+          this.state.rentCollected = apiData.rentCollected;
+          this.state.rooftopLocked = apiData.rooftopLocked;
+          this.state.checkinsToday = apiData.checkinsToday;
+          this.saveState();
+        }
+      }
+    } catch (err) {
+      // Backend starting or offline - fallback to local storage
+    }
   }
 
   private notify() {
-    this.listeners.forEach(cb => cb());
+    this.listeners.forEach(l => l());
+  }
+
+  public subscribe(listener: () => void): () => void {
+    this.listeners.push(listener);
+    return () => {
+      this.listeners = this.listeners.filter(l => l !== listener);
+    };
   }
 
   public getState(): BackendState {
     return this.state;
   }
 
-  // --- Auth Methods ---
+  // --- Auth Actions ---
   public loginAsOwner() {
-    this.state.currentUser = defaultOwnerUser;
-    this.state.isOwnerView = true;
     this.state.isLoggedIn = true;
+    this.state.isOwnerView = true;
+    this.state.currentUser = defaultOwnerUser;
     this.saveState();
-    return this.state.currentUser;
+    fetch(`${API_BASE}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ role: 'owner' })
+    }).catch(() => {});
   }
 
   public loginAsTenant() {
+    this.state.isLoggedIn = true;
+    this.state.isOwnerView = false;
     this.state.currentUser = defaultTenantUser;
-    this.state.isOwnerView = false;
-    this.state.isLoggedIn = true;
     this.saveState();
-    return this.state.currentUser;
-  }
-
-  public registerOwner(data: { name: string; phone: string; email: string; buildingName: string; nid: string }) {
-    const newOwner: User = {
-      id: `usr-owner-${Date.now()}`,
-      name: data.name,
-      phone: data.phone,
-      email: data.email,
-      role: 'owner',
-      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=60',
-      nid: data.nid,
-      nidVerified: true,
-      buildingName: data.buildingName || 'Gulshan Luxury Tower Portfolio',
-      occupation: 'Property Owner & Investor'
-    };
-    this.state.currentUser = newOwner;
-    this.state.isOwnerView = true;
-    this.state.isLoggedIn = true;
-    this.state.recentActivities.unshift({
-      id: `act-${Date.now()}`,
-      text: `New Landlord Account Registered: ${data.name}`,
-      time: 'Just now',
-      type: 'success'
-    });
-    this.saveState();
-    return newOwner;
-  }
-
-  public registerTenant(data: {
-    name: string;
-    phone: string;
-    email: string;
-    unitNumber: string;
-    buildingName: string;
-    nid: string;
-    occupation?: string;
-    emergencyPhone?: string;
-    rentAmount?: number;
-  }) {
-    const newTenant: User = {
-      id: `usr-tenant-${Date.now()}`,
-      name: data.name,
-      phone: data.phone,
-      email: data.email,
-      role: 'tenant',
-      avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=60',
-      nid: data.nid,
-      nidVerified: true,
-      unitNumber: data.unitNumber || '2B',
-      buildingName: data.buildingName || 'Gulshan Luxury Tower',
-      leaseStartDate: 'Jan 1, 2026',
-      leaseEndDate: 'Dec 31, 2026',
-      rentAmount: data.rentAmount || 28000,
-      securityDeposit: (data.rentAmount || 28000) * 2,
-      parkingSlot: 'P-14',
-      occupation: data.occupation || 'Executive Professional',
-      emergencyContact: {
-        name: 'Emergency Contact',
-        relationship: 'Family',
-        phone: data.emergencyPhone || '+880 1700-000000'
-      },
-      familyMembersCount: 2
-    };
-    this.state.currentUser = newTenant;
-    this.state.isOwnerView = false;
-    this.state.isLoggedIn = true;
-    this.state.recentActivities.unshift({
-      id: `act-${Date.now()}`,
-      text: `New Verified Resident Registered: ${data.name} (Unit ${data.unitNumber || '2B'})`,
-      time: 'Just now',
-      type: 'success'
-    });
-    this.saveState();
-    return newTenant;
-  }
-
-  public loginWithCredentials(phoneOrEmail: string, role: 'owner' | 'tenant') {
-    if (role === 'owner') {
-      const user: User = {
-        ...defaultOwnerUser,
-        phone: phoneOrEmail.includes('@') ? defaultOwnerUser.phone : phoneOrEmail,
-        email: phoneOrEmail.includes('@') ? phoneOrEmail : defaultOwnerUser.email
-      };
-      this.state.currentUser = user;
-      this.state.isOwnerView = true;
-      this.state.isLoggedIn = true;
-      this.saveState();
-      return user;
-    } else {
-      const user: User = {
-        ...defaultTenantUser,
-        phone: phoneOrEmail.includes('@') ? defaultTenantUser.phone : phoneOrEmail,
-        email: phoneOrEmail.includes('@') ? phoneOrEmail : defaultTenantUser.email
-      };
-      this.state.currentUser = user;
-      this.state.isOwnerView = false;
-      this.state.isLoggedIn = true;
-      this.saveState();
-      return user;
-    }
+    fetch(`${API_BASE}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ role: 'tenant' })
+    }).catch(() => {});
   }
 
   public logout() {
     this.state.isLoggedIn = false;
     this.saveState();
+    fetch(`${API_BASE}/auth/logout`, { method: 'POST' }).catch(() => {});
   }
 
   public toggleViewMode(isOwner: boolean) {
@@ -605,7 +496,7 @@ class BackendService {
     this.saveState();
   }
 
-  // --- Emergency / Utility Actions ---
+  // --- Utility & Emergency Actions ---
   public resolveGasLeakAlert(unitNumber = '2B') {
     const alertIndex = this.state.criticalAlerts.findIndex(a => a.unit === unitNumber && a.type === 'gas_leak');
     if (alertIndex !== -1) {
@@ -618,6 +509,11 @@ class BackendService {
       type: 'success'
     });
     this.saveState();
+    fetch(`${API_BASE}/telemetry/resolve-gas`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ unit: unitNumber })
+    }).catch(() => {});
   }
 
   public dispatchPlumberForLeak(unitNumber = '1B') {
@@ -634,13 +530,9 @@ class BackendService {
       createdAt: 'Just now'
     };
     this.state.dispatches.unshift(newDispatch);
-    
-    // update telemetry status
-    const item = this.state.telemetry.find(t => t.flat.includes(unitNumber));
-    if (item) {
-      item.isAlert = false;
-      item.status = 'DISPATCHED';
-    }
+
+    const alert = this.state.criticalAlerts.find(a => a.unit === unitNumber && a.type === 'water_leak');
+    if (alert) alert.active = false;
 
     this.state.recentActivities.unshift({
       id: `act-${Date.now()}`,
@@ -648,11 +540,15 @@ class BackendService {
       time: 'Just now',
       type: 'info'
     });
-
     this.saveState();
+    fetch(`${API_BASE}/telemetry/resolve-water`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ unit: unitNumber })
+    }).catch(() => {});
   }
 
-  // --- Rent Payment Action ---
+  // --- Rent Payment ---
   public payRent(amount = 28000, method: 'bKash' | 'Nagad' | 'Bank Transfer' | 'Card' = 'bKash') {
     const txId = `${method.toUpperCase().slice(0, 2)}${Math.floor(10000000 + Math.random() * 90000000)}M`;
     const newReceipt: RentReceipt = {
@@ -675,25 +571,18 @@ class BackendService {
       type: 'success'
     });
 
-    // add confirmation message to conversation
-    const convo = this.state.conversations.find(c => c.unitNumber === '2B');
-    if (convo) {
-      convo.messages.push({
-        id: `m-${Date.now()}`,
-        sender: 'Payment Gateway',
-        text: `Payment Receipt confirmed for ৳${amount.toLocaleString()} (TxID: ${txId})`,
-        time: 'Just now',
-        isMe: false
-      });
-      convo.lastMessage = `Payment Receipt confirmed for ৳${amount.toLocaleString()}`;
-      convo.timestamp = 'Just now';
-    }
-
     this.saveState();
+
+    fetch(`${API_BASE}/rent/pay`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ unitNumber: '2B', amount, paymentMethod: method })
+    }).catch(() => {});
+
     return newReceipt;
   }
 
-  // --- Security & Gate Actions ---
+  // --- Security ---
   public toggleRooftopLock() {
     this.state.rooftopLocked = !this.state.rooftopLocked;
     this.state.recentActivities.unshift({
@@ -703,6 +592,11 @@ class BackendService {
       type: 'info'
     });
     this.saveState();
+
+    fetch(`${API_BASE}/security/rooftop/toggle`, {
+      method: 'POST'
+    }).catch(() => {});
+
     return this.state.rooftopLocked;
   }
 
@@ -718,6 +612,12 @@ class BackendService {
     };
     this.state.gateLogs.unshift(newLog);
     this.saveState();
+
+    fetch(`${API_BASE}/security/guest-pass`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ guestName, unitNumber: hostUnit })
+    }).catch(() => {});
   }
 
   public triggerSos(unitNumber = '2B') {
@@ -728,9 +628,15 @@ class BackendService {
       type: 'warning'
     });
     this.saveState();
+
+    fetch(`${API_BASE}/security/sos`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ unitNumber })
+    }).catch(() => {});
   }
 
-  // --- Messenger Actions ---
+  // --- Messenger ---
   public sendMessage(conversationId: string, text: string, isMe = true) {
     const convo = this.state.conversations.find(c => c.id === conversationId);
     if (convo) {
@@ -745,6 +651,12 @@ class BackendService {
       convo.lastMessage = text;
       convo.timestamp = 'Just now';
       this.saveState();
+
+      fetch(`${API_BASE}/messages`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text, isOwner: this.state.isOwnerView })
+      }).catch(() => {});
     }
   }
 
@@ -760,27 +672,38 @@ class BackendService {
     };
     this.state.broadcasts.unshift(newBc);
     this.saveState();
+
+    fetch(`${API_BASE}/broadcasts`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ title, body, priority: urgent ? 'high' : 'medium' })
+    }).catch(() => {});
   }
 
-  // --- Maintenance ---
-  public addMaintenanceDispatch(unitNumber: string, trade: string, description: string) {
+  // --- Pro Services ---
+  public bookService(serviceTitle: string, category = 'HVAC', cost = 1200) {
     const newDsp: MaintenanceDispatch = {
       id: `dsp-${Date.now()}`,
-      unitNumber,
-      trade,
-      contractorName: 'Assigned Master Pro',
-      phone: '+880 1819-001122',
+      title: serviceTitle,
+      unit: `Flat ${this.state.currentUser.unitNumber || '2B'}`,
+      technician: 'Kamrul Hasan (Verified Pro)',
+      phone: '+880 1711-445566',
       status: 'in_progress',
-      scheduledTime: 'Tomorrow 10:00 AM',
-      description,
-      priority: 'high',
-      createdAt: 'Just now'
+      cost,
+      scheduledTime: 'Today 03:00 PM',
+      category
     };
     this.state.dispatches.unshift(newDsp);
     this.saveState();
+
+    fetch(`${API_BASE}/services/book`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ serviceTitle, category, cost, unitNumber: this.state.currentUser.unitNumber || '2B' })
+    }).catch(() => {});
   }
 
-  // --- Reset to Fresh Demo State ---
+  // --- Reset ---
   public resetState() {
     this.state = JSON.parse(JSON.stringify(initialDefaultState));
     this.saveState();
