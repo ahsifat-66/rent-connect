@@ -68,13 +68,25 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
         {/* 5. Guests / Security Tab */}
         <button
           onClick={() => setActiveTab('guests')}
-          className={`flex flex-col items-center py-1.5 px-3 rounded-2xl transition-all ${
+          className={`flex flex-col items-center py-1.5 px-2 rounded-2xl transition-all ${
             activeTab === 'guests'
               ? 'text-[#111827] dark:text-white font-extrabold scale-105'
               : 'text-slate-400 dark:text-slate-500 hover:text-slate-600'
           }`}>
           <span className="text-xl">👥</span>
           <span className="text-[11px] mt-0.5 font-bold">Guests</span>
+        </button>
+
+        {/* 6. Profile Tab */}
+        <button
+          onClick={() => setActiveTab('profile')}
+          className={`flex flex-col items-center py-1.5 px-2 rounded-2xl transition-all ${
+            activeTab === 'profile'
+              ? 'text-[#111827] dark:text-white font-extrabold scale-105'
+              : 'text-slate-400 dark:text-slate-500 hover:text-slate-600'
+          }`}>
+          <span className="text-xl">👤</span>
+          <span className="text-[11px] mt-0.5 font-bold">Profile</span>
         </button>
 
       </div>

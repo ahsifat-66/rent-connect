@@ -57,8 +57,20 @@ export const OwnerBottomNav: React.FC<OwnerBottomNavProps> = ({
               ? 'text-[#111827] dark:text-white font-extrabold scale-105'
               : 'text-slate-400 dark:text-slate-500 hover:text-slate-600'
           }`}>
-          <span className="text-xl">👥</span>
+          <span className="text-xl">🛡️</span>
           <span className="text-[11px] mt-0.5 font-bold">Security</span>
+        </button>
+
+        {/* 5. Profile Tab */}
+        <button
+          onClick={() => setActiveTab('profile')}
+          className={`flex flex-col items-center py-1.5 px-3 rounded-2xl transition-all ${
+            activeTab === 'profile'
+              ? 'text-[#111827] dark:text-white font-extrabold scale-105'
+              : 'text-slate-400 dark:text-slate-500 hover:text-slate-600'
+          }`}>
+          <span className="text-xl">👤</span>
+          <span className="text-[11px] mt-0.5 font-bold">Profile</span>
         </button>
 
       </div>

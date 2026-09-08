@@ -313,22 +313,44 @@
           )}
 
           {/* Top Header */}
-          <header className="sticky top-0 z-30 bg-white/95 dark:bg-[#161B22]/95 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800 px-4 py-2.5">
-            <div className="max-w-md mx-auto flex items-center justify-between">
-              <div onClick={() => setActiveTab('home')} className="flex items-center gap-2 cursor-pointer">
-                <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#121632] to-[#00B665] flex items-center justify-center text-white font-black text-sm shadow">RC</div>
-                <span className="font-black text-base tracking-tight text-[#111827] dark:text-white">RentConnect</span>
+          <header className="sticky top-0 z-40 bg-white/95 dark:bg-[#161B22]/95 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800 px-3.5 sm:px-6 py-2">
+            <div className="max-w-md sm:max-w-4xl mx-auto flex items-center justify-between gap-2">
+              <div className="flex items-center gap-2">
+                <div onClick={() => setActiveTab('home')} className="flex items-center gap-2 cursor-pointer select-none">
+                  <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#121632] to-[#00B665] flex items-center justify-center text-white font-black text-sm shadow">RC</div>
+                  <span className="font-black text-base tracking-tight text-[#111827] dark:text-white">RentConnect</span>
+                </div>
+
+                <button
+                  onClick={() => {
+                    setIsOwnerView(!isOwnerView);
+                    setActiveTab('home');
+                    showToast(isOwnerView ? "Switched to Resident Tenant Mode" : "Switched to House Owner Command Center");
+                  }}
+                  className={`px-2.5 py-1 rounded-full text-[10px] font-black border transition-all active:scale-95 flex items-center gap-1 ${
+                    isOwnerView
+                      ? 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border-amber-500/30'
+                      : 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30'
+                  }`}>
+                  <span>{isOwnerView ? '👑 Owner' : '🛡️ Tenant'}</span>
+                  <span className="text-[9px] opacity-70 underline">switch</span>
+                </button>
               </div>
 
               <div className="flex items-center gap-2">
-                <div onClick={() => setActiveTab('profile')} title="Click to open My Profile" className="relative w-8 h-8 rounded-full ring-2 ring-emerald-500 overflow-hidden cursor-pointer active:scale-95">
-                  <img src={isOwnerView ? "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=60" : "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=60"} className="w-full h-full object-cover" />
-                  <span className="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-emerald-500 border border-white"></span>
+                <div className="flex items-center bg-slate-100 dark:bg-slate-800 p-0.5 rounded-xl border border-slate-200 dark:border-slate-700">
+                  <button type="button" onClick={() => setTheme('light')} className={`px-2 py-1 rounded-lg text-xs font-bold ${theme === 'light' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-400'}`}>☀️</button>
+                  <button type="button" onClick={() => setTheme('dark')} className={`px-2 py-1 rounded-lg text-xs font-bold ${theme === 'dark' ? 'bg-[#161B22] text-white shadow-sm' : 'text-slate-400'}`}>🌙</button>
                 </div>
 
                 <button onClick={() => setIsLoggedIn(false)} className="px-2.5 py-1.5 rounded-xl text-xs font-extrabold bg-red-500/10 hover:bg-red-500/20 text-red-600 dark:text-red-400 border border-red-500/20 flex items-center gap-1 active:scale-95">
-                  <span>🚪</span><span>Log Out</span>
+                  <span>🚪</span><span className="hidden sm:inline">Log Out</span>
                 </button>
+
+                <div onClick={() => setActiveTab('profile')} title="Click to view My Profile" className="relative w-8 h-8 rounded-full ring-2 ring-emerald-500 overflow-hidden cursor-pointer active:scale-95 shrink-0">
+                  <img src={isOwnerView ? "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=60" : "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=60"} className="w-full h-full object-cover" />
+                  <span className="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-emerald-500 border border-white"></span>
+                </div>
               </div>
             </div>
           </header>
@@ -384,12 +406,12 @@
                     <div className="space-y-3">
                       <h3 className="font-black text-sm uppercase tracking-wider px-1">Management Grid</h3>
                       <div className="grid grid-cols-2 gap-3.5">
-                        <div onClick={() => showToast("Opening Broadcast Manager")} className="rounded-[24px] p-5 bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 text-center space-y-2 cursor-pointer shadow-sm"><div className="text-2xl">📣</div><span className="font-extrabold text-xs">Broadcast Notice</span></div>
-                        <div onClick={() => showToast("Opening Marketplace")} className="rounded-[24px] p-5 bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 text-center space-y-2 cursor-pointer shadow-sm relative"><span className="absolute top-3.5 right-3.5 w-2 h-2 rounded-full bg-red-500"></span><div className="text-2xl">🏢</div><span className="font-extrabold text-xs">Marketplace</span></div>
-                        <div onClick={() => showToast("Opening Messenger")} className="rounded-[24px] p-5 bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 text-center space-y-2 cursor-pointer shadow-sm relative"><span className="absolute top-3.5 right-3.5 w-2 h-2 rounded-full bg-red-500"></span><div className="text-2xl">💬</div><span className="font-extrabold text-xs">Messenger</span></div>
-                        <div onClick={() => showToast("Opening Hire Pro Dispatch")} className="rounded-[24px] p-5 bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 text-center space-y-2 cursor-pointer shadow-sm"><div className="text-2xl">🔧</div><span className="font-extrabold text-xs">Hire Pro</span></div>
-                        <div onClick={() => setActiveTab('vault')} className="rounded-[24px] p-5 bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 text-center space-y-2 cursor-pointer shadow-sm"><div className="text-2xl">🛡️</div><span className="font-extrabold text-xs">NID Vault</span></div>
-                        <div onClick={() => setActiveTab('monitor')} className="rounded-[24px] p-5 bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 text-center space-y-2 cursor-pointer shadow-sm"><div className="text-2xl">📊</div><span className="font-extrabold text-xs">Analytics</span></div>
+                        <div onClick={() => setActiveTab('broadcasts')} className="rounded-[24px] p-5 bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 text-center space-y-2 cursor-pointer shadow-sm hover:shadow-md active:scale-95 transition-all"><div className="text-2xl">📣</div><span className="font-extrabold text-xs">Broadcast Notice</span></div>
+                        <div onClick={() => setActiveTab('marketplace')} className="rounded-[24px] p-5 bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 text-center space-y-2 cursor-pointer shadow-sm hover:shadow-md active:scale-95 transition-all relative"><span className="absolute top-3.5 right-3.5 w-2 h-2 rounded-full bg-red-500 animate-pulse"></span><div className="text-2xl">🏢</div><span className="font-extrabold text-xs">Marketplace</span></div>
+                        <div onClick={() => setActiveTab('messenger')} className="rounded-[24px] p-5 bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 text-center space-y-2 cursor-pointer shadow-sm hover:shadow-md active:scale-95 transition-all relative"><span className="absolute top-3.5 right-3.5 w-2 h-2 rounded-full bg-red-500 animate-pulse"></span><div className="text-2xl">💬</div><span className="font-extrabold text-xs">Messenger</span></div>
+                        <div onClick={() => setActiveTab('hirepro')} className="rounded-[24px] p-5 bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 text-center space-y-2 cursor-pointer shadow-sm hover:shadow-md active:scale-95 transition-all"><div className="text-2xl">🔧</div><span className="font-extrabold text-xs">Hire Pro</span></div>
+                        <div onClick={() => setActiveTab('vault')} className="rounded-[24px] p-5 bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 text-center space-y-2 cursor-pointer shadow-sm hover:shadow-md active:scale-95 transition-all"><div className="text-2xl">🛡️</div><span className="font-extrabold text-xs">NID Vault</span></div>
+                        <div onClick={() => setActiveTab('monitor')} className="rounded-[24px] p-5 bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 text-center space-y-2 cursor-pointer shadow-sm hover:shadow-md active:scale-95 transition-all"><div className="text-2xl">📊</div><span className="font-extrabold text-xs">Analytics</span></div>
                       </div>
                     </div>
                   </div>
@@ -408,27 +430,66 @@
                       <div className="rounded-[24px] p-4 bg-[#E58325] text-white"><div className="text-2xl font-black">2</div><p className="text-xs">Pending</p></div>
                     </div>
 
+                    {/* Floor 1 */}
                     <div className="space-y-3">
                       <span className="inline-block px-3.5 py-1 rounded-full bg-[#121632] text-white text-xs font-black">Floor 1</span>
                       <div className="grid grid-cols-3 gap-2.5">
                         <div className="rounded-[20px] p-3 bg-white dark:bg-[#161B22] border text-center space-y-1">
                           <span>🛡️</span><h4 className="font-black text-sm">1A</h4><p className="text-[10px] text-slate-500 truncate">Fatima Rahman</p><div className="font-mono font-bold text-xs">৳12,000</div>
-                          <button onClick={() => setSelectedReceipt({ id: 'REC-1A', month: 'March 2026', amount: 12000, tenant: 'Fatima Rahman', unit: '1A' })} className="w-full py-1 bg-slate-50 dark:bg-slate-900 text-[10px] font-bold rounded-xl">Quick Receipt</button>
+                          <button onClick={() => setSelectedReceipt({ id: 'REC-1A', month: 'March 2026', amount: 12000, tenant: 'Fatima Rahman', unit: '1A' })} className="w-full py-1 bg-slate-50 dark:bg-slate-900 text-[10px] font-bold rounded-xl active:scale-95">Quick Receipt</button>
                         </div>
                         {waterAlertActive ? (
                           <div className="rounded-[20px] p-3 bg-gradient-to-b from-[#FF4D2D] to-[#E63518] text-white text-center space-y-1 shadow-lg animate-pulse">
                             <span>⚠️</span><h4 className="font-black text-sm">1B</h4><p className="text-[10px] text-red-100 truncate">Karim Ahmed</p><div className="text-[11px] font-extrabold">Water Leak</div>
-                            <button onClick={() => setDiagnosisUnit('1B')} className="w-full py-1 bg-black/20 text-[9px] font-black uppercase rounded-xl">ALERT</button>
+                            <button onClick={() => setDiagnosisUnit('1B')} className="w-full py-1 bg-black/20 text-[9px] font-black uppercase rounded-xl active:scale-95">ALERT</button>
                           </div>
                         ) : (
                           <div className="rounded-[20px] p-3 bg-white dark:bg-[#161B22] border text-center space-y-1">
                             <span>🛡️</span><h4 className="font-black text-sm">1B</h4><p className="text-[10px] text-slate-500 truncate">Karim Ahmed</p><div className="font-mono font-bold text-xs">৳12,000</div>
-                            <button onClick={() => setSelectedReceipt({ id: 'REC-1B', month: 'March 2026', amount: 12000, tenant: 'Karim Ahmed', unit: '1B' })} className="w-full py-1 bg-slate-50 dark:bg-slate-900 text-[10px] font-bold rounded-xl">Quick Receipt</button>
+                            <button onClick={() => setSelectedReceipt({ id: 'REC-1B', month: 'March 2026', amount: 12000, tenant: 'Karim Ahmed', unit: '1B' })} className="w-full py-1 bg-slate-50 dark:bg-slate-900 text-[10px] font-bold rounded-xl active:scale-95">Quick Receipt</button>
                           </div>
                         )}
                         <div className="rounded-[20px] p-3 bg-white dark:bg-[#161B22] border text-center space-y-1">
                           <span>🛡️</span><h4 className="font-black text-sm">1C</h4><p className="text-[10px] text-slate-500 truncate">Shabnam Begum</p><div className="font-mono font-bold text-xs">৳12,000</div>
-                          <button onClick={() => setSelectedReceipt({ id: 'REC-1C', month: 'March 2026', amount: 12000, tenant: 'Shabnam Begum', unit: '1C' })} className="w-full py-1 bg-slate-50 dark:bg-slate-900 text-[10px] font-bold rounded-xl">Quick Receipt</button>
+                          <button onClick={() => setSelectedReceipt({ id: 'REC-1C', month: 'March 2026', amount: 12000, tenant: 'Shabnam Begum', unit: '1C' })} className="w-full py-1 bg-slate-50 dark:bg-slate-900 text-[10px] font-bold rounded-xl active:scale-95">Quick Receipt</button>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Floor 2 */}
+                    <div className="space-y-3">
+                      <span className="inline-block px-3.5 py-1 rounded-full bg-[#121632] text-white text-xs font-black">Floor 2</span>
+                      <div className="grid grid-cols-3 gap-2.5">
+                        <div className="rounded-[20px] p-3 bg-white dark:bg-[#161B22] border text-center space-y-1">
+                          <span>🛡️</span><h4 className="font-black text-sm">2A</h4><p className="text-[10px] text-slate-500 truncate">Rizwan Hasan</p><div className="font-mono font-bold text-xs">৳14,000</div>
+                          <button onClick={() => setSelectedReceipt({ id: 'REC-2A', month: 'March 2026', amount: 14000, tenant: 'Rizwan Hasan', unit: '2A' })} className="w-full py-1 bg-slate-50 dark:bg-slate-900 text-[10px] font-bold rounded-xl active:scale-95">Quick Receipt</button>
+                        </div>
+                        <div className="rounded-[20px] p-3 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-500/40 text-center space-y-1">
+                          <span className="text-emerald-500 font-black">⭐</span><h4 className="font-black text-sm text-emerald-700 dark:text-emerald-400">2B</h4><p className="text-[10px] text-slate-500 truncate">Tanvir Ahmed</p><div className="font-mono font-bold text-xs text-emerald-600">৳28,000</div>
+                          <button onClick={() => setSelectedReceipt({ id: 'REC-2B', month: 'March 2026', amount: 28000, tenant: 'Tanvir Ahmed', unit: '2B' })} className="w-full py-1 bg-emerald-600 text-white text-[10px] font-bold rounded-xl active:scale-95">Quick Receipt</button>
+                        </div>
+                        <div className="rounded-[20px] p-3 bg-white dark:bg-[#161B22] border text-center space-y-1">
+                          <span>🛡️</span><h4 className="font-black text-sm">2C</h4><p className="text-[10px] text-slate-500 truncate">Ariful Haque</p><div className="font-mono font-bold text-xs">৳14,000</div>
+                          <button onClick={() => setSelectedReceipt({ id: 'REC-2C', month: 'March 2026', amount: 14000, tenant: 'Ariful Haque', unit: '2C' })} className="w-full py-1 bg-slate-50 dark:bg-slate-900 text-[10px] font-bold rounded-xl active:scale-95">Quick Receipt</button>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Floor 3 */}
+                    <div className="space-y-3">
+                      <span className="inline-block px-3.5 py-1 rounded-full bg-[#121632] text-white text-xs font-black">Floor 3</span>
+                      <div className="grid grid-cols-3 gap-2.5">
+                        <div className="rounded-[20px] p-3 bg-white dark:bg-[#161B22] border text-center space-y-1">
+                          <span>🛡️</span><h4 className="font-black text-sm">3A</h4><p className="text-[10px] text-slate-500 truncate">Tasnim Jahan</p><div className="font-mono font-bold text-xs">৳15,000</div>
+                          <button onClick={() => setSelectedReceipt({ id: 'REC-3A', month: 'March 2026', amount: 15000, tenant: 'Tasnim Jahan', unit: '3A' })} className="w-full py-1 bg-slate-50 dark:bg-slate-900 text-[10px] font-bold rounded-xl active:scale-95">Quick Receipt</button>
+                        </div>
+                        <div className="rounded-[20px] p-3 bg-white dark:bg-[#161B22] border text-center space-y-1">
+                          <span>🛡️</span><h4 className="font-black text-sm">3B</h4><p className="text-[10px] text-slate-500 truncate">Mehedi Zaman</p><div className="font-mono font-bold text-xs">৳15,000</div>
+                          <button onClick={() => setSelectedReceipt({ id: 'REC-3B', month: 'March 2026', amount: 15000, tenant: 'Mehedi Zaman', unit: '3B' })} className="w-full py-1 bg-slate-50 dark:bg-slate-900 text-[10px] font-bold rounded-xl active:scale-95">Quick Receipt</button>
+                        </div>
+                        <div className="rounded-[20px] p-3 bg-white dark:bg-[#161B22] border text-center space-y-1">
+                          <span>🛡️</span><h4 className="font-black text-sm">3C</h4><p className="text-[10px] text-slate-500 truncate">Sadia Afreen</p><div className="font-mono font-bold text-xs">৳15,000</div>
+                          <button onClick={() => setSelectedReceipt({ id: 'REC-3C', month: 'March 2026', amount: 15000, tenant: 'Sadia Afreen', unit: '3C' })} className="w-full py-1 bg-slate-50 dark:bg-slate-900 text-[10px] font-bold rounded-xl active:scale-95">Quick Receipt</button>
                         </div>
                       </div>
                     </div>
@@ -543,12 +604,42 @@
 
                 {/* 4. Security Shield */}
                 {activeTab === 'security' && (
-                  <div className="space-y-5 animate-fade-in">
-                    <h1 className="text-2xl font-extrabold">Security Shield</h1>
-                    <div className="rounded-[28px] p-5 bg-white dark:bg-[#161B22] border space-y-4">
-                      <div className="rounded-2xl p-4 bg-gradient-to-r from-[#E58325] to-[#D97706] text-white flex justify-between items-center">
-                        <div><h4 className="font-extrabold text-sm">Rooftop Access</h4><p className="text-xs">{rooftopLocked ? 'Locked' : 'Unlocked'}</p></div>
-                        <button onClick={() => { setRooftopLocked(!rooftopLocked); showToast(rooftopLocked ? "Rooftop Unlocked" : "Rooftop Locked"); }} className={`w-14 h-8 p-1 rounded-full flex items-center ${rooftopLocked ? 'bg-white/30 justify-end' : 'bg-white/80 justify-start'}`}><div className="w-6 h-6 bg-white rounded-full"></div></button>
+                  <div className="space-y-5 animate-fade-in max-w-lg mx-auto">
+                    <div className="flex items-center gap-3">
+                      <button onClick={() => setActiveTab('home')} className="w-10 h-10 rounded-2xl bg-slate-100 dark:bg-slate-800 font-bold active:scale-95">←</button>
+                      <div>
+                        <h1 className="text-2xl font-extrabold">Security Shield</h1>
+                        <p className="text-xs text-slate-500">Access Control & Building Security</p>
+                      </div>
+                    </div>
+
+                    <div className="rounded-[28px] p-5 bg-white dark:bg-[#161B22] border space-y-4 shadow-sm">
+                      <div className="rounded-2xl p-4 bg-gradient-to-r from-[#E58325] to-[#D97706] text-white flex justify-between items-center shadow">
+                        <div><h4 className="font-extrabold text-sm">Rooftop Access Lock</h4><p className="text-xs text-amber-100">{rooftopLocked ? 'Locked (Secure)' : 'Unlocked (Open)'}</p></div>
+                        <button onClick={() => { setRooftopLocked(!rooftopLocked); showToast(rooftopLocked ? "Rooftop Unlocked" : "Rooftop Locked"); }} className={`w-14 h-8 p-1 rounded-full flex items-center transition-all ${rooftopLocked ? 'bg-white/30 justify-end' : 'bg-white/80 justify-start'}`}><div className="w-6 h-6 bg-white rounded-full shadow"></div></button>
+                      </div>
+
+                      <button onClick={() => { setSelectedReceipt(null); setSelectedGuestName('Visitor Guest'); setShowGuestQrModal(true); }} className="w-full py-3.5 bg-gradient-to-r from-[#6366F1] to-[#8B5CF6] text-white font-black text-xs uppercase tracking-wider rounded-2xl shadow active:scale-98">
+                        📱 Generate Guest QR Pass
+                      </button>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-3.5">
+                      <div className="p-4 rounded-2xl bg-[#2563EB] text-white shadow"><div className="text-2xl font-black">14</div><p className="text-xs text-blue-100">Check-ins Today</p></div>
+                      <div className="p-4 rounded-2xl bg-[#00B665] text-white shadow"><div className="text-2xl font-black">8</div><p className="text-xs text-emerald-100">Currently Inside</p></div>
+                    </div>
+
+                    <div className="rounded-[28px] p-5 bg-white dark:bg-[#161B22] border space-y-3 shadow-sm">
+                      <h3 className="font-extrabold text-sm">Recent Gate Access Logs</h3>
+                      <div className="space-y-2 text-xs">
+                        <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 flex justify-between items-center">
+                          <span>🚪 Kamal Hossain (Guest · Flat 2B)</span>
+                          <span className="text-[10px] text-emerald-600 font-bold">Checked In</span>
+                        </div>
+                        <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 flex justify-between items-center">
+                          <span>🛵 Pathao Courier (Delivery · Flat 1A)</span>
+                          <span className="text-[10px] text-slate-400 font-bold">Checked Out</span>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -893,17 +984,19 @@
                 <button onClick={() => setActiveTab('home')} className={`flex flex-col items-center py-1.5 px-3 rounded-2xl ${activeTab === 'home' ? 'text-[#111827] dark:text-white font-extrabold scale-105' : 'text-slate-400'}`}><span className="text-xl">📈</span><span className="text-[11px] font-bold">Home</span></button>
                 <button onClick={() => setActiveTab('vault')} className={`flex flex-col items-center py-1.5 px-3 rounded-2xl ${activeTab === 'vault' ? 'text-[#111827] dark:text-white font-extrabold scale-105' : 'text-slate-400'}`}><span className="text-xl">🛡️</span><span className="text-[11px] font-bold">Vault</span></button>
                 <button onClick={() => setActiveTab('monitor')} className={`flex flex-col items-center py-1.5 px-3 rounded-2xl ${activeTab === 'monitor' ? 'text-[#111827] dark:text-white font-extrabold scale-105' : 'text-slate-400'}`}><span className="text-xl">📊</span><span className="text-[11px] font-bold">Monitor</span></button>
-                <button onClick={() => setActiveTab('security')} className={`flex flex-col items-center py-1.5 px-3 rounded-2xl ${activeTab === 'security' ? 'text-[#111827] dark:text-white font-extrabold scale-105' : 'text-slate-400'}`}><span className="text-xl">👥</span><span className="text-[11px] font-bold">Security</span></button>
+                <button onClick={() => setActiveTab('security')} className={`flex flex-col items-center py-1.5 px-3 rounded-2xl ${activeTab === 'security' ? 'text-[#111827] dark:text-white font-extrabold scale-105' : 'text-slate-400'}`}><span className="text-xl">🛡️</span><span className="text-[11px] font-bold">Security</span></button>
+                <button onClick={() => setActiveTab('profile')} className={`flex flex-col items-center py-1.5 px-3 rounded-2xl ${activeTab === 'profile' ? 'text-[#111827] dark:text-white font-extrabold scale-105' : 'text-slate-400'}`}><span className="text-xl">👤</span><span className="text-[11px] font-bold">Profile</span></button>
               </div>
             </nav>
           ) : (
             <nav className="fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-[#161B22]/95 backdrop-blur-xl border-t border-slate-200/80 dark:border-slate-800 pb-safe pt-1.5 px-3 shadow-lg">
               <div className="max-w-md mx-auto flex items-center justify-around">
-                <button onClick={() => setActiveTab('home')} className={`flex flex-col items-center py-1.5 px-3 rounded-2xl ${activeTab === 'home' ? 'text-[#111827] dark:text-white font-extrabold scale-105' : 'text-slate-400'}`}><span className="text-xl">🏠</span><span className="text-[11px] font-bold">Home</span></button>
-                <button onClick={() => setActiveTab('lease')} className={`flex flex-col items-center py-1.5 px-3 rounded-2xl ${activeTab === 'lease' ? 'text-[#111827] dark:text-white font-extrabold scale-105' : 'text-slate-400'}`}><span className="text-xl">📄</span><span className="text-[11px] font-bold">Lease</span></button>
-                <button onClick={() => setActiveTab('pay')} className={`flex flex-col items-center py-1.5 px-3 rounded-2xl ${activeTab === 'pay' ? 'text-[#00B665] font-extrabold scale-105' : 'text-slate-400'}`}><span className="text-xl">💲</span><span className="text-[11px] font-bold">Pay</span></button>
-                <button onClick={() => setActiveTab('chat')} className={`flex flex-col items-center py-1.5 px-3 rounded-2xl ${activeTab === 'chat' ? 'text-sky-500 font-extrabold scale-105' : 'text-slate-400'}`}><span className="text-xl">💬</span><span className="text-[11px] font-bold">Chat</span></button>
-                <button onClick={() => setActiveTab('guests')} className={`flex flex-col items-center py-1.5 px-3 rounded-2xl ${activeTab === 'guests' ? 'text-[#111827] dark:text-white font-extrabold scale-105' : 'text-slate-400'}`}><span className="text-xl">👥</span><span className="text-[11px] font-bold">Guests</span></button>
+                <button onClick={() => setActiveTab('home')} className={`flex flex-col items-center py-1.5 px-2 rounded-2xl ${activeTab === 'home' ? 'text-[#111827] dark:text-white font-extrabold scale-105' : 'text-slate-400'}`}><span className="text-xl">🏠</span><span className="text-[11px] font-bold">Home</span></button>
+                <button onClick={() => setActiveTab('lease')} className={`flex flex-col items-center py-1.5 px-2 rounded-2xl ${activeTab === 'lease' ? 'text-[#111827] dark:text-white font-extrabold scale-105' : 'text-slate-400'}`}><span className="text-xl">📄</span><span className="text-[11px] font-bold">Lease</span></button>
+                <button onClick={() => setActiveTab('pay')} className={`flex flex-col items-center py-1.5 px-2 rounded-2xl ${activeTab === 'pay' ? 'text-[#00B665] font-extrabold scale-105' : 'text-slate-400'}`}><span className="text-xl">💲</span><span className="text-[11px] font-bold">Pay</span></button>
+                <button onClick={() => setActiveTab('chat')} className={`flex flex-col items-center py-1.5 px-2 rounded-2xl ${activeTab === 'chat' ? 'text-sky-500 font-extrabold scale-105' : 'text-slate-400'}`}><span className="text-xl">💬</span><span className="text-[11px] font-bold">Chat</span></button>
+                <button onClick={() => setActiveTab('guests')} className={`flex flex-col items-center py-1.5 px-2 rounded-2xl ${activeTab === 'guests' ? 'text-[#111827] dark:text-white font-extrabold scale-105' : 'text-slate-400'}`}><span className="text-xl">👥</span><span className="text-[11px] font-bold">Guests</span></button>
+                <button onClick={() => setActiveTab('profile')} className={`flex flex-col items-center py-1.5 px-2 rounded-2xl ${activeTab === 'profile' ? 'text-[#111827] dark:text-white font-extrabold scale-105' : 'text-slate-400'}`}><span className="text-xl">👤</span><span className="text-[11px] font-bold">Profile</span></button>
               </div>
             </nav>
           )}
