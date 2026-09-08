@@ -1,4 +1,4 @@
-﻿import express from 'express';
+import express from 'express';
 import cors from 'cors';
 import fs from 'fs';
 import path from 'path';
@@ -36,15 +36,17 @@ const getInitialState = () => ({
   checkinsToday: 14,
   complianceRate: 98,
   units: [
-    { id: '1a', unitNumber: '1A', floor: 1, tenantName: 'Fatima Rahman', rentAmount: 12000, rentStatus: 'paid', waterUsageLitres: 125, elecUsageKwh: 34, nidVerified: true, hasEmergencyAlert: false, assignedParking: 'P-1' },
-    { id: '1b', unitNumber: '1B', floor: 1, tenantName: 'Karim Ahmed', rentAmount: 12000, rentStatus: 'paid', waterUsageLitres: 420, elecUsageKwh: 36, nidVerified: true, hasEmergencyAlert: true, alertType: 'water_leak', assignedParking: 'P-2' },
-    { id: '1c', unitNumber: '1C', floor: 1, tenantName: 'Shabnam Begum', rentAmount: 12000, rentStatus: 'paid', waterUsageLitres: 120, elecUsageKwh: 48, nidVerified: true, hasEmergencyAlert: false, assignedParking: 'P-3' },
-    { id: '2a', unitNumber: '2A', floor: 2, tenantName: 'Rizwan Hasan', rentAmount: 14000, rentStatus: 'paid', waterUsageLitres: 115, elecUsageKwh: 38, nidVerified: true, hasEmergencyAlert: false, assignedParking: 'P-4' },
-    { id: '2b', unitNumber: '2B', floor: 2, tenantName: 'Tanvir Ahmed', rentAmount: 28000, rentStatus: 'paid', waterUsageLitres: 122, elecUsageKwh: 52, nidVerified: true, hasEmergencyAlert: true, alertType: 'gas_leak', assignedParking: 'P-14' },
-    { id: '2c', unitNumber: '2C', floor: 2, tenantName: 'Ariful Haque', rentAmount: 14000, rentStatus: 'paid', waterUsageLitres: 118, elecUsageKwh: 36, nidVerified: true, hasEmergencyAlert: false, assignedParking: 'P-6' },
-    { id: '3a', unitNumber: '3A', floor: 3, tenantName: 'Tasnim Jahan', rentAmount: 15000, rentStatus: 'pending', waterUsageLitres: 135, elecUsageKwh: 44, nidVerified: true, hasEmergencyAlert: false, assignedParking: 'P-7' },
-    { id: '3b', unitNumber: '3B', floor: 3, tenantName: 'Mehedi Zaman', rentAmount: 15000, rentStatus: 'pending', waterUsageLitres: 130, elecUsageKwh: 41, nidVerified: true, hasEmergencyAlert: false, assignedParking: 'P-8' },
-    { id: '3c', unitNumber: '3C', floor: 3, tenantName: 'Sadia Afreen', rentAmount: 15000, rentStatus: 'pending', waterUsageLitres: 128, elecUsageKwh: 45, nidVerified: true, hasEmergencyAlert: false, assignedParking: 'P-9' }
+    { id: '1a', unitNumber: '1A', floor: 1, building: 'Gulshan Luxury Tower', tenantName: 'Fatima Rahman', rentAmount: 12000, rentStatus: 'paid', status: 'occupied', sqft: 1400, bedrooms: 2, bathrooms: 2, amenities: ['Lift', 'Generator', 'Balcony'], photos: ['https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800'], waterUsageLitres: 125, elecUsageKwh: 34, nidVerified: true, hasEmergencyAlert: false, assignedParking: 'P-1' },
+    { id: '1b', unitNumber: '1B', floor: 1, building: 'Gulshan Luxury Tower', tenantName: 'Karim Ahmed', rentAmount: 12000, rentStatus: 'paid', status: 'occupied', sqft: 1400, bedrooms: 2, bathrooms: 2, amenities: ['Lift', 'Generator', 'Water Sensor'], photos: ['https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800'], waterUsageLitres: 420, elecUsageKwh: 36, nidVerified: true, hasEmergencyAlert: true, alertType: 'water_leak', assignedParking: 'P-2' },
+    { id: '1c', unitNumber: '1C', floor: 1, building: 'Gulshan Luxury Tower', tenantName: 'Shabnam Begum', rentAmount: 12000, rentStatus: 'paid', status: 'occupied', sqft: 1400, bedrooms: 2, bathrooms: 2, amenities: ['Lift', 'Generator', 'East Facing'], photos: ['https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800'], waterUsageLitres: 120, elecUsageKwh: 48, nidVerified: true, hasEmergencyAlert: false, assignedParking: 'P-3' },
+    { id: '2a', unitNumber: '2A', floor: 2, building: 'Gulshan Luxury Tower', tenantName: 'Rizwan Hasan', rentAmount: 14000, rentStatus: 'paid', status: 'occupied', sqft: 1600, bedrooms: 3, bathrooms: 2, amenities: ['Central AC', 'Lift', 'Generator'], photos: ['https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800'], waterUsageLitres: 115, elecUsageKwh: 38, nidVerified: true, hasEmergencyAlert: false, assignedParking: 'P-4' },
+    { id: '2b', unitNumber: '2B', floor: 2, building: 'Gulshan Luxury Tower', tenantName: 'Tanvir Ahmed', rentAmount: 28000, rentStatus: 'paid', status: 'occupied', sqft: 1850, bedrooms: 3, bathrooms: 3, amenities: ['Central AC', 'South Balcony', 'Generator', 'Parking', '24/7 Security'], photos: ['https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800'], waterUsageLitres: 122, elecUsageKwh: 52, nidVerified: true, hasEmergencyAlert: true, alertType: 'gas_leak', assignedParking: 'P-14' },
+    { id: '2c', unitNumber: '2C', floor: 2, building: 'Gulshan Luxury Tower', tenantName: 'Ariful Haque', rentAmount: 14000, rentStatus: 'paid', status: 'occupied', sqft: 1600, bedrooms: 3, bathrooms: 2, amenities: ['Lift', 'Generator', 'IPS Ready'], photos: ['https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800'], waterUsageLitres: 118, elecUsageKwh: 36, nidVerified: true, hasEmergencyAlert: false, assignedParking: 'P-6' },
+    { id: '3a', unitNumber: '3A', floor: 3, building: 'Gulshan Luxury Tower', tenantName: 'Tasnim Jahan', rentAmount: 15000, rentStatus: 'pending', status: 'occupied', sqft: 1750, bedrooms: 3, bathrooms: 3, amenities: ['Top Floor', 'Rooftop Access', 'Generator'], photos: ['https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800'], waterUsageLitres: 135, elecUsageKwh: 44, nidVerified: true, hasEmergencyAlert: false, assignedParking: 'P-7' },
+    { id: '3b', unitNumber: '3B', floor: 3, building: 'Gulshan Luxury Tower', tenantName: 'Mehedi Zaman', rentAmount: 15000, rentStatus: 'pending', status: 'occupied', sqft: 1750, bedrooms: 3, bathrooms: 3, amenities: ['North View', 'Lift', 'Generator'], photos: ['https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?w=800'], waterUsageLitres: 130, elecUsageKwh: 41, nidVerified: true, hasEmergencyAlert: false, assignedParking: 'P-8' },
+    { id: '3c', unitNumber: '3C', floor: 3, building: 'Gulshan Luxury Tower', tenantName: 'Sadia Afreen', rentAmount: 15000, rentStatus: 'pending', status: 'occupied', sqft: 1750, bedrooms: 3, bathrooms: 3, amenities: ['Corner Unit', 'Lift', 'Generator'], photos: ['https://images.unsplash.com/photo-1600585155469-8a356db6fef7?w=800'], waterUsageLitres: 128, elecUsageKwh: 45, nidVerified: true, hasEmergencyAlert: false, assignedParking: 'P-9' },
+    { id: '4a', unitNumber: '4A', floor: 4, building: 'Gulshan Luxury Tower', tenantName: 'Vacant (Ready to Move)', rentAmount: 32000, rentStatus: 'vacant', status: 'vacant', sqft: 1850, bedrooms: 3, bathrooms: 3, amenities: ['Central AC', 'South Balcony', 'Generator', 'Covered Parking', '24/7 Security'], photos: ['https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800'], waterUsageLitres: 0, elecUsageKwh: 0, nidVerified: false, hasEmergencyAlert: false, assignedParking: 'P-10' },
+    { id: '4b', unitNumber: '4B', floor: 4, building: 'Gulshan Luxury Tower', tenantName: 'Vacant (Ready to Move)', rentAmount: 45000, rentStatus: 'vacant', status: 'vacant', sqft: 2250, bedrooms: 4, bathrooms: 4, amenities: ['Penthouse Terrace', 'Central AC', 'Generator', 'Dual Parking', 'Smart Lock'], photos: ['https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800'], waterUsageLitres: 0, elecUsageKwh: 0, nidVerified: false, hasEmergencyAlert: false, assignedParking: 'P-11' }
   ],
   criticalAlerts: [
     { id: 'alt-gas-2b', unit: '2B', type: 'gas_leak', title: 'CRITICAL ALERT: Gas Leak in Flat 2B', subtitle: 'Sensor triggered 0.82 PSI drop', active: true, timestamp: '10 mins ago' },
@@ -219,24 +221,61 @@ app.get('/api/units', (req, res) => {
 });
 
 app.post('/api/units', (req, res) => {
-  const { unitNumber, floor, rentAmount, tenantName } = req.body;
+  const { unitNumber, floor, rentAmount, tenantName, status, sqft, bedrooms, bathrooms, amenities, photos } = req.body;
+  const unitNo = (unitNumber || '4A').toUpperCase();
   const newUnit = {
-    id: `u-${Date.now()}`,
-    unitNumber: unitNumber || '4A',
-    floor: Number(floor) || 4,
+    id: `u-${unitNo.toLowerCase()}-${Date.now()}`,
+    unitNumber: unitNo,
+    floor: Number(floor) || parseInt(unitNo.replace(/\D/g, '')) || 4,
     rentAmount: Number(rentAmount) || 30000,
-    tenantName: tenantName || 'Vacant Unit',
-    rentStatus: 'pending',
+    tenantName: status === 'vacant' ? 'Vacant (Ready to Move)' : (tenantName || 'Resident'),
+    rentStatus: status === 'vacant' ? 'vacant' : 'pending',
+    status: status || 'vacant',
+    sqft: Number(sqft) || 1600,
+    bedrooms: Number(bedrooms) || 3,
+    bathrooms: Number(bathrooms) || 2,
+    amenities: amenities || ['Lift', 'Generator', 'Balcony'],
+    photos: photos && photos.length > 0 ? photos : ['https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&auto=format&fit=crop&q=60'],
     waterUsageLitres: 0,
     elecUsageKwh: 0,
     nidVerified: false,
     hasEmergencyAlert: false,
     assignedParking: `P-${db.units.length + 1}`
   };
-  db.units.push(newUnit);
-  db.rentTotal += newUnit.rentAmount;
+  
+  const existingIdx = db.units.findIndex(u => u.unitNumber === unitNo);
+  if (existingIdx >= 0) {
+    db.units[existingIdx] = { ...db.units[existingIdx], ...newUnit };
+  } else {
+    db.units.push(newUnit);
+    db.rentTotal += newUnit.rentAmount;
+  }
+
+  db.recentActivities.unshift({
+    id: `act-${Date.now()}`,
+    text: `Flat ${unitNo} (${newUnit.status === 'vacant' ? 'Vacant' : 'Occupied'}) added to building portfolio`,
+    time: 'Just now',
+    type: 'success'
+  });
+
   saveDb();
   res.status(201).json({ success: true, unit: newUnit });
+});
+
+app.patch('/api/units/:id/status', (req, res) => {
+  const { status } = req.body;
+  const param = String(req.params.id).toLowerCase();
+  const unit = db.units.find(u => u.id.toLowerCase() === param || u.unitNumber.toLowerCase() === param);
+  if (!unit) return res.status(404).json({ error: 'Unit not found' });
+
+  unit.status = status || (unit.status === 'vacant' ? 'occupied' : 'vacant');
+  unit.rentStatus = unit.status === 'vacant' ? 'vacant' : 'paid';
+  if (unit.status === 'vacant') {
+    unit.tenantName = 'Vacant (Ready to Move)';
+  }
+
+  saveDb();
+  res.json({ success: true, unit });
 });
 
 // 5. Rent Payment & Receipts

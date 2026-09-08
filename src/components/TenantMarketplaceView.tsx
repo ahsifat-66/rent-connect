@@ -250,70 +250,111 @@ export const TenantMarketplaceView: React.FC<TenantMarketplaceViewProps> = ({
         <div className="space-y-4">
           <div className="flex items-center justify-between px-1">
             <span className="text-xs font-extrabold text-slate-400 uppercase tracking-wider">
-              Available Building Units
+              Gulshan Luxury Tower Portfolio ({(units || []).filter(u => u && u.status === 'vacant').length} Vacant)
             </span>
-            <span className="text-xs text-slate-400">
-              Share with colleagues & friends
+            <span className="text-xs text-emerald-600 dark:text-emerald-400 font-bold">
+              Direct Landlord Md ABID HASAN SIFAT
             </span>
           </div>
 
           <div className="grid grid-cols-1 gap-4">
-            {units.map(unit => (
-              <div
-                key={unit.id}
-                className="rounded-[28px] overflow-hidden bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-md transition-all">
-                
-                <div className="relative h-44 sm:h-52">
-                  <img
-                    src={unit.photos[0]}
-                    alt={`Flat ${unit.unitNumber}`}
-                    className="w-full h-full object-cover"
-                  />
-                  <span className={`absolute top-2.5 left-2.5 text-[10px] font-black uppercase px-2.5 py-1 rounded-full ${
-                    unit.status === 'vacant' ? 'bg-emerald-600 text-white' : 'bg-slate-900/80 text-white'
-                  }`}>
-                    {unit.status === 'vacant' ? 'Vacant Ready' : 'Occupied'}
-                  </span>
-                  <div className="absolute bottom-2.5 right-2.5 bg-black/75 backdrop-blur-md px-3 py-1.5 rounded-xl text-white font-mono font-bold text-xs border border-white/20">
-                    ৳ {unit.rentAmount.toLocaleString()} / mo
-                  </div>
-                </div>
+            {(units || []).map(unit => {
+              if (!unit) return null;
+              const isVacant = unit.status === 'vacant';
+              const photo = (unit.photos && Array.isArray(unit.photos) && unit.photos.length > 0)
+                ? unit.photos[0]
+                : 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800';
+              const rent = Number(unit.rentAmount) || 15000;
+              const sqft = Number(unit.sqft) || 1600;
+              const beds = Number(unit.bedrooms) || 3;
+              const baths = Number(unit.bathrooms) || 2;
+              const amenities = Array.isArray(unit.amenities) ? unit.amenities : [];
 
-                <div className="p-4 sm:p-5 space-y-3">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h3 className="text-base font-extrabold text-[#111827] dark:text-white">
-                        Flat {unit.unitNumber} · {unit.building}
-                      </h3>
-                      <p className="text-xs text-slate-400 mt-0.5">
-                        {unit.sqft} Sq. Ft. · {unit.bedrooms} Beds · {unit.bathrooms} Baths
-                      </p>
+              return (
+                <div
+                  key={unit.id || `u-${unit.unitNumber}`}
+                  className="rounded-[28px] overflow-hidden bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-md transition-all">
+                  
+                  <div className="relative h-48 sm:h-52 overflow-hidden">
+                    <img
+                      src={photo}
+                      alt={`Flat ${unit.unitNumber}`}
+                      className="w-full h-full object-cover"
+                    />
+                    <span className={`absolute top-2.5 left-2.5 text-[10px] font-black uppercase px-3 py-1 rounded-full shadow-md flex items-center gap-1.5 ${
+                      isVacant 
+                        ? 'bg-emerald-600 text-white animate-pulse' 
+                        : 'bg-slate-900/80 text-white'
+                    }`}>
+                      <span className={`w-1.5 h-1.5 rounded-full ${isVacant ? 'bg-white' : 'bg-amber-400'}`}></span>
+                      {isVacant ? '🟢 VACANT · READY TO MOVE' : 'OCCUPIED · LEASED'}
+                    </span>
+                    <div className="absolute bottom-2.5 right-2.5 bg-black/80 backdrop-blur-md px-3 py-1.5 rounded-xl text-white font-mono font-bold text-xs border border-white/20">
+                      ৳ {rent.toLocaleString()} / mo
                     </div>
                   </div>
 
-                  <div className="flex flex-wrap gap-1.5">
-                    {unit.amenities.map((am, i) => (
-                      <span
-                        key={i}
-                        className="text-[10px] bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 px-2.5 py-0.5 rounded-lg font-semibold border border-emerald-500/20">
-                        {am}
-                      </span>
-                    ))}
+                  <div className="p-4 sm:p-5 space-y-3.5">
+                    <div className="flex items-start justify-between gap-2">
+                      <div>
+                        <h3 className="text-base sm:text-lg font-black text-[#111827] dark:text-white">
+                          Flat {unit.unitNumber} · {unit.building || 'Gulshan Luxury Tower'}
+                        </h3>
+                        <p className="text-xs text-slate-400 mt-0.5">
+                          {sqft} Sq. Ft. · {beds} Bedrooms · {baths} Bathrooms
+                        </p>
+                      </div>
+                      {isVacant && (
+                        <span className="px-2.5 py-1 rounded-xl bg-emerald-500/10 text-emerald-600 text-[10px] font-black uppercase">
+                          Available
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="flex flex-wrap gap-1.5">
+                      {amenities.map((am, i) => (
+                        <span
+                          key={i}
+                          className="text-[10px] bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-2.5 py-0.5 rounded-lg font-semibold">
+                          {am}
+                        </span>
+                      ))}
+                    </div>
+
+                    {/* Action buttons */}
+                    <div className="grid grid-cols-2 gap-2 pt-2 border-t border-slate-100 dark:border-slate-800">
+                      {isVacant ? (
+                        <button
+                          onClick={() => {
+                            if (onShowToast) onShowToast(`📅 Viewing request submitted for Flat ${unit.unitNumber}! Owner notified.`);
+                          }}
+                          className="py-2.5 px-3 rounded-xl bg-[#121632] hover:bg-[#1c224b] text-white font-extrabold text-xs active:scale-95 transition-all shadow-sm">
+                          📅 Book Viewing
+                        </button>
+                      ) : (
+                        <button
+                          disabled
+                          className="py-2.5 px-3 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-400 font-bold text-xs cursor-not-allowed">
+                          Currently Leased
+                        </button>
+                      )}
+
+                      <a
+                        href={`https://api.whatsapp.com/send?text=${encodeURIComponent(
+                          `Check out Flat ${unit.unitNumber} (${sqft} sqft, ৳${rent.toLocaleString()}/mo) at ${unit.building || 'Gulshan Luxury Tower'} on RentConnect!`
+                        )}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="py-2.5 px-3 bg-[#25D366] hover:bg-[#1ebd59] text-white font-extrabold text-xs rounded-xl flex items-center justify-center gap-1.5 active:scale-95 shadow transition-all">
+                        <span>📱</span> WhatsApp
+                      </a>
+                    </div>
+
                   </div>
 
-                  <a
-                    href={`https://api.whatsapp.com/send?text=${encodeURIComponent(
-                      `Check out Flat ${unit.unitNumber} (${unit.sqft} sqft, ৳${unit.rentAmount.toLocaleString()}/mo) at ${unit.building} on RentConnect!`
-                    )}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full py-3 bg-[#25D366] hover:bg-[#1ebd59] text-white font-extrabold text-xs rounded-2xl flex items-center justify-center gap-2 active:scale-95 shadow transition-all">
-                    <span>📱</span> Share Listing via WhatsApp
-                  </a>
                 </div>
-
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       )}

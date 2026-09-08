@@ -80,9 +80,31 @@
       const [waterAlertActive, setWaterAlertActive] = useState(true);
       const [rooftopLocked, setRooftopLocked] = useState(true);
 
-      // Modals
+      // Units state with Vacants
+      const [units, setUnits] = useState([
+        { id: '1a', unitNumber: '1A', floor: 1, tenant: 'Fatima Rahman', rentAmount: 12000, status: 'occupied', sqft: 1400, beds: 2, baths: 2, photo: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800' },
+        { id: '1b', unitNumber: '1B', floor: 1, tenant: 'Karim Ahmed', rentAmount: 12000, status: 'occupied', sqft: 1400, beds: 2, baths: 2, photo: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800' },
+        { id: '1c', unitNumber: '1C', floor: 1, tenant: 'Shabnam Begum', rentAmount: 12000, status: 'occupied', sqft: 1400, beds: 2, baths: 2, photo: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800' },
+        { id: '2a', unitNumber: '2A', floor: 2, tenant: 'Rizwan Hasan', rentAmount: 14000, status: 'occupied', sqft: 1600, beds: 3, baths: 2, photo: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800' },
+        { id: '2b', unitNumber: '2B', floor: 2, tenant: 'Tanvir Ahmed', rentAmount: 28000, status: 'occupied', sqft: 1850, beds: 3, baths: 3, photo: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800' },
+        { id: '2c', unitNumber: '2C', floor: 2, tenant: 'Ariful Haque', rentAmount: 14000, status: 'occupied', sqft: 1600, beds: 3, baths: 2, photo: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800' },
+        { id: '3a', unitNumber: '3A', floor: 3, tenant: 'Tasnim Jahan', rentAmount: 15000, status: 'occupied', sqft: 1750, beds: 3, baths: 3, photo: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800' },
+        { id: '3b', unitNumber: '3B', floor: 3, tenant: 'Mehedi Zaman', rentAmount: 15000, status: 'occupied', sqft: 1750, beds: 3, baths: 3, photo: 'https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?w=800' },
+        { id: '3c', unitNumber: '3C', floor: 3, tenant: 'Sadia Afreen', rentAmount: 15000, status: 'occupied', sqft: 1750, beds: 3, baths: 3, photo: 'https://images.unsplash.com/photo-1600585155469-8a356db6fef7?w=800' },
+        { id: '4a', unitNumber: '4A', floor: 4, tenant: null, rentAmount: 32000, status: 'vacant', sqft: 1850, beds: 3, baths: 3, photo: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800' },
+        { id: '4b', unitNumber: '4B', floor: 4, tenant: null, rentAmount: 45000, status: 'vacant', sqft: 2250, beds: 4, baths: 4, photo: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800' }
+      ]);
+
+      // Modals & Marketplace
       const [showPayModal, setShowPayModal] = useState(false);
       const [showContractModal, setShowContractModal] = useState(false);
+      const [showAddFlatModal, setShowAddFlatModal] = useState(false);
+      const [newFlatNo, setNewFlatNo] = useState('');
+      const [newFlatFloor, setNewFlatFloor] = useState('4');
+      const [newFlatRent, setNewFlatRent] = useState('35000');
+      const [newFlatSqft, setNewFlatSqft] = useState('1850');
+      const [newFlatStatus, setNewFlatStatus] = useState('vacant');
+      const [marketFilter, setMarketFilter] = useState('all');
       const [selectedReceipt, setSelectedReceipt] = useState(null);
       const [diagnosisUnit, setDiagnosisUnit] = useState(null);
 
@@ -682,6 +704,96 @@
                     <button onClick={() => setIsLoggedIn(false)} className="w-full py-3.5 rounded-2xl bg-red-500/10 text-red-600 font-bold text-xs uppercase border border-red-500/20">🚪 Log Out of RentConnect</button>
                   </div>
                 )}
+
+                {/* 6. Owner Marketplace (Vacants & Listings) */}
+                {activeTab === 'marketplace' && (
+                  <div className="space-y-5 animate-fade-in">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <button onClick={() => setActiveTab('home')} className="w-10 h-10 rounded-2xl bg-slate-100 dark:bg-slate-800 font-bold">←</button>
+                        <div>
+                          <h1 className="text-2xl font-extrabold">Marketplace & Vacants</h1>
+                          <p className="text-xs text-slate-500">Gulshan Tower Portfolio Vacancies</p>
+                        </div>
+                      </div>
+                      <button onClick={() => setShowAddFlatModal(true)} className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs rounded-2xl shadow active:scale-95">
+                        + Add Flat
+                      </button>
+                    </div>
+
+                    {/* Filter Pills */}
+                    <div className="flex gap-2 text-xs">
+                      <button onClick={() => setMarketFilter('all')} className={`px-3 py-1.5 rounded-xl font-bold ${marketFilter === 'all' ? 'bg-[#121632] text-white' : 'bg-white dark:bg-[#161B22] border'}`}>All ({units.length})</button>
+                      <button onClick={() => setMarketFilter('vacant')} className={`px-3 py-1.5 rounded-xl font-bold ${marketFilter === 'vacant' ? 'bg-emerald-600 text-white' : 'bg-white dark:bg-[#161B22] border'}`}>🟢 Vacant ({units.filter(u => u.status === 'vacant').length})</button>
+                      <button onClick={() => setMarketFilter('occupied')} className={`px-3 py-1.5 rounded-xl font-bold ${marketFilter === 'occupied' ? 'bg-[#121632] text-white' : 'bg-white dark:bg-[#161B22] border'}`}>👥 Occupied ({units.filter(u => u.status !== 'vacant').length})</button>
+                    </div>
+
+                    <div className="grid grid-cols-1 gap-4">
+                      {units.filter(u => marketFilter === 'all' ? true : marketFilter === 'vacant' ? u.status === 'vacant' : u.status !== 'vacant').map(u => (
+                        <div key={u.id} className="rounded-[28px] overflow-hidden bg-white dark:bg-[#161B22] border shadow-sm flex flex-col">
+                          <div className="relative h-44">
+                            <img src={u.photo} alt={`Flat ${u.unitNumber}`} className="w-full h-full object-cover" />
+                            <span className={`absolute top-2.5 left-2.5 text-[10px] font-black uppercase px-2.5 py-1 rounded-full ${u.status === 'vacant' ? 'bg-emerald-600 text-white animate-pulse' : 'bg-slate-900/80 text-white'}`}>
+                              {u.status === 'vacant' ? '🟢 VACANT · READY' : 'OCCUPIED'}
+                            </span>
+                            <div className="absolute bottom-2.5 right-2.5 bg-black/80 px-3 py-1 rounded-xl text-white font-mono font-bold text-xs">
+                              ৳{u.rentAmount.toLocaleString()} / mo
+                            </div>
+                          </div>
+                          <div className="p-4 space-y-3">
+                            <div className="flex justify-between items-center">
+                              <div><h3 className="font-extrabold text-base">Flat {u.unitNumber}</h3><p className="text-xs text-slate-400">{u.sqft} Sq. Ft. · {u.beds} Beds · {u.baths} Baths</p></div>
+                              <button onClick={() => {
+                                const newStatus = u.status === 'vacant' ? 'occupied' : 'vacant';
+                                setUnits(units.map(x => x.id === u.id ? { ...x, status: newStatus } : x));
+                                showToast(`Flat ${u.unitNumber} marked as ${newStatus}!`);
+                              }} className="px-3 py-1 bg-slate-100 dark:bg-slate-800 text-[10px] font-bold rounded-xl border">
+                                {u.status === 'vacant' ? 'Mark Occupied' : 'Mark Vacant'}
+                              </button>
+                            </div>
+                            <a href={`https://api.whatsapp.com/send?text=${encodeURIComponent(`Check out Flat ${u.unitNumber} (${u.sqft} sqft, ৳${u.rentAmount}/mo) at Gulshan Luxury Tower on RentConnect!`)}`} target="_blank" rel="noopener noreferrer" className="w-full py-2.5 bg-[#25D366] text-white font-extrabold text-xs rounded-xl flex items-center justify-center gap-1.5 shadow">
+                              <span>📱</span> Share on WhatsApp
+                            </a>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* 7. Owner Messenger */}
+                {activeTab === 'messenger' && (
+                  <div className="space-y-4 animate-fade-in">
+                    <div className="flex items-center gap-3">
+                      <button onClick={() => setActiveTab('home')} className="w-10 h-10 rounded-2xl bg-slate-100 dark:bg-slate-800 font-bold">←</button>
+                      <h1 className="text-2xl font-extrabold">Building Messenger</h1>
+                    </div>
+                    <div className="p-4 rounded-3xl bg-white dark:bg-[#161B22] border space-y-3">
+                      <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-900 border flex justify-between items-center cursor-pointer" onClick={() => showToast("Opening chat with Tanvir Ahmed (Flat 2B)...")}>
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold">TA</div>
+                          <div><h4 className="font-extrabold text-xs">Tanvir Ahmed (Flat 2B)</h4><p className="text-[10px] text-slate-400">AC is running smoothly!</p></div>
+                        </div>
+                        <span className="text-[10px] text-emerald-500 font-bold">10:32 AM</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* 8. Owner Broadcasts */}
+                {activeTab === 'broadcasts' && (
+                  <div className="space-y-4 animate-fade-in">
+                    <div className="flex items-center gap-3">
+                      <button onClick={() => setActiveTab('home')} className="w-10 h-10 rounded-2xl bg-slate-100 dark:bg-slate-800 font-bold">←</button>
+                      <h1 className="text-2xl font-extrabold">Broadcast Notices</h1>
+                    </div>
+                    <div className="p-5 rounded-3xl bg-white dark:bg-[#161B22] border space-y-3">
+                      <span className="px-2.5 py-0.5 rounded-full bg-sky-500/10 text-sky-500 text-[10px] font-bold">OFFICIAL</span>
+                      <h3 className="font-extrabold text-sm">Elevator Safety Inspection & Calibration</h3>
+                      <p className="text-xs text-slate-400">Lift 2 service scheduled for Sunday between 10:00 AM and 01:00 PM.</p>
+                    </div>
+                  </div>
+                )}
               </>
             )}
 
@@ -1060,6 +1172,50 @@
                 </div>
                 <p className="text-xs text-slate-500">Premises: Gulshan Luxury Tower, Flat 2B. Landlord: Md ABID HASAN SIFAT. Tenant: Tanvir Ahmed.</p>
                 <button onClick={() => window.print()} className="w-full py-3 bg-[#00B665] text-white font-bold text-xs rounded-2xl">⬇️ Download / Print Signed PDF</button>
+              </div>
+            </div>
+          )}
+
+          {/* Add Flat Modal */}
+          {showAddFlatModal && (
+            <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-end sm:items-center justify-center p-0 sm:p-4">
+              <div className="w-full max-w-md bg-white dark:bg-[#161B22] p-6 rounded-t-3xl sm:rounded-3xl space-y-4 border border-slate-200 dark:border-slate-800">
+                <div className="flex justify-between items-center border-b pb-2">
+                  <h3 className="font-extrabold text-base">Add Vacant / New Flat</h3>
+                  <button onClick={() => setShowAddFlatModal(false)} className="font-bold">✕</button>
+                </div>
+                <form onSubmit={(e) => {
+                  e.preventDefault();
+                  if (!newFlatNo) return;
+                  const newU = {
+                    id: `u-${Date.now()}`,
+                    unitNumber: newFlatNo.toUpperCase(),
+                    floor: parseInt(newFlatFloor) || 4,
+                    tenant: newFlatStatus === 'vacant' ? null : 'Resident',
+                    rentAmount: parseInt(newFlatRent) || 30000,
+                    status: newFlatStatus,
+                    sqft: parseInt(newFlatSqft) || 1600,
+                    beds: 3,
+                    baths: 2,
+                    photo: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800'
+                  };
+                  setUnits([...units, newU]);
+                  setShowAddFlatModal(false);
+                  setNewFlatNo('');
+                  showToast(`🎉 Flat ${newU.unitNumber} added as ${newU.status}!`);
+                }} className="space-y-3 text-xs">
+                  <div className="flex gap-2">
+                    <button type="button" onClick={() => setNewFlatStatus('vacant')} className={`flex-1 py-2 rounded-xl font-bold ${newFlatStatus === 'vacant' ? 'bg-emerald-600 text-white' : 'bg-slate-100 dark:bg-slate-800'}`}>🟢 Vacant</button>
+                    <button type="button" onClick={() => setNewFlatStatus('occupied')} className={`flex-1 py-2 rounded-xl font-bold ${newFlatStatus === 'occupied' ? 'bg-[#121632] text-white' : 'bg-slate-100 dark:bg-slate-800'}`}>👥 Occupied</button>
+                  </div>
+                  <div><label className="font-bold block mb-1">Unit Number</label><input type="text" required placeholder="e.g. 4C, 5A" value={newFlatNo} onChange={(e) => setNewFlatNo(e.target.value)} className="w-full p-2.5 rounded-xl border bg-slate-50 dark:bg-slate-900" /></div>
+                  <div className="grid grid-cols-2 gap-2">
+                    <div><label className="font-bold block mb-1">Floor</label><input type="number" value={newFlatFloor} onChange={(e) => setNewFlatFloor(e.target.value)} className="w-full p-2.5 rounded-xl border bg-slate-50 dark:bg-slate-900" /></div>
+                    <div><label className="font-bold block mb-1">Rent (৳)</label><input type="number" value={newFlatRent} onChange={(e) => setNewFlatRent(e.target.value)} className="w-full p-2.5 rounded-xl border bg-slate-50 dark:bg-slate-900" /></div>
+                  </div>
+                  <div><label className="font-bold block mb-1">Sq. Ft.</label><input type="number" value={newFlatSqft} onChange={(e) => setNewFlatSqft(e.target.value)} className="w-full p-2.5 rounded-xl border bg-slate-50 dark:bg-slate-900" /></div>
+                  <button type="submit" className="w-full py-3 bg-[#00B665] text-white font-bold rounded-2xl shadow">Publish Flat to Portfolio →</button>
+                </form>
               </div>
             </div>
           )}

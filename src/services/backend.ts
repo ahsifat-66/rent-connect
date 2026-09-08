@@ -1,4 +1,4 @@
-﻿import { User, Unit, RentReceipt, MaintenanceDispatch, BroadcastNotice, Conversation, ChatMessage } from '../types';
+import { User, Unit, RentReceipt, MaintenanceDispatch, BroadcastNotice, Conversation, ChatMessage } from '../types';
 
 export interface ActivityItem {
   id: string;
@@ -270,7 +270,7 @@ const initialDefaultState: BackendState = {
       bedrooms: 3,
       bathrooms: 3,
       amenities: ['Corner Unit', 'Lift', 'Generator'],
-      photos: ['https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&auto=format&fit=crop&q=60'],
+      photos: ['https://images.unsplash.com/photo-1600585155469-8a356db6fef7?w=800&auto=format&fit=crop&q=60'],
       tenant: {
         name: 'Sadia Afreen',
         phone: '+880 1913-778899',
@@ -278,6 +278,32 @@ const initialDefaultState: BackendState = {
         leaseUntil: 'Dec 31, 2026',
         avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&auto=format&fit=crop&q=60'
       }
+    },
+    {
+      id: 'u-4a',
+      unitNumber: '4A',
+      building: 'Gulshan Luxury Tower',
+      rentAmount: 32000,
+      sqft: 1850,
+      status: 'vacant',
+      bedrooms: 3,
+      bathrooms: 3,
+      amenities: ['Central AC', 'South Balcony', 'Generator', 'Covered Parking', '24/7 Security'],
+      photos: ['https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&auto=format&fit=crop&q=60'],
+      tenant: null
+    },
+    {
+      id: 'u-4b',
+      unitNumber: '4B',
+      building: 'Gulshan Luxury Tower',
+      rentAmount: 45000,
+      sqft: 2250,
+      status: 'vacant',
+      bedrooms: 4,
+      bathrooms: 4,
+      amenities: ['Penthouse Terrace', 'Central AC', 'Generator', 'Dual Parking', 'Smart Lock'],
+      photos: ['https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop&q=60'],
+      tenant: null
     }
   ],
   criticalAlerts: [
@@ -396,6 +422,88 @@ const initialDefaultState: BackendState = {
   ]
 };
 
+const DEFAULT_UNIT_PHOTOS: Record<string, string> = {
+  '1A': 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800',
+  '1B': 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800',
+  '1C': 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800',
+  '2A': 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800',
+  '2B': 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800',
+  '2C': 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800',
+  '3A': 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800',
+  '3B': 'https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?w=800',
+  '3C': 'https://images.unsplash.com/photo-1600585155469-8a356db6fef7?w=800',
+  '4A': 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800',
+  '4B': 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800'
+};
+
+function normalizeUnit(raw: any): Unit {
+  if (!raw) {
+    return {
+      id: 'u-1a',
+      unitNumber: '1A',
+      building: 'Gulshan Luxury Tower',
+      rentAmount: 12000,
+      sqft: 1400,
+      status: 'occupied',
+      bedrooms: 2,
+      bathrooms: 2,
+      amenities: ['Lift', 'Generator', 'Balcony'],
+      photos: ['https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800'],
+      tenant: null
+    };
+  }
+
+  const unitNumber = String(raw.unitNumber || raw.unit || '1A').toUpperCase().replace(/^FLAT\s*/i, '').replace(/^UNIT\s*/i, '');
+  const floorNum = Number(raw.floor) || parseInt(unitNumber.replace(/\D/g, '')) || 1;
+  const isVacant = raw.status === 'vacant' || raw.rentStatus === 'vacant' || (!raw.tenantName && !raw.tenant) || raw.tenantName === 'Vacant (Ready to Move)' || raw.tenantName === 'Vacant Unit';
+  
+  const defaultPhoto = DEFAULT_UNIT_PHOTOS[unitNumber] || 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800';
+  let photos: string[] = [];
+  if (Array.isArray(raw.photos) && raw.photos.length > 0) {
+    photos = raw.photos;
+  } else if (typeof raw.photo === 'string' && raw.photo) {
+    photos = [raw.photo];
+  } else {
+    photos = [defaultPhoto];
+  }
+
+  let amenities: string[] = [];
+  if (Array.isArray(raw.amenities) && raw.amenities.length > 0) {
+    amenities = raw.amenities;
+  } else {
+    amenities = ['Lift', 'Generator Backup', '24/7 CCTV Security', 'Balcony'];
+  }
+
+  let tenantObj = null;
+  if (!isVacant) {
+    if (typeof raw.tenant === 'object' && raw.tenant !== null) {
+      tenantObj = raw.tenant;
+    } else {
+      tenantObj = {
+        name: raw.tenantName || 'Verified Resident',
+        phone: raw.phone || '+880 1711-000000',
+        nid: raw.nid || '19882692610000000',
+        leaseUntil: raw.leaseUntil || 'Dec 31, 2026',
+        avatar: raw.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150'
+      };
+    }
+  }
+
+  return {
+    id: String(raw.id || `u-${unitNumber.toLowerCase()}`),
+    unitNumber,
+    building: String(raw.building || 'Gulshan Luxury Tower'),
+    rentAmount: Number(raw.rentAmount) || (12000 + floorNum * 2000),
+    sqft: Number(raw.sqft) || (1300 + floorNum * 150),
+    status: isVacant ? 'vacant' : 'occupied',
+    bedrooms: Number(raw.bedrooms) || Number(raw.beds) || (floorNum >= 3 ? 3 : 2),
+    bathrooms: Number(raw.bathrooms) || Number(raw.baths) || (floorNum >= 3 ? 3 : 2),
+    amenities,
+    photos,
+    tenant: tenantObj
+  };
+}
+
 class BackendService {
   private state: BackendState;
   private listeners: (() => void)[] = [];
@@ -409,12 +517,19 @@ class BackendService {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
-        return { ...initialDefaultState, ...JSON.parse(saved) };
+        const parsed = JSON.parse(saved);
+        const merged = { ...initialDefaultState, ...parsed };
+        if (Array.isArray(merged.units)) {
+          merged.units = merged.units.map(normalizeUnit);
+        }
+        return merged;
       }
     } catch (e) {
       console.warn('Could not load stored state:', e);
     }
-    return JSON.parse(JSON.stringify(initialDefaultState));
+    const def = JSON.parse(JSON.stringify(initialDefaultState));
+    def.units = def.units.map(normalizeUnit);
+    return def;
   }
 
   private saveState() {
@@ -431,11 +546,11 @@ class BackendService {
       const res = await fetch(`${API_BASE}/state`);
       if (res.ok) {
         const apiData = await res.json();
-        if (apiData && apiData.units) {
-          this.state.units = apiData.units;
-          this.state.rentCollected = apiData.rentCollected;
-          this.state.rooftopLocked = apiData.rooftopLocked;
-          this.state.checkinsToday = apiData.checkinsToday;
+        if (apiData && Array.isArray(apiData.units)) {
+          this.state.units = apiData.units.map(normalizeUnit);
+          if (typeof apiData.rentCollected === 'number') this.state.rentCollected = apiData.rentCollected;
+          if (typeof apiData.rooftopLocked === 'boolean') this.state.rooftopLocked = apiData.rooftopLocked;
+          if (typeof apiData.checkinsToday === 'number') this.state.checkinsToday = apiData.checkinsToday;
           this.saveState();
         }
       }
@@ -701,6 +816,105 @@ class BackendService {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ serviceTitle, category, cost, unitNumber: this.state.currentUser.unitNumber || '2B' })
     }).catch(() => {});
+  }
+
+  // --- Unit & Vacant Management ---
+  public addUnit(unitData: Partial<Unit>): Unit {
+    const unitNo = (unitData.unitNumber || '4A').toUpperCase();
+    const newUnit: Unit = {
+      id: `u-${unitNo.toLowerCase()}-${Date.now()}`,
+      unitNumber: unitNo,
+      building: unitData.building || 'Gulshan Luxury Tower',
+      rentAmount: Number(unitData.rentAmount) || 30000,
+      sqft: Number(unitData.sqft) || 1600,
+      status: unitData.status || 'vacant',
+      bedrooms: Number(unitData.bedrooms) || 3,
+      bathrooms: Number(unitData.bathrooms) || 2,
+      amenities: unitData.amenities || ['Lift', 'Generator', 'Balcony'],
+      photos: unitData.photos && unitData.photos.length > 0 ? unitData.photos : ['https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&auto=format&fit=crop&q=60'],
+      tenant: unitData.status === 'occupied' ? (unitData.tenant || null) : null
+    };
+
+    // Prevent duplicate unit numbers by replacing or appending
+    const existingIndex = this.state.units.findIndex(u => u.unitNumber === unitNo);
+    if (existingIndex >= 0) {
+      this.state.units[existingIndex] = newUnit;
+    } else {
+      this.state.units.push(newUnit);
+      this.state.rentTotal += newUnit.rentAmount;
+    }
+
+    this.state.recentActivities.unshift({
+      id: `act-${Date.now()}`,
+      text: `Flat ${newUnit.unitNumber} (${newUnit.status === 'vacant' ? 'Vacant' : 'Occupied'}) added to building portfolio.`,
+      time: 'Just now',
+      type: 'success'
+    });
+
+    this.saveState();
+
+    fetch(`${API_BASE}/units`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        unitNumber: newUnit.unitNumber,
+        rentAmount: newUnit.rentAmount,
+        sqft: newUnit.sqft,
+        status: newUnit.status,
+        bedrooms: newUnit.bedrooms,
+        bathrooms: newUnit.bathrooms,
+        amenities: newUnit.amenities,
+        photos: newUnit.photos
+      })
+    }).catch(() => {});
+
+    return newUnit;
+  }
+
+  public toggleUnitStatus(unitIdOrNumber: string) {
+    const unit = this.state.units.find(u => u.id === unitIdOrNumber || u.unitNumber === unitIdOrNumber);
+    if (unit) {
+      unit.status = unit.status === 'vacant' ? 'occupied' : 'vacant';
+      if (unit.status === 'vacant') {
+        unit.tenant = null;
+      }
+      this.state.recentActivities.unshift({
+        id: `act-${Date.now()}`,
+        text: `Flat ${unit.unitNumber} status updated to ${unit.status === 'vacant' ? 'Vacant (খালি)' : 'Occupied (ভাড়া)'}`,
+        time: 'Just now',
+        type: 'info'
+      });
+      this.saveState();
+
+      fetch(`${API_BASE}/units/${unit.id}/status`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: unit.status })
+      }).catch(() => {});
+    }
+  }
+
+  public setUnitStatus(unitIdOrNumber: string, status: 'vacant' | 'occupied') {
+    const unit = this.state.units.find(u => u.id === unitIdOrNumber || u.unitNumber === unitIdOrNumber);
+    if (unit) {
+      unit.status = status;
+      if (status === 'vacant') {
+        unit.tenant = null;
+      }
+      this.state.recentActivities.unshift({
+        id: `act-${Date.now()}`,
+        text: `Flat ${unit.unitNumber} status changed to ${status}`,
+        time: 'Just now',
+        type: 'info'
+      });
+      this.saveState();
+
+      fetch(`${API_BASE}/units/${unit.id}/status`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status })
+      }).catch(() => {});
+    }
   }
 
   // --- Reset ---

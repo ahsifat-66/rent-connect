@@ -32,6 +32,7 @@ import { GuestQrModal } from './components/GuestQrModal';
 import { RentPayModal } from './components/RentPayModal';
 import { DigitalGatePassModal } from './components/DigitalGatePassModal';
 import { DmpFormModal } from './components/DmpFormModal';
+import { AddFlatModal } from './components/AddFlatModal';
 
 // Secondary Views
 import { MarketplaceView } from './components/MarketplaceView';
@@ -423,6 +424,15 @@ export const App: React.FC = () => {
         onClose={() => setShowDmpFormModal(false)}
         user={currentUser}
         lang="en"
+      />
+
+      {/* Add Vacant / New Flat Modal */}
+      <AddFlatModal
+        isOpen={showAddFlatModal}
+        onClose={() => setShowAddFlatModal(false)}
+        onSuccess={(unit) => {
+          showToast(`🎉 Flat ${unit.unitNumber} (${unit.status === 'vacant' ? 'Vacant' : 'Occupied'}) published to portfolio!`);
+        }}
       />
 
     </div>
