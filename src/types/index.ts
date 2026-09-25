@@ -69,7 +69,11 @@ export interface MaintenanceDispatch {
   description: string;
   reportedBy?: string;
   priority?: 'low' | 'medium' | 'high' | 'urgent';
-  createdAt: string;
+  createdAt?: string;
+  title?: string;
+  cost?: number;
+  category?: string;
+  unit?: string;
 }
 
 export interface RentReceipt {
@@ -86,9 +90,12 @@ export interface BroadcastNotice {
   id: string;
   title: string;
   body: string;
-  urgent: boolean;
+  urgent?: boolean;
   date: string;
   author: string;
+  target?: string;
+  category?: string;
+  priority?: 'low' | 'medium' | 'high' | 'urgent';
 }
 
 export interface ChatMessage {
@@ -102,10 +109,14 @@ export interface ChatMessage {
 export interface Conversation {
   id: string;
   unitNumber: string;
-  participantName: string;
-  avatar: string;
+  participantName?: string;
+  tenantName?: string;
+  avatar?: string;
+  tenantAvatar?: string;
   lastMessage: string;
-  timestamp: string;
-  unread: number;
+  timestamp?: string;
+  lastMessageTime?: string;
+  unread?: number;
+  unreadCount?: number;
   messages: ChatMessage[];
 }

@@ -359,24 +359,30 @@ const initialDefaultState: BackendState = {
     {
       id: 'dsp-1',
       title: 'AC Inverter Master Cleaning & Gas Recharge',
+      unitNumber: '2B',
       unit: 'Flat 2B',
-      technician: 'Rahim Uddin (Verified Pro)',
+      trade: 'HVAC',
+      contractorName: 'Rahim Uddin (Verified Pro)',
       phone: '+880 1711-889900',
       status: 'completed',
       cost: 1200,
       scheduledTime: 'Today 11:30 AM',
-      category: 'HVAC'
+      category: 'HVAC',
+      description: 'AC Inverter Master Cleaning & Gas Recharge'
     },
     {
       id: 'dsp-2',
       title: 'Emergency Master Bathroom Solenoid Valve',
+      unitNumber: '1B',
       unit: 'Flat 1B',
-      technician: 'Belal Hossain (Lead Plumber)',
+      trade: 'Plumbing',
+      contractorName: 'Belal Hossain (Lead Plumber)',
       phone: '+880 1812-334455',
       status: 'in_progress',
       cost: 500,
       scheduledTime: 'Today 02:00 PM',
-      category: 'Plumbing'
+      category: 'Plumbing',
+      description: 'Emergency Master Bathroom Solenoid Valve'
     }
   ],
   broadcasts: [
@@ -507,10 +513,18 @@ function normalizeUnit(raw: any): Unit {
 class BackendService {
   private state: BackendState;
   private listeners: (() => void)[] = [];
+  private token: string | null = null;
 
   constructor() {
+    try {
+      this.token = localStorage.getItem('rc_auth_token');
+    } catch {}
     this.state = this.loadState();
     this.syncFromApi();
+  }
+
+  public getAuthHeader(): Record<string, string> {
+    return this.token ? { 'Authorization': `Bearer ${this.token}` } : {};
   }
 
   private loadState(): BackendState {
@@ -899,25 +913,64 @@ class BackendService {
 
   // --- Pro Services ---
   public bookService(serviceTitle: string, category = 'HVAC', cost = 1200) {
+    const unitNo = this.state.currentUser.unitNumber || '2B';
     const newDsp: MaintenanceDispatch = {
       id: `dsp-${Date.now()}`,
       title: serviceTitle,
-      unit: `Flat ${this.state.currentUser.unitNumber || '2B'}`,
-      technician: 'Kamrul Hasan (Verified Pro)',
+      unitNumber: unitNo,
+      unit: `Flat ${unitNo}`,
+      trade: category,
+      contractorName: 'Kamrul Hasan (Verified Pro)',
       phone: '+880 1711-445566',
       status: 'in_progress',
       cost,
       scheduledTime: 'Today 03:00 PM',
-      category
+      category,
+      description: `Service request for ${serviceTitle}`
     };
     this.state.dispatches.unshift(newDsp);
     this.saveState();
 
     fetch(`${API_BASE}/services/book`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ serviceTitle, category, cost, unitNumber: this.state.currentUser.unitNumber || '2B' })
+      headers: { 'Content-Type': 'application/json', ...this.getAuthHeader() },
+      body: JSON.stringify({ serviceTitle, category, cost, unitNumber: unitNo })
     }).catch(() => {});
+    return newDsp;
+  }
+
+  public addMaintenanceDispatch(unit: string, trade: string, description: string) {
+    const cleanUnit = unit.replace(/^Flat\s*/i, '').trim();
+    const newDsp: MaintenanceDispatch = {
+      id: `dsp-${Date.now()}`,
+      title: `${trade} Service (${cleanUnit})`,
+      unitNumber: cleanUnit,
+      unit: `Flat ${cleanUnit}`,
+      trade,
+      contractorName: `${trade} Specialist (Verified Pro)`,
+      phone: '+880 1711-445566',
+      status: 'in_progress',
+      cost: 1200,
+      scheduledTime: 'Today 03:00 PM',
+      category: trade,
+      description,
+      createdAt: 'Just now'
+    };
+    this.state.dispatches.unshift(newDsp);
+    this.saveState();
+
+    fetch(`${API_BASE}/services/book`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...this.getAuthHeader() },
+      body: JSON.stringify({
+        serviceTitle: newDsp.title,
+        category: trade,
+        cost: newDsp.cost,
+        unitNumber: cleanUnit
+      })
+    }).catch(() => {});
+
+    return newDsp;
   }
 
   // --- Unit & Vacant Management ---

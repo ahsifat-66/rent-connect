@@ -1,18 +1,36 @@
 {
-  "currentUser": {
-    "id": "usr-owner-1",
-    "name": "Md ABID HASAN SIFAT",
-    "phone": "+880 1911-554433",
-    "email": "sifat.owner@gulshantower.com",
-    "role": "owner",
-    "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=60",
-    "nid": "19652692610000111",
-    "nidVerified": true,
-    "buildingName": "Gulshan Luxury Tower Portfolio",
-    "occupation": "Property Managing Director & Investor"
-  },
-  "isLoggedIn": true,
-  "isOwnerView": true,
+  "users": [
+    {
+      "id": "usr-owner-1",
+      "name": "Md ABID HASAN SIFAT",
+      "phone": "+880 1911-554433",
+      "email": "sifat.owner@gulshantower.com",
+      "role": "owner",
+      "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=60",
+      "nid": "19652692610000111",
+      "nidVerified": true,
+      "buildingName": "Gulshan Luxury Tower Portfolio",
+      "occupation": "Property Managing Director & Investor"
+    },
+    {
+      "id": "usr-tenant-2b",
+      "name": "Tanvir Ahmed",
+      "phone": "+880 1711-234567",
+      "email": "tanvir.ahmed@example.com",
+      "role": "tenant",
+      "avatar": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=60",
+      "nid": "19882692610000452",
+      "nidVerified": true,
+      "unitNumber": "2B",
+      "buildingName": "Gulshan Luxury Tower",
+      "leaseStartDate": "Jan 1, 2026",
+      "leaseEndDate": "Dec 31, 2026",
+      "rentAmount": 28000,
+      "securityDeposit": 56000,
+      "parkingSlot": "P-14",
+      "occupation": "Senior Software Architect"
+    }
+  ],
   "rentCollected": 141000,
   "rentTotal": 197000,
   "rooftopLocked": true,

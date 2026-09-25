@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import fs from 'fs';
 import path from 'path';
+import crypto from 'crypto';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -10,13 +11,67 @@ const DB_PATH = path.join(__dirname, 'data', 'db.json');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+const JWT_SECRET = process.env.JWT_SECRET || 'rentconnect-super-secure-dhaka-secret-2026';
 
 app.use(cors());
 app.use(express.json());
 
-// Initial Seed Database
-const getInitialState = () => ({
-  currentUser: {
+// Token helpers (HMAC-SHA256 stateless tokens using built-in node:crypto)
+function createAuthToken(payload) {
+  const header = Buffer.from(JSON.stringify({ alg: 'HS256', typ: 'JWT' })).toString('base64url');
+  const exp = Math.floor(Date.now() / 1000) + (7 * 24 * 60 * 60); // 7 days
+  const fullPayload = Buffer.from(JSON.stringify({ ...payload, exp })).toString('base64url');
+  const signature = crypto.createHmac('sha256', JWT_SECRET)
+    .update(`${header}.${fullPayload}`)
+    .digest('base64url');
+  return `${header}.${fullPayload}.${signature}`;
+}
+
+function verifyAuthToken(token) {
+  if (!token || typeof token !== 'string') return null;
+  const parts = token.split('.');
+  if (parts.length !== 3) return null;
+  const [header, payload, signature] = parts;
+  const expectedSig = crypto.createHmac('sha256', JWT_SECRET)
+    .update(`${header}.${payload}`)
+    .digest('base64url');
+  if (signature !== expectedSig) return null;
+  try {
+    const data = JSON.parse(Buffer.from(payload, 'base64url').toString('utf8'));
+    if (data.exp && data.exp < Math.floor(Date.now() / 1000)) return null;
+    return data;
+  } catch {
+    return null;
+  }
+}
+
+// Authentication Middleware
+app.use((req, res, next) => {
+  const authHeader = req.headers.authorization;
+  if (authHeader && authHeader.startsWith('Bearer ')) {
+    req.user = verifyAuthToken(authHeader.slice(7).trim());
+  } else {
+    req.user = null;
+  }
+  next();
+});
+
+const requireAuth = (req, res, next) => {
+  if (!req.user) {
+    return res.status(401).json({ error: 'Authentication required' });
+  }
+  next();
+};
+
+const requireOwner = (req, res, next) => {
+  if (req.user && req.user.role !== 'owner') {
+    return res.status(403).json({ error: 'Forbidden: House Owner privileges required' });
+  }
+  next();
+};
+
+const DEFAULT_USERS = [
+  {
     id: 'usr-owner-1',
     name: 'Md ABID HASAN SIFAT',
     phone: '+880 1911-554433',
@@ -28,8 +83,29 @@ const getInitialState = () => ({
     buildingName: 'Gulshan Luxury Tower Portfolio',
     occupation: 'Property Managing Director & Investor'
   },
-  isLoggedIn: true,
-  isOwnerView: true,
+  {
+    id: 'usr-tenant-2b',
+    name: 'Tanvir Ahmed',
+    phone: '+880 1711-234567',
+    email: 'tanvir.ahmed@example.com',
+    role: 'tenant',
+    avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=60',
+    nid: '19882692610000452',
+    nidVerified: true,
+    unitNumber: '2B',
+    buildingName: 'Gulshan Luxury Tower',
+    leaseStartDate: 'Jan 1, 2026',
+    leaseEndDate: 'Dec 31, 2026',
+    rentAmount: 28000,
+    securityDeposit: 56000,
+    parkingSlot: 'P-14',
+    occupation: 'Senior Software Architect'
+  }
+];
+
+// Initial Seed Database
+const getInitialState = () => ({
+  users: DEFAULT_USERS,
   rentCollected: 85000,
   rentTotal: 142000,
   rooftopLocked: true,
@@ -114,7 +190,9 @@ if (fs.existsSync(DB_PATH)) {
 
 const saveDb = () => {
   try {
-    fs.writeFileSync(DB_PATH, JSON.stringify(db, null, 2), 'utf8');
+    const tempPath = `${DB_PATH}.tmp`;
+    fs.writeFileSync(tempPath, JSON.stringify(db, null, 2), 'utf8');
+    fs.renameSync(tempPath, DB_PATH);
   } catch (err) {
     console.error('[RentConnect DB] Error persisting database:', err);
   }
@@ -141,77 +219,59 @@ app.get('/api/health', (req, res) => {
 
 // 2. Full State
 app.get('/api/state', (req, res) => {
-  res.json(db);
+  res.json({
+    ...db,
+    currentUser: req.user || DEFAULT_USERS[0],
+    isLoggedIn: Boolean(req.user),
+    isOwnerView: req.user ? req.user.role === 'owner' : true
+  });
 });
 
 // 3. Auth
 app.post('/api/auth/login', (req, res) => {
-  const { role, method } = req.body;
-  if (role === 'owner') {
-    db.isLoggedIn = true;
-    db.isOwnerView = true;
-    db.currentUser = {
-      id: 'usr-owner-1',
-      name: 'Md ABID HASAN SIFAT',
-      phone: '+880 1911-554433',
-      email: 'sifat.owner@gulshantower.com',
-      role: 'owner',
-      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=60',
-      nid: '19652692610000111',
-      nidVerified: true,
-      buildingName: 'Gulshan Luxury Tower Portfolio',
-      occupation: 'Property Managing Director & Investor'
-    };
-  } else {
-    db.isLoggedIn = true;
-    db.isOwnerView = false;
-    db.currentUser = {
-      id: 'usr-tenant-2b',
-      name: 'Tanvir Ahmed',
-      phone: '+880 1711-234567',
-      email: 'tanvir.ahmed@example.com',
-      role: 'tenant',
-      avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=60',
-      nid: '19882692610000452',
-      nidVerified: true,
-      unitNumber: '2B',
-      buildingName: 'Gulshan Luxury Tower',
-      leaseStartDate: 'Jan 1, 2026',
-      leaseEndDate: 'Dec 31, 2026',
-      rentAmount: 28000,
-      securityDeposit: 56000,
-      parkingSlot: 'P-14',
-      occupation: 'Senior Software Architect'
-    };
-  }
-  saveDb();
-  res.json({ success: true, user: db.currentUser, isOwnerView: db.isOwnerView });
+  const { role, identifier } = req.body;
+  const user = (role === 'owner') ? DEFAULT_USERS[0] : DEFAULT_USERS[1];
+  const token = createAuthToken({
+    id: user.id,
+    role: user.role,
+    name: user.name,
+    email: user.email,
+    unitNumber: user.unitNumber
+  });
+  res.json({ success: true, token, user, isOwnerView: (user.role === 'owner') });
 });
 
 app.post('/api/auth/register', (req, res) => {
   const { name, phone, email, nid, role, unit } = req.body;
-  const user = {
+  const userRole = role === 'owner' ? 'owner' : 'tenant';
+  const newUser = {
     id: `usr-${Date.now()}`,
-    name: name || 'Registered Resident',
+    name: name || (userRole === 'owner' ? 'Md ABID HASAN SIFAT' : 'Tanvir Ahmed'),
     phone: phone || '+880 1700-000000',
     email: email || 'resident@example.com',
     nid: nid || '1990000000000',
     nidVerified: true,
-    role: role || 'tenant',
+    role: userRole,
     unitNumber: unit || '2B',
     avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150',
     buildingName: 'Gulshan Luxury Tower'
   };
-  db.currentUser = user;
-  db.isLoggedIn = true;
-  db.isOwnerView = (role === 'owner');
+  if (!db.users) db.users = [...DEFAULT_USERS];
+  db.users.push(newUser);
   saveDb();
-  res.json({ success: true, user, message: 'Account registered with verified NID.' });
+
+  const token = createAuthToken({
+    id: newUser.id,
+    role: newUser.role,
+    name: newUser.name,
+    email: newUser.email,
+    unitNumber: newUser.unitNumber
+  });
+
+  res.json({ success: true, token, user: newUser, message: 'Account registered with verified NID.' });
 });
 
 app.post('/api/auth/logout', (req, res) => {
-  db.isLoggedIn = false;
-  saveDb();
   res.json({ success: true, message: 'Logged out successfully.' });
 });
 
@@ -220,7 +280,7 @@ app.get('/api/units', (req, res) => {
   res.json(db.units);
 });
 
-app.post('/api/units', (req, res) => {
+app.post('/api/units', requireOwner, (req, res) => {
   const { unitNumber, floor, rentAmount, tenantName, status, sqft, bedrooms, bathrooms, amenities, photos } = req.body;
   const unitNo = (unitNumber || '4A').toUpperCase();
   const newUnit = {
@@ -262,7 +322,7 @@ app.post('/api/units', (req, res) => {
   res.status(201).json({ success: true, unit: newUnit });
 });
 
-app.patch('/api/units/:id/status', (req, res) => {
+app.patch('/api/units/:id/status', requireOwner, (req, res) => {
   const { status } = req.body;
   const param = String(req.params.id).toLowerCase();
   const unit = db.units.find(u => u.id.toLowerCase() === param || u.unitNumber.toLowerCase() === param);
@@ -382,7 +442,7 @@ app.get('/api/security', (req, res) => {
   });
 });
 
-app.post('/api/security/rooftop/toggle', (req, res) => {
+app.post('/api/security/rooftop/toggle', requireOwner, (req, res) => {
   db.rooftopLocked = !db.rooftopLocked;
   db.recentActivities.unshift({
     id: `act-${Date.now()}`,
@@ -467,7 +527,7 @@ app.get('/api/broadcasts', (req, res) => {
   res.json(db.broadcasts);
 });
 
-app.post('/api/broadcasts', (req, res) => {
+app.post('/api/broadcasts', requireOwner, (req, res) => {
   const { title, body, category, priority } = req.body;
   const newNotice = {
     id: `bc-${Date.now()}`,

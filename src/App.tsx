@@ -36,6 +36,8 @@ import { RentPayModal } from './components/RentPayModal';
 import { DigitalGatePassModal } from './components/DigitalGatePassModal';
 import { DmpFormModal } from './components/DmpFormModal';
 import { AddFlatModal } from './components/AddFlatModal';
+import { PublishBroadcastModal } from './components/PublishBroadcastModal';
+import { DispatchProModal } from './components/DispatchProModal';
 
 // Secondary Views
 import { MarketplaceView } from './components/MarketplaceView';
@@ -464,6 +466,31 @@ export const App: React.FC = () => {
         onSuccess={(unit) => {
           showToast(`🎉 Flat ${unit.unitNumber} (${unit.status === 'vacant' ? (lang === 'bn' ? 'খালি' : 'Vacant') : (lang === 'bn' ? 'ভাড়া দেওয়া' : 'Occupied')}) published to portfolio!`);
         }}
+      />
+
+      {/* Publish Notice Modal */}
+      <PublishBroadcastModal
+        isOpen={showBroadcastModal}
+        onClose={() => setShowBroadcastModal(false)}
+        onSuccess={(title) => {
+          showToast(lang === 'bn' ? `📢 নোটিশ প্রকাশিত হয়েছে: ${title}` : `📢 Notice published: ${title}`);
+        }}
+        lang={lang}
+      />
+
+      {/* Dispatch Pro / Report Issue Modal */}
+      <DispatchProModal
+        isOpen={showDispatchModal || showTicketModal}
+        onClose={() => {
+          setShowDispatchModal(false);
+          setShowTicketModal(false);
+        }}
+        isOwner={showDispatchModal}
+        initialUnit={isOwnerView ? '2B' : (currentUser.unitNumber || '2B')}
+        onSuccess={(trade, unit) => {
+          showToast(lang === 'bn' ? `🛠️ ${trade} মিস্ত্রি নির্ধারিত হয়েছে (ফ্ল্যাট ${unit})` : `🛠️ ${trade} Pro dispatched to Flat ${unit}`);
+        }}
+        lang={lang}
       />
 
     </div>
