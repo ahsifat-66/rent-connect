@@ -111,7 +111,7 @@ export const TenantChatWithOwnerView: React.FC<TenantChatWithOwnerViewProps> = (
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-140px)] min-h-[560px] max-w-lg mx-auto bg-white dark:bg-[#161B22] rounded-[32px] border border-slate-100 dark:border-slate-800 shadow-xl overflow-hidden animate-fade-in">
+    <div className="flex flex-col h-[calc(100vh-140px)] md:h-[calc(100vh-160px)] min-h-[560px] w-full max-w-5xl mx-auto bg-white dark:bg-[#161B22] rounded-[32px] border border-slate-100 dark:border-slate-800 shadow-xl overflow-hidden animate-fade-in">
       
       {/* 1. Owner Profile Header */}
       <div className="p-4 bg-gradient-to-r from-[#121632] via-[#1E2348] to-[#121632] text-white flex items-center justify-between shadow-md shrink-0">

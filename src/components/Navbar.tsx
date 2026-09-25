@@ -53,7 +53,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <header className="sticky top-0 z-40 backdrop-blur-md bg-white/95 dark:bg-[#161B22]/95 border-b border-slate-200/80 dark:border-slate-800 px-3 sm:px-6 py-2 transition-colors duration-200">
-      <div className="max-w-md sm:max-w-6xl mx-auto flex items-center justify-between gap-2">
+      <div className="max-w-7xl mx-auto flex items-center justify-between gap-2 sm:gap-4">
         
         {/* Brand Logo & Role Pill */}
         <div className="flex items-center gap-2">
@@ -89,12 +89,12 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
 
         {/* Desktop Quick Nav */}
-        <nav className="hidden md:flex items-center gap-1 bg-slate-100 dark:bg-slate-800/80 p-1 rounded-2xl border border-slate-200/60 dark:border-slate-700">
+        <nav className="hidden md:flex items-center gap-0.5 lg:gap-1 bg-slate-100 dark:bg-slate-800/80 p-1 rounded-2xl border border-slate-200/60 dark:border-slate-700 overflow-x-auto scrollbar-none">
           {navItems.map(tab => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`px-2.5 py-1.5 rounded-xl text-xs font-extrabold transition-all ${
+              className={`px-2 lg:px-2.5 py-1.5 rounded-xl text-[11px] lg:text-xs font-extrabold whitespace-nowrap transition-all ${
                 activeTab === tab.id
                   ? 'bg-white dark:bg-[#161B22] text-[#111827] dark:text-white shadow-sm scale-105'
                   : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'

@@ -47,7 +47,7 @@ export const MarketplaceView: React.FC<MarketplaceViewProps> = ({
   };
 
   return (
-    <div className="space-y-5 animate-fade-in max-w-4xl mx-auto pb-8">
+    <div className="space-y-6 animate-fade-in w-full max-w-7xl mx-auto pb-8">
       
       {/* 1. Header with Title and Add Button */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">

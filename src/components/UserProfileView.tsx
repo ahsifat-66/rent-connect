@@ -38,7 +38,7 @@ export const UserProfileView: React.FC<UserProfileViewProps> = ({
   };
 
   return (
-    <div className="space-y-5 animate-fade-in max-w-lg mx-auto pb-6">
+    <div className="space-y-6 animate-fade-in w-full max-w-5xl mx-auto pb-6">
       
       {/* 1. Header Navigation */}
       <div className="flex items-center justify-between">
@@ -180,7 +180,10 @@ export const UserProfileView: React.FC<UserProfileViewProps> = ({
         </form>
       ) : (
         /* 4. Role-Specific Information Overview */
-        <div className="space-y-4">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          
+          {/* Left Column: Tenancy/Portfolio & Emergency Contacts */}
+          <div className="lg:col-span-6 space-y-6">
           
           {/* Tenant Information Cards */}
           {!isOwner && (
@@ -280,6 +283,10 @@ export const UserProfileView: React.FC<UserProfileViewProps> = ({
               </div>
             </>
           )}
+          </div>
+
+          {/* Right Column: Documents, Settings & Sign Out */}
+          <div className="lg:col-span-6 space-y-6">
 
           {/* 5. Document Vault Downloads */}
           <div className="p-5 rounded-[28px] bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 shadow-sm space-y-3">
@@ -363,6 +370,7 @@ export const UserProfileView: React.FC<UserProfileViewProps> = ({
             <span>🚪</span>
             <span>{t('logout', lang)} {t('brandName', lang)}</span>
           </button>
+          </div>
 
         </div>
       )}

@@ -134,7 +134,7 @@ export const TenantHireProView: React.FC<TenantHireProViewProps> = ({
   );
 
   return (
-    <div className="space-y-5 animate-fade-in max-w-lg mx-auto pb-6">
+    <div className="space-y-6 animate-fade-in w-full max-w-6xl mx-auto pb-6">
       
       {/* 1. Header with Back Button */}
       <div className="flex items-center gap-3">
@@ -183,7 +183,7 @@ export const TenantHireProView: React.FC<TenantHireProViewProps> = ({
             </span>
           </h3>
 
-          <div className="space-y-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {activeDispatches.map(item => (
               <div
                 key={item.id}
@@ -222,7 +222,7 @@ export const TenantHireProView: React.FC<TenantHireProViewProps> = ({
           <span className="text-xs text-slate-400 font-medium">Standard Gulshan Rates</span>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {serviceCategories.map(cat => (
             <div
               key={cat.id}

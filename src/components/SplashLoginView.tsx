@@ -108,7 +108,7 @@ export const SplashLoginView: React.FC<SplashLoginViewProps> = ({
       <div className="absolute bottom-1/4 left-1/2 -translate-x-1/2 w-96 h-96 bg-indigo-600/10 dark:bg-indigo-600/20 rounded-full blur-3xl pointer-events-none"></div>
 
       {/* Top Bar with Language Toggle & Theme Toggle */}
-      <div className="w-full max-w-md flex items-center justify-between z-20">
+      <div className="w-full max-w-6xl flex items-center justify-between z-20">
         <div className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 font-bold">
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
           <span>{t('securedGateway', lang)}</span>
@@ -165,8 +165,8 @@ export const SplashLoginView: React.FC<SplashLoginViewProps> = ({
         </div>
       </div>
 
-      {/* Top Branding Section */}
-      <div className="flex flex-col items-center text-center pt-2 sm:pt-3 z-10">
+      {/* Top Branding Section (Mobile Only - Desktop has left hero column) */}
+      <div className="flex flex-col items-center text-center pt-2 sm:pt-3 z-10 lg:hidden">
         <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-3xl bg-white dark:bg-[#1A1D3D] border border-slate-200 dark:border-slate-700/50 flex items-center justify-center shadow-lg dark:shadow-2xl mb-2 text-[#111827] dark:text-white">
           <svg className="w-8 h-8 sm:w-9 sm:h-9 stroke-current fill-none stroke-2" viewBox="0 0 24 24">
             <rect x="4" y="2" width="16" height="20" rx="3" strokeLinecap="round" strokeLinejoin="round"/>
@@ -185,8 +185,103 @@ export const SplashLoginView: React.FC<SplashLoginViewProps> = ({
         </p>
       </div>
 
-      {/* Central Auth Container */}
-      <div className="w-full max-w-md my-3 sm:my-4 z-10 space-y-3.5">
+      {/* Central Content Area: Desktop Split-Screen, Mobile Single-Column */}
+      <div className="w-full max-w-6xl my-auto py-4 sm:py-6 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center z-10">
+        
+        {/* Desktop Left Showcase Column */}
+        <div className="hidden lg:flex lg:col-span-7 flex-col justify-center space-y-7 pr-4">
+          <div className="flex items-center gap-3.5">
+            <div className="w-14 h-14 rounded-2xl bg-white dark:bg-[#1A1D3D] border border-slate-200 dark:border-slate-700/60 flex items-center justify-center shadow-lg text-[#111827] dark:text-white">
+              <svg className="w-8 h-8 stroke-current fill-none stroke-2" viewBox="0 0 24 24">
+                <rect x="4" y="2" width="16" height="20" rx="3" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M9 6h6M9 10h6M9 14h6M9 18h6" strokeLinecap="round"/>
+                <rect x="8" y="2" width="8" height="4" rx="1"/>
+              </svg>
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="text-2xl font-black tracking-[0.2em] text-[#111827] dark:text-white uppercase">RENT</span>
+                <span className="text-2xl font-black tracking-[0.25em] text-[#00B665] uppercase">CONNECT</span>
+              </div>
+              <p className="text-xs text-slate-500 dark:text-slate-400 font-bold">
+                Dhaka High-Rise Property Operating System
+              </p>
+            </div>
+          </div>
+
+          <div className="space-y-3">
+            <h2 className="text-3xl xl:text-4xl font-extrabold tracking-tight text-[#111827] dark:text-white leading-tight">
+              {lang === 'bn' 
+                ? 'স্মার্ট আবাসন ও প্রোপার্টি অটোমেশনের পূর্ণাঙ্গ প্ল্যাটফর্ম' 
+                : 'Intelligent Real Estate Automation for Modern Bangladesh'}
+            </h2>
+            <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed max-w-xl">
+              {lang === 'bn'
+                ? 'আইওটি সাবমিটারিং, স্মার্ট ডোর এক্সেস, ডিজিটাল ভাড়া আদায় এবং ডিএমপি পুলিশ ভেরিফিকেশন সহ আধুনিক ফ্ল্যাট পরিচালনার অত্যাধুনিক সিস্টেম।'
+                : 'Unified telemetry for DWASA water flow, DESCO prepaid submeters, facial recognition gate security, automated rent escrow, and DMP citizen registry.'}
+            </p>
+          </div>
+
+          {/* Feature Highlights Grid */}
+          <div className="grid grid-cols-2 gap-3.5 max-w-xl">
+            <div className="p-4 rounded-2xl bg-white/80 dark:bg-[#1A1D3D]/70 border border-slate-200/80 dark:border-slate-700/50 shadow-sm backdrop-blur-sm space-y-1">
+              <div className="flex items-center gap-2 text-[#00B665] font-black text-sm">
+                <span>💧</span> DWASA & DESCO IoT
+              </div>
+              <p className="text-xs text-slate-500 dark:text-slate-400 leading-snug">
+                Live submeter flow rates, peak kWh alerts & leak detection.
+              </p>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-white/80 dark:bg-[#1A1D3D]/70 border border-slate-200/80 dark:border-slate-700/50 shadow-sm backdrop-blur-sm space-y-1">
+              <div className="flex items-center gap-2 text-sky-500 font-black text-sm">
+                <span>🛡️</span> DMP Citizen Auth
+              </div>
+              <p className="text-xs text-slate-500 dark:text-slate-400 leading-snug">
+                Automated tenant police verification with NID barcode sync.
+              </p>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-white/80 dark:bg-[#1A1D3D]/70 border border-slate-200/80 dark:border-slate-700/50 shadow-sm backdrop-blur-sm space-y-1">
+              <div className="flex items-center gap-2 text-amber-500 font-black text-sm">
+                <span>৳</span> Instant Rent Escrow
+              </div>
+              <p className="text-xs text-slate-500 dark:text-slate-400 leading-snug">
+                bKash, Nagad, Visa & bank transfer with instant automated receipts.
+              </p>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-white/80 dark:bg-[#1A1D3D]/70 border border-slate-200/80 dark:border-slate-700/50 shadow-sm backdrop-blur-sm space-y-1">
+              <div className="flex items-center gap-2 text-purple-500 font-black text-sm">
+                <span>🚪</span> Contactless Gates
+              </div>
+              <p className="text-xs text-slate-500 dark:text-slate-400 leading-snug">
+                QR visitor passes, guard desk intercom & rooftop electronic locks.
+              </p>
+            </div>
+          </div>
+
+          {/* Verified Stats Bar */}
+          <div className="flex items-center gap-6 pt-2 border-t border-slate-200/60 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400">
+            <div>
+              <span className="font-extrabold text-[#111827] dark:text-white font-mono text-sm block">99.8%</span>
+              <span>Collection Rate</span>
+            </div>
+            <div className="w-px h-6 bg-slate-300 dark:bg-slate-700"></div>
+            <div>
+              <span className="font-extrabold text-[#111827] dark:text-white font-mono text-sm block">&lt; 3 Sec</span>
+              <span>Gate Pass Issuance</span>
+            </div>
+            <div className="w-px h-6 bg-slate-300 dark:bg-slate-700"></div>
+            <div>
+              <span className="font-extrabold text-emerald-500 font-mono text-sm block">Bank-Grade</span>
+              <span>256-bit TLS Protected</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Central Auth Container */}
+        <div className="w-full max-w-md mx-auto lg:max-w-none lg:col-span-5 space-y-3.5">
         
         {/* ========================================================================= */}
         {/* --- 1. PROMINENT 1-CLICK DEMO QUICK-ACTION BUTTONS --- */}
@@ -566,10 +661,11 @@ export const SplashLoginView: React.FC<SplashLoginViewProps> = ({
           </form>
         )}
 
+        </div>
       </div>
 
       {/* Footer Security Notes */}
-      <div className="text-center space-y-0.5 pb-1 z-10">
+      <div className="w-full max-w-6xl text-center space-y-0.5 pb-1 z-10">
         <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
           {t('footerSecurity', lang)}
         </p>

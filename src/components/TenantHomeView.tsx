@@ -95,7 +95,7 @@ export const TenantHomeView: React.FC<TenantHomeViewProps> = ({
   const selectedData = tenantTelemetry7Days[selectedDayIndex];
 
   return (
-    <div className="space-y-5 animate-fade-in max-w-lg mx-auto pb-6">
+    <div className="space-y-6 animate-fade-in w-full pb-6">
       
       {/* 1. Header with Greeting & Location */}
       <div className="flex items-center justify-between">
@@ -143,543 +143,556 @@ export const TenantHomeView: React.FC<TenantHomeViewProps> = ({
         </span>
       </div>
 
-      {/* 3. Essential Resident Services Grid (Hire Pro, Marketplace, Chat to Owner) */}
-      <div className="space-y-3">
-        <div className="flex items-center justify-between px-1">
-          <h3 className="font-extrabold text-base text-[#111827] dark:text-white">
-            {t('residentServicesHub', lang)}
-          </h3>
-          <span className="text-xs text-slate-400 font-medium">{t('quickAccess', lang)}</span>
-        </div>
+      {/* Main Grid: Desktop Dual-Column Split */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
 
-        <div className="grid grid-cols-3 gap-2.5 sm:gap-3">
-          
-          {/* 1. Hire Pro */}
-          <div
-            onClick={() => onNavigateTab('hirepro')}
-            className="p-3.5 sm:p-4 rounded-[24px] bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 hover:border-emerald-500/40 shadow-sm hover:shadow-md cursor-pointer active:scale-95 transition-all text-center flex flex-col items-center justify-between space-y-2 group">
-            <div className="w-11 h-11 rounded-2xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
-              🛠️
-            </div>
-            <div>
-              <h4 className="font-extrabold text-xs sm:text-sm text-[#111827] dark:text-white leading-tight">
-                {t('navHirePro', lang)}
-              </h4>
-              <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold block mt-0.5">
-                {t('acPlumber', lang)}
+        {/* Left Column (Desktop 7 cols): IoT Telemetry Analytics + Notices */}
+        <div className="lg:col-span-7 space-y-6 order-2 lg:order-1">
+          {/* 6. FULL REALISTIC IOT UTILITIES ANALYTICS */}
+          <div className="space-y-4">
+            
+            {/* Section Header */}
+            <div className="flex items-center justify-between px-1">
+              <div>
+                <h3 className="font-extrabold text-base text-[#111827] dark:text-white">
+                  {t('telemetryAnalytics', lang)}
+                </h3>
+                <p className="text-xs text-slate-400">
+                  {t('telemetrySub', lang)}
+                </p>
+              </div>
+              <span className="flex items-center gap-1 text-emerald-600 font-bold text-xs">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                {t('online', lang)}
               </span>
             </div>
-          </div>
 
-          {/* 2. Marketplace */}
-          <div
-            onClick={() => onNavigateTab('marketplace')}
-            className="p-3.5 sm:p-4 rounded-[24px] bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 hover:border-emerald-500/40 shadow-sm hover:shadow-md cursor-pointer active:scale-95 transition-all text-center flex flex-col items-center justify-between space-y-2 group">
-            <div className="w-11 h-11 rounded-2xl bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
-              🛍️
-            </div>
-            <div>
-              <h4 className="font-extrabold text-xs sm:text-sm text-[#111827] dark:text-white leading-tight">
-                {t('marketplace', lang)}
-              </h4>
-              <span className="text-[10px] text-amber-600 dark:text-amber-400 font-bold block mt-0.5">
-                {t('buySellBay', lang)}
-              </span>
-            </div>
-          </div>
-
-          {/* 3. Chat to Owner */}
-          <div
-            onClick={() => onNavigateTab('chat')}
-            className="p-3.5 sm:p-4 rounded-[24px] bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 hover:border-emerald-500/40 shadow-sm hover:shadow-md cursor-pointer active:scale-95 transition-all text-center flex flex-col items-center justify-between space-y-2 group">
-            <div className="w-11 h-11 rounded-2xl bg-sky-50 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform relative">
-              💬
-              <span className="absolute top-1 right-1 w-2.5 h-2.5 rounded-full bg-emerald-500 border border-white dark:border-[#161B22]"></span>
-            </div>
-            <div>
-              <h4 className="font-extrabold text-xs sm:text-sm text-[#111827] dark:text-white leading-tight">
-                {t('chatOwner', lang)}
-              </h4>
-              <span className="text-[10px] text-sky-600 dark:text-sky-400 font-bold block mt-0.5">
-                {t('directLine', lang)}
-              </span>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      {/* 4. Direct Line to Landlord Banner */}
-      <div className="rounded-[28px] p-4 sm:p-5 bg-gradient-to-r from-[#121632] via-[#1E2348] to-[#121632] text-white border border-slate-700 shadow-lg flex items-center justify-between gap-3">
-        <div className="flex items-center gap-3 min-w-0">
-          <div className="relative w-11 h-11 rounded-2xl overflow-hidden ring-2 ring-emerald-500 shrink-0">
-            <img
-              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=60"
-              alt="Owner"
-              className="w-full h-full object-cover"
-            />
-            <span className="absolute bottom-0 right-0 w-3 h-3 bg-[#00B665] border-2 border-[#121632] rounded-full"></span>
-          </div>
-          <div className="min-w-0">
-            <div className="flex items-center gap-1.5">
-              <h4 className="font-extrabold text-xs sm:text-sm truncate">
-                Md ABID HASAN SIFAT
-              </h4>
-              <span className="text-[9px] bg-amber-500/20 text-amber-300 font-bold px-1.5 py-0.2 rounded">
-                {lang === 'bn' ? 'বাড়িওয়ালা' : 'Owner'}
-              </span>
-            </div>
-            <p className="text-[11px] text-slate-300 truncate mt-0.5">
-              {t('landlordOnline', lang)}
-            </p>
-          </div>
-        </div>
-
-        <button
-          onClick={() => onNavigateTab('chat')}
-          className="px-3.5 py-2 rounded-xl bg-[#00B665] hover:bg-[#009E54] active:scale-95 text-white font-black text-xs uppercase tracking-wider shadow shrink-0 transition-all">
-          {t('chatNow', lang)}
-        </button>
-      </div>
-
-      {/* 5. Building Notices Horizontal Carousel */}
-      <div className="space-y-3">
-        <div className="flex items-center justify-between px-1">
-          <h3 className="font-extrabold text-base text-[#111827] dark:text-white">
-            {t('buildingNotices', lang)}
-          </h3>
-          <span className="text-xs text-slate-400 font-medium">{t('swipeNotice', lang)}</span>
-        </div>
-
-        <div className="flex gap-3.5 overflow-x-auto pb-2 scrollbar-none snap-x">
-          
-          {/* Notice Card 1 */}
-          <div className="min-w-[240px] sm:min-w-[260px] rounded-[24px] p-4 bg-gradient-to-br from-[#121632] to-[#1E2348] text-white shadow-md flex flex-col justify-between space-y-3 shrink-0 snap-start">
-            <span className="self-start text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/30">
-              MAINTENANCE
-            </span>
-            <p className="text-xs font-semibold leading-relaxed text-slate-100">
-              Elevator service scheduled for Sunday 10 AM
-            </p>
-          </div>
-
-          {/* Notice Card 2 */}
-          <div className="min-w-[240px] sm:min-w-[260px] rounded-[24px] p-4 bg-gradient-to-br from-[#121632] to-[#1E2348] text-white shadow-md flex flex-col justify-between space-y-3 shrink-0 snap-start">
-            <span className="self-start text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
-              SECURITY
-            </span>
-            <p className="text-xs font-semibold leading-relaxed text-slate-100">
-              New facial recognition gate sensors live at Lobby
-            </p>
-          </div>
-
-          {/* Notice Card 3 */}
-          <div className="min-w-[240px] sm:min-w-[260px] rounded-[24px] p-4 bg-gradient-to-br from-[#121632] to-[#1E2348] text-white shadow-md flex flex-col justify-between space-y-3 shrink-0 snap-start">
-            <span className="self-start text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-sky-500/20 text-sky-300 border border-sky-400/30">
-              COMMUNITY
-            </span>
-            <p className="text-xs font-semibold leading-relaxed text-slate-100">
-              Rooftop garden open for evening resident walks
-            </p>
-          </div>
-
-        </div>
-      </div>
-
-      {/* 6. FULL REALISTIC IOT UTILITIES ANALYTICS (Matches Owner View) */}
-      <div className="space-y-4">
-        
-        {/* Section Header */}
-        <div className="flex items-center justify-between px-1">
-          <div>
-            <h3 className="font-extrabold text-base text-[#111827] dark:text-white">
-              {t('telemetryAnalytics', lang)}
-            </h3>
-            <p className="text-xs text-slate-400">
-              {t('telemetrySub', lang)}
-            </p>
-          </div>
-          <span className="flex items-center gap-1 text-emerald-600 font-bold text-xs">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            {t('online', lang)}
-          </span>
-        </div>
-
-        {/* Live Infrastructure Pulse Status Bar */}
-        <div className="p-3 rounded-2xl bg-white dark:bg-[#161B22] border border-slate-200 dark:border-slate-800 shadow-sm grid grid-cols-3 gap-2 text-[11px]">
-          <div className="p-2 rounded-xl bg-sky-50 dark:bg-sky-950/40 border border-sky-100 dark:border-sky-900/50">
-            <span className="text-sky-700 dark:text-sky-300 font-bold block">💧 DWASA Water</span>
-            <span className="font-mono text-[10px] text-slate-600 dark:text-slate-400">12.2 L/min · 2.8 bar</span>
-          </div>
-          <div className="p-2 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-100 dark:border-amber-900/50">
-            <span className="text-amber-700 dark:text-amber-300 font-bold block">⚡ DESCO Grid</span>
-            <span className="font-mono text-[10px] text-slate-600 dark:text-slate-400">228.1V · PF 0.99</span>
-          </div>
-          <div className="p-2 rounded-xl bg-purple-50 dark:bg-purple-950/40 border border-purple-100 dark:border-purple-900/50">
-            <span className="text-purple-700 dark:text-purple-300 font-bold block">🔥 Titas Gas</span>
-            <span className="font-mono text-[10px] text-slate-600 dark:text-slate-400">0.52 PSI Normal</span>
-          </div>
-        </div>
-
-        {/* Filter Segmented Control */}
-        <div className="flex items-center justify-between p-1 rounded-2xl bg-white dark:bg-[#161B22] border border-slate-200 dark:border-slate-800 shadow-sm">
-          <button
-            onClick={() => setUtilityFilter('both')}
-            className={`flex-1 py-2 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-1 ${
-              utilityFilter === 'both'
-                ? 'bg-[#121632] text-white shadow-sm ring-1 ring-white/10'
-                : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
-            }`}>
-            <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-[#00B665] to-[#E58325]"></span>
-            {t('bothLines', lang)}
-          </button>
-
-          <button
-            onClick={() => setUtilityFilter('water')}
-            className={`flex-1 py-2 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-1 ${
-              utilityFilter === 'water'
-                ? 'bg-[#00B665] text-white shadow-sm'
-                : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
-            }`}>
-            <span className="w-1.5 h-1.5 rounded-full bg-sky-400"></span>
-            {t('waterL', lang)}
-          </button>
-
-          <button
-            onClick={() => setUtilityFilter('electricity')}
-            className={`flex-1 py-2 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-1 ${
-              utilityFilter === 'electricity'
-                ? 'bg-[#E58325] text-white shadow-sm'
-                : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
-            }`}>
-            <span className="w-1.5 h-1.5 rounded-full bg-amber-300"></span>
-            {t('elecKwh', lang)}
-          </button>
-        </div>
-
-        {/* Dual-Line Weekly Analytics Chart Card */}
-        <div className="rounded-[28px] p-5 sm:p-6 bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 shadow-[0_8px_30px_rgb(0,0,0,0.04)] space-y-4">
-          
-          {/* Header & Legends */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-            <div>
-              <h3 className="font-extrabold text-base text-[#111827] dark:text-white">
-                {t('telemetryTrends', lang)} · Flat {user.unitNumber || '2B'}
-              </h3>
-              <p className="text-xs text-slate-400">
-                {t('weeklyComparison', lang)}
-              </p>
+            {/* Live Infrastructure Pulse Status Bar */}
+            <div className="p-3 rounded-2xl bg-white dark:bg-[#161B22] border border-slate-200 dark:border-slate-800 shadow-sm grid grid-cols-3 gap-2 text-[11px]">
+              <div className="p-2 rounded-xl bg-sky-50 dark:bg-sky-950/40 border border-sky-100 dark:border-sky-900/50">
+                <span className="text-sky-700 dark:text-sky-300 font-bold block">💧 DWASA Water</span>
+                <span className="font-mono text-[10px] text-slate-600 dark:text-slate-400">12.2 L/min · 2.8 bar</span>
+              </div>
+              <div className="p-2 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-100 dark:border-amber-900/50">
+                <span className="text-amber-700 dark:text-amber-300 font-bold block">⚡ DESCO Grid</span>
+                <span className="font-mono text-[10px] text-slate-600 dark:text-slate-400">228.1V · PF 0.99</span>
+              </div>
+              <div className="p-2 rounded-xl bg-purple-50 dark:bg-purple-950/40 border border-purple-100 dark:border-purple-900/50">
+                <span className="text-purple-700 dark:text-purple-300 font-bold block">🔥 Titas Gas</span>
+                <span className="font-mono text-[10px] text-slate-600 dark:text-slate-400">0.52 PSI Normal</span>
+              </div>
             </div>
 
-            <div className="flex items-center gap-2 text-xs font-bold font-mono">
-              {(utilityFilter === 'both' || utilityFilter === 'water') && (
-                <div className="flex items-center gap-1 px-2 py-0.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 text-[#00B665] dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800/50 text-[10px]">
-                  <span className="w-2 h-1 rounded-full bg-[#00B665]"></span>
-                  <span>💧 Water (L)</span>
-                </div>
-              )}
-              {(utilityFilter === 'both' || utilityFilter === 'electricity') && (
-                <div className="flex items-center gap-1 px-2 py-0.5 rounded-lg bg-amber-50 dark:bg-amber-950/40 text-[#E58325] dark:text-amber-400 border border-amber-200 dark:border-amber-800/50 text-[10px]">
-                  <span className="w-2 h-1 rounded-full bg-[#E58325]"></span>
-                  <span>⚡ Elec (kWh)</span>
-                </div>
-              )}
-            </div>
-          </div>
+            {/* Filter Segmented Control */}
+            <div className="flex items-center justify-between p-1 rounded-2xl bg-white dark:bg-[#161B22] border border-slate-200 dark:border-slate-800 shadow-sm">
+              <button
+                onClick={() => setUtilityFilter('both')}
+                className={`flex-1 py-2 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-1 ${
+                  utilityFilter === 'both'
+                    ? 'bg-[#121632] text-white shadow-sm ring-1 ring-white/10'
+                    : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
+                }`}>
+                <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-[#00B665] to-[#E58325]"></span>
+                {t('bothLines', lang)}
+              </button>
 
-          {/* SVG Canvas */}
-          <div className="relative w-full overflow-hidden select-none bg-slate-50/70 dark:bg-[#0D1117]/70 rounded-2xl p-2 border border-slate-100 dark:border-slate-800/80">
-            <svg
-              viewBox={`0 0 ${svgW} ${svgH}`}
-              className="w-full h-52 sm:h-60 overflow-visible"
-              style={{ touchAction: 'manipulation' }}>
+              <button
+                onClick={() => setUtilityFilter('water')}
+                className={`flex-1 py-2 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-1 ${
+                  utilityFilter === 'water'
+                    ? 'bg-[#00B665] text-white shadow-sm'
+                    : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
+                }`}>
+                <span className="w-1.5 h-1.5 rounded-full bg-sky-400"></span>
+                {t('waterL', lang)}
+              </button>
+
+              <button
+                onClick={() => setUtilityFilter('electricity')}
+                className={`flex-1 py-2 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-1 ${
+                  utilityFilter === 'electricity'
+                    ? 'bg-[#E58325] text-white shadow-sm'
+                    : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
+                }`}>
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-300"></span>
+                {t('elecKwh', lang)}
+              </button>
+            </div>
+
+            {/* Dual-Line Weekly Analytics Chart Card */}
+            <div className="rounded-[28px] p-5 sm:p-6 bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 shadow-[0_8px_30px_rgb(0,0,0,0.04)] space-y-4">
               
-              <defs>
-                <linearGradient id="tenantWaterGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#00B665" stopOpacity="0.35" />
-                  <stop offset="100%" stopColor="#00B665" stopOpacity="0.0" />
-                </linearGradient>
+              {/* Header & Legends */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div>
+                  <h3 className="font-extrabold text-base text-[#111827] dark:text-white">
+                    {t('telemetryTrends', lang)} · Flat {user.unitNumber || '2B'}
+                  </h3>
+                  <p className="text-xs text-slate-400">
+                    {t('weeklyComparison', lang)}
+                  </p>
+                </div>
 
-                <linearGradient id="tenantElecGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#E58325" stopOpacity="0.35" />
-                  <stop offset="100%" stopColor="#E58325" stopOpacity="0.0" />
-                </linearGradient>
+                <div className="flex items-center gap-2 text-xs font-bold font-mono">
+                  {(utilityFilter === 'both' || utilityFilter === 'water') && (
+                    <div className="flex items-center gap-1 px-2 py-0.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 text-[#00B665] dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800/50 text-[10px]">
+                      <span className="w-2 h-1 rounded-full bg-[#00B665]"></span>
+                      <span>💧 Water (L)</span>
+                    </div>
+                  )}
+                  {(utilityFilter === 'both' || utilityFilter === 'electricity') && (
+                    <div className="flex items-center gap-1 px-2 py-0.5 rounded-lg bg-amber-50 dark:bg-amber-950/40 text-[#E58325] dark:text-amber-400 border border-amber-200 dark:border-amber-800/50 text-[10px]">
+                      <span className="w-2 h-1 rounded-full bg-[#E58325]"></span>
+                      <span>⚡ Elec (kWh)</span>
+                    </div>
+                  )}
+                </div>
+              </div>
 
-                <filter id="glowTenantW" x="-20%" y="-20%" width="140%" height="140%">
-                  <feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="#00B665" floodOpacity="0.5" />
-                </filter>
-                <filter id="glowTenantE" x="-20%" y="-20%" width="140%" height="140%">
-                  <feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="#E58325" floodOpacity="0.5" />
-                </filter>
-              </defs>
+              {/* SVG Canvas */}
+              <div className="relative w-full overflow-hidden select-none bg-slate-50/70 dark:bg-[#0D1117]/70 rounded-2xl p-2 border border-slate-100 dark:border-slate-800/80">
+                <svg
+                  viewBox={`0 0 ${svgW} ${svgH}`}
+                  className="w-full h-52 sm:h-60 overflow-visible"
+                  style={{ touchAction: 'manipulation' }}>
+                  
+                  <defs>
+                    <linearGradient id="tenantWaterGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#00B665" stopOpacity="0.35" />
+                      <stop offset="100%" stopColor="#00B665" stopOpacity="0.0" />
+                    </linearGradient>
 
-              {/* Gridlines & Y-Axis Scales */}
-              {[0, 0.25, 0.5, 0.75, 1.0].map((ratio, idx) => {
-                const yPos = padT + plotH * (1 - ratio);
-                const waterVal = Math.round(ratio * 200);
-                const elecVal = Math.round(ratio * 60);
+                    <linearGradient id="tenantElecGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#E58325" stopOpacity="0.35" />
+                      <stop offset="100%" stopColor="#E58325" stopOpacity="0.0" />
+                    </linearGradient>
 
-                return (
-                  <g key={idx} className="opacity-60">
-                    <line
-                      x1={padL}
-                      y1={yPos}
-                      x2={svgW - padR}
-                      y2={yPos}
-                      stroke="currentColor"
-                      strokeDasharray="3 3"
-                      className="text-slate-300 dark:text-slate-700 stroke-[1]"
-                    />
-                    
-                    {(utilityFilter === 'both' || utilityFilter === 'water') && (
-                      <text
-                        x={padL - 6}
-                        y={yPos + 3.5}
-                        textAnchor="end"
-                        className="fill-[#00B665] font-mono font-bold text-[10px]">
-                        {waterVal}
-                      </text>
-                    )}
+                    <filter id="glowTenantW" x="-20%" y="-20%" width="140%" height="140%">
+                      <feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="#00B665" floodOpacity="0.5" />
+                    </filter>
+                    <filter id="glowTenantE" x="-20%" y="-20%" width="140%" height="140%">
+                      <feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="#E58325" floodOpacity="0.5" />
+                    </filter>
+                  </defs>
 
-                    {(utilityFilter === 'both' || utilityFilter === 'electricity') && (
-                      <text
-                        x={svgW - padR + 6}
-                        y={yPos + 3.5}
-                        textAnchor="start"
-                        className="fill-[#E58325] font-mono font-bold text-[10px]">
-                        {elecVal}
-                      </text>
-                    )}
-                  </g>
-                );
-              })}
+                  {/* Gridlines & Y-Axis Scales */}
+                  {[0, 0.25, 0.5, 0.75, 1.0].map((ratio, idx) => {
+                    const yPos = padT + plotH * (1 - ratio);
+                    const waterVal = Math.round(ratio * 200);
+                    const elecVal = Math.round(ratio * 60);
 
-              {/* Y-Axis Titles */}
-              {(utilityFilter === 'both' || utilityFilter === 'water') && (
-                <text x={padL - 6} y={padT - 10} textAnchor="end" className="fill-[#00B665] font-black text-[9px] uppercase tracking-wider">
-                  💧 Liter
-                </text>
-              )}
-              {(utilityFilter === 'both' || utilityFilter === 'electricity') && (
-                <text x={svgW - padR + 6} y={padT - 10} textAnchor="start" className="fill-[#E58325] font-black text-[9px] uppercase tracking-wider">
-                  ⚡ kWh
-                </text>
-              )}
-
-              {/* Active Day Selection Vertical Pillar */}
-              {selectedDayIndex !== null && (
-                <g>
-                  <line
-                    x1={getX(selectedDayIndex)}
-                    y1={padT}
-                    x2={getX(selectedDayIndex)}
-                    y2={padT + plotH}
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeDasharray="4 2"
-                    className="text-slate-400 dark:text-slate-500"
-                  />
-                  <circle
-                    cx={getX(selectedDayIndex)}
-                    cy={padT + plotH + 18}
-                    r="3"
-                    className="fill-slate-600 dark:fill-slate-300"
-                  />
-                </g>
-              )}
-
-              {/* Water Layer */}
-              {(utilityFilter === 'both' || utilityFilter === 'water') && (
-                <g>
-                  <path d={waterAreaPath} fill="url(#tenantWaterGrad)" />
-                  <path
-                    d={waterPath}
-                    fill="none"
-                    stroke="#00B665"
-                    strokeWidth="3.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    filter="url(#glowTenantW)"
-                  />
-                  {waterPoints.map((pt, i) => {
-                    const isSelected = selectedDayIndex === i;
                     return (
-                      <circle
-                        key={`tw-${i}`}
-                        cx={pt.x}
-                        cy={pt.y}
-                        r={isSelected ? 6 : 4}
-                        fill="#00B665"
-                        stroke="#ffffff"
-                        strokeWidth={isSelected ? 2.5 : 1.5}
-                        className="transition-all duration-300 cursor-pointer"
-                      />
-                    );
-                  })}
-                </g>
-              )}
-
-              {/* Electricity Layer */}
-              {(utilityFilter === 'both' || utilityFilter === 'electricity') && (
-                <g>
-                  <path d={elecAreaPath} fill="url(#tenantElecGrad)" />
-                  <path
-                    d={elecPath}
-                    fill="none"
-                    stroke="#E58325"
-                    strokeWidth="3.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    filter="url(#glowTenantE)"
-                  />
-                  {elecPoints.map((pt, i) => {
-                    const isSelected = selectedDayIndex === i;
-                    const isPeak = tenantTelemetry7Days[i].isElecPeak;
-                    return (
-                      <g key={`te-${i}`}>
-                        {isPeak && (
-                          <circle cx={pt.x} cy={pt.y} r="10" className="fill-amber-500/30 animate-ping" />
-                        )}
-                        <circle
-                          cx={pt.x}
-                          cy={pt.y}
-                          r={isSelected ? 6 : isPeak ? 5 : 4}
-                          fill={isPeak ? '#F59E0B' : '#E58325'}
-                          stroke="#ffffff"
-                          strokeWidth={isSelected ? 2.5 : 1.5}
-                          className="transition-all duration-300 cursor-pointer"
+                      <g key={idx} className="opacity-60">
+                        <line
+                          x1={padL}
+                          y1={yPos}
+                          x2={svgW - padR}
+                          y2={yPos}
+                          stroke="currentColor"
+                          strokeDasharray="3 3"
+                          className="text-slate-300 dark:text-slate-700 stroke-[1]"
                         />
+                        
+                        {(utilityFilter === 'both' || utilityFilter === 'water') && (
+                          <text
+                            x={padL - 6}
+                            y={yPos + 3.5}
+                            textAnchor="end"
+                            className="fill-[#00B665] font-mono font-bold text-[10px]">
+                            {waterVal}
+                          </text>
+                        )}
+
+                        {(utilityFilter === 'both' || utilityFilter === 'electricity') && (
+                          <text
+                            x={svgW - padR + 6}
+                            y={yPos + 3.5}
+                            textAnchor="start"
+                            className="fill-[#E58325] font-mono font-bold text-[10px]">
+                            {elecVal}
+                          </text>
+                        )}
                       </g>
                     );
                   })}
-                </g>
+
+                  {/* Y-Axis Titles */}
+                  {(utilityFilter === 'both' || utilityFilter === 'water') && (
+                    <text x={padL - 6} y={padT - 10} textAnchor="end" className="fill-[#00B665] font-black text-[9px] uppercase tracking-wider">
+                      💧 Liter
+                    </text>
+                  )}
+                  {(utilityFilter === 'both' || utilityFilter === 'electricity') && (
+                    <text x={svgW - padR + 6} y={padT - 10} textAnchor="start" className="fill-[#E58325] font-black text-[9px] uppercase tracking-wider">
+                      ⚡ kWh
+                    </text>
+                  )}
+
+                  {/* Active Day Selection Vertical Pillar */}
+                  {selectedDayIndex !== null && (
+                    <g>
+                      <line
+                        x1={getX(selectedDayIndex)}
+                        y1={padT}
+                        x2={getX(selectedDayIndex)}
+                        y2={padT + plotH}
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        strokeDasharray="4 2"
+                        className="text-slate-400 dark:text-slate-500"
+                      />
+                      <circle
+                        cx={getX(selectedDayIndex)}
+                        cy={padT + plotH + 18}
+                        r="3"
+                        className="fill-slate-600 dark:fill-slate-300"
+                      />
+                    </g>
+                  )}
+
+                  {/* Water Layer */}
+                  {(utilityFilter === 'both' || utilityFilter === 'water') && (
+                    <g>
+                      <path d={waterAreaPath} fill="url(#tenantWaterGrad)" />
+                      <path
+                        d={waterPath}
+                        fill="none"
+                        stroke="#00B665"
+                        strokeWidth="3.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        filter="url(#glowTenantW)"
+                      />
+                      {waterPoints.map((pt, i) => {
+                        const isSelected = selectedDayIndex === i;
+                        return (
+                          <circle
+                            key={`tw-${i}`}
+                            cx={pt.x}
+                            cy={pt.y}
+                            r={isSelected ? 6 : 4}
+                            fill="#00B665"
+                            stroke="#ffffff"
+                            strokeWidth={isSelected ? 2.5 : 1.5}
+                            className="transition-all duration-300 cursor-pointer"
+                          />
+                        );
+                      })}
+                    </g>
+                  )}
+
+                  {/* Electricity Layer */}
+                  {(utilityFilter === 'both' || utilityFilter === 'electricity') && (
+                    <g>
+                      <path d={elecAreaPath} fill="url(#tenantElecGrad)" />
+                      <path
+                        d={elecPath}
+                        fill="none"
+                        stroke="#E58325"
+                        strokeWidth="3.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        filter="url(#glowTenantE)"
+                      />
+                      {elecPoints.map((pt, i) => {
+                        const isSelected = selectedDayIndex === i;
+                        const isPeak = tenantTelemetry7Days[i].isElecPeak;
+                        return (
+                          <g key={`te-${i}`}>
+                            {isPeak && (
+                              <circle cx={pt.x} cy={pt.y} r="10" className="fill-amber-500/30 animate-ping" />
+                            )}
+                            <circle
+                              cx={pt.x}
+                              cy={pt.y}
+                              r={isSelected ? 6 : isPeak ? 5 : 4}
+                              fill={isPeak ? '#F59E0B' : '#E58325'}
+                              stroke="#ffffff"
+                              strokeWidth={isSelected ? 2.5 : 1.5}
+                              className="transition-all duration-300 cursor-pointer"
+                            />
+                          </g>
+                        );
+                      })}
+                    </g>
+                  )}
+
+                  {/* X-Axis Day Labels */}
+                  {tenantTelemetry7Days.map((item, i) => {
+                    const xPos = getX(i);
+                    const isSelected = selectedDayIndex === i;
+                    return (
+                      <g key={`tday-${i}`} onClick={() => setSelectedDayIndex(i)} className="cursor-pointer">
+                        <rect x={xPos - 25} y={padT} width="50" height={plotH + padB} fill="transparent" />
+                        <text
+                          x={xPos}
+                          y={padT + plotH + 18}
+                          textAnchor="middle"
+                          className={`text-[11px] font-bold font-mono ${
+                            isSelected
+                              ? 'fill-slate-900 dark:fill-white font-extrabold text-[12px]'
+                              : 'fill-slate-400 dark:fill-slate-500'
+                          }`}>
+                          {item.day}
+                        </text>
+                      </g>
+                    );
+                  })}
+
+                </svg>
+              </div>
+
+              {/* Active Day Inspector */}
+              {selectedData && (
+                <div className="p-4 rounded-2xl bg-slate-50 dark:bg-[#0D1117] border border-slate-200 dark:border-slate-800 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <h4 className="font-extrabold text-sm text-[#111827] dark:text-white flex items-center gap-1.5">
+                      <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+                      {selectedData.day} Telemetry Breakdown
+                    </h4>
+                    <span className="text-[11px] font-mono text-slate-400">
+                      {selectedData.desc}
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3 pt-1">
+                    {/* Water */}
+                    <div className="p-3 rounded-xl bg-emerald-500/5 dark:bg-emerald-950/20 border border-emerald-500/20">
+                      <span className="font-extrabold text-xs text-[#00B665] block">💧 Water (DWASA)</span>
+                      <div className="text-lg font-black text-[#111827] dark:text-white font-mono mt-1">
+                        {selectedData.water} Liters
+                      </div>
+                      <span className="text-[11px] text-slate-400 font-mono block mt-0.5">
+                        Est. Cost: <strong className="text-emerald-600 dark:text-emerald-400">{selectedData.waterCost}</strong>
+                      </span>
+                    </div>
+
+                    {/* Electricity */}
+                    <div className="p-3 rounded-xl bg-amber-500/5 dark:bg-amber-950/20 border border-amber-500/20">
+                      <span className="font-extrabold text-xs text-[#E58325] block">⚡ Electricity (DESCO)</span>
+                      <div className="text-lg font-black text-[#111827] dark:text-white font-mono mt-1">
+                        {selectedData.elec} kWh
+                      </div>
+                      <span className="text-[11px] text-slate-400 font-mono block mt-0.5">
+                        Est. Cost: <strong className="text-amber-600 dark:text-amber-400">{selectedData.elecCost}</strong>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between pt-2 border-t border-slate-200 dark:border-slate-800/80 text-xs">
+                    <span className="text-slate-500 dark:text-slate-400">
+                      Combined Day Utility Expense:
+                    </span>
+                    <span className="font-black font-mono text-[#111827] dark:text-white text-sm">
+                      ৳{(parseFloat(selectedData.waterCost.replace('৳', '')) + parseFloat(selectedData.elecCost.replace('৳', ''))).toFixed(2)}
+                    </span>
+                  </div>
+                </div>
               )}
 
-              {/* X-Axis Day Labels */}
-              {tenantTelemetry7Days.map((item, i) => {
-                const xPos = getX(i);
-                const isSelected = selectedDayIndex === i;
-                return (
-                  <g key={`tday-${i}`} onClick={() => setSelectedDayIndex(i)} className="cursor-pointer">
-                    <rect x={xPos - 25} y={padT} width="50" height={plotH + padB} fill="transparent" />
-                    <text
-                      x={xPos}
-                      y={padT + plotH + 18}
-                      textAnchor="middle"
-                      className={`text-[11px] font-bold font-mono ${
-                        isSelected
-                          ? 'fill-slate-900 dark:fill-white font-extrabold text-[12px]'
-                          : 'fill-slate-400 dark:fill-slate-500'
-                      }`}>
-                      {item.day}
-                    </text>
-                  </g>
-                );
-              })}
+              {/* Submeter Drill-down Shortcut Tile */}
+              <div
+                onClick={() => setSelectedSubmeter(tenantSubmeterData)}
+                className="p-3.5 rounded-2xl bg-white dark:bg-[#161B22] border border-slate-200 dark:border-slate-800 hover:border-emerald-500/40 flex items-center justify-between cursor-pointer shadow-sm active:scale-98 transition-all">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-[#0D1117] flex items-center justify-center font-black text-sm">
+                    2B
+                  </div>
+                  <div>
+                    <h5 className="font-extrabold text-xs sm:text-sm text-[#111827] dark:text-white">
+                      Flat 2B IoT Submeter Diagnostics
+                    </h5>
+                    <p className="text-[10px] text-slate-400 font-mono">
+                      DWASA-SUB-2B-SMART · DESCO-EL-2B-PREPAID (৳2,890.00 Balance)
+                    </p>
+                  </div>
+                </div>
+                <span className="text-xs text-sky-600 dark:text-sky-400 font-bold">
+                  Inspect Diagnostics →
+                </span>
+              </div>
 
-            </svg>
+            </div>
+
           </div>
 
-          {/* Active Day Inspector */}
-          {selectedData && (
-            <div className="p-4 rounded-2xl bg-slate-50 dark:bg-[#0D1117] border border-slate-200 dark:border-slate-800 space-y-3">
-              <div className="flex items-center justify-between">
-                <h4 className="font-extrabold text-sm text-[#111827] dark:text-white flex items-center gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
-                  {selectedData.day} Telemetry Breakdown
-                </h4>
-                <span className="text-[11px] font-mono text-slate-400">
-                  {selectedData.desc}
-                </span>
-              </div>
-
-              <div className="grid grid-cols-2 gap-3 pt-1">
-                {/* Water */}
-                <div className="p-3 rounded-xl bg-emerald-500/5 dark:bg-emerald-950/20 border border-emerald-500/20">
-                  <span className="font-extrabold text-xs text-[#00B665] block">💧 Water (DWASA)</span>
-                  <div className="text-lg font-black text-[#111827] dark:text-white font-mono mt-1">
-                    {selectedData.water} Liters
-                  </div>
-                  <span className="text-[11px] text-slate-400 font-mono block mt-0.5">
-                    Est. Cost: <strong className="text-emerald-600 dark:text-emerald-400">{selectedData.waterCost}</strong>
-                  </span>
-                </div>
-
-                {/* Electricity */}
-                <div className="p-3 rounded-xl bg-amber-500/5 dark:bg-amber-950/20 border border-amber-500/20">
-                  <span className="font-extrabold text-xs text-[#E58325] block">⚡ Electricity (DESCO)</span>
-                  <div className="text-lg font-black text-[#111827] dark:text-white font-mono mt-1">
-                    {selectedData.elec} kWh
-                  </div>
-                  <span className="text-[11px] text-slate-400 font-mono block mt-0.5">
-                    Est. Cost: <strong className="text-amber-600 dark:text-amber-400">{selectedData.elecCost}</strong>
-                  </span>
-                </div>
-              </div>
-
-              <div className="flex items-center justify-between pt-2 border-t border-slate-200 dark:border-slate-800/80 text-xs">
-                <span className="text-slate-500 dark:text-slate-400">
-                  Combined Day Utility Expense:
-                </span>
-                <span className="font-black font-mono text-[#111827] dark:text-white text-sm">
-                  ৳{(parseFloat(selectedData.waterCost.replace('৳', '')) + parseFloat(selectedData.elecCost.replace('৳', ''))).toFixed(2)}
-                </span>
-              </div>
+          {/* 5. Building Notices Horizontal Carousel */}
+          <div className="space-y-3">
+            <div className="flex items-center justify-between px-1">
+              <h3 className="font-extrabold text-base text-[#111827] dark:text-white">
+                {t('buildingNotices', lang)}
+              </h3>
+              <span className="text-xs text-slate-400 font-medium">{t('swipeNotice', lang)}</span>
             </div>
-          )}
 
-          {/* Submeter Drill-down Shortcut Tile */}
-          <div
-            onClick={() => setSelectedSubmeter(tenantSubmeterData)}
-            className="p-3.5 rounded-2xl bg-white dark:bg-[#161B22] border border-slate-200 dark:border-slate-800 hover:border-emerald-500/40 flex items-center justify-between cursor-pointer shadow-sm active:scale-98 transition-all">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-[#0D1117] flex items-center justify-center font-black text-sm">
-                2B
+            <div className="flex gap-3.5 overflow-x-auto pb-2 scrollbar-none snap-x sm:grid sm:grid-cols-3 sm:overflow-visible">
+              
+              {/* Notice Card 1 */}
+              <div className="min-w-[240px] sm:min-w-0 rounded-[24px] p-4 bg-gradient-to-br from-[#121632] to-[#1E2348] text-white shadow-md flex flex-col justify-between space-y-3 shrink-0 snap-start">
+                <span className="self-start text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/30">
+                  MAINTENANCE
+                </span>
+                <p className="text-xs font-semibold leading-relaxed text-slate-100">
+                  Elevator service scheduled for Sunday 10 AM
+                </p>
               </div>
-              <div>
-                <h5 className="font-extrabold text-xs sm:text-sm text-[#111827] dark:text-white">
-                  Flat 2B IoT Submeter Diagnostics
-                </h5>
-                <p className="text-[10px] text-slate-400 font-mono">
-                  DWASA-SUB-2B-SMART · DESCO-EL-2B-PREPAID (৳2,890.00 Balance)
+
+              {/* Notice Card 2 */}
+              <div className="min-w-[240px] sm:min-w-0 rounded-[24px] p-4 bg-gradient-to-br from-[#121632] to-[#1E2348] text-white shadow-md flex flex-col justify-between space-y-3 shrink-0 snap-start">
+                <span className="self-start text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
+                  SECURITY
+                </span>
+                <p className="text-xs font-semibold leading-relaxed text-slate-100">
+                  New facial recognition gate sensors live at Lobby
+                </p>
+              </div>
+
+              {/* Notice Card 3 */}
+              <div className="min-w-[240px] sm:min-w-0 rounded-[24px] p-4 bg-gradient-to-br from-[#121632] to-[#1E2348] text-white shadow-md flex flex-col justify-between space-y-3 shrink-0 snap-start">
+                <span className="self-start text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-sky-500/20 text-sky-300 border border-sky-400/30">
+                  COMMUNITY
+                </span>
+                <p className="text-xs font-semibold leading-relaxed text-slate-100">
+                  Rooftop garden open for evening resident walks
+                </p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        {/* Right Column (Desktop 5 cols): Direct Line to Landlord, Services Hub, Gate Security */}
+        <div className="lg:col-span-5 space-y-6 order-1 lg:order-2">
+
+          {/* 4. Direct Line to Landlord Banner */}
+          <div className="rounded-[28px] p-4 sm:p-5 bg-gradient-to-r from-[#121632] via-[#1E2348] to-[#121632] text-white border border-slate-700 shadow-lg flex items-center justify-between gap-3">
+            <div className="flex items-center gap-3 min-w-0">
+              <div className="relative w-11 h-11 rounded-2xl overflow-hidden ring-2 ring-emerald-500 shrink-0">
+                <img
+                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=60"
+                  alt="Owner"
+                  className="w-full h-full object-cover"
+                />
+                <span className="absolute bottom-0 right-0 w-3 h-3 bg-[#00B665] border-2 border-[#121632] rounded-full"></span>
+              </div>
+              <div className="min-w-0">
+                <div className="flex items-center gap-1.5">
+                  <h4 className="font-extrabold text-xs sm:text-sm truncate">
+                    Md ABID HASAN SIFAT
+                  </h4>
+                  <span className="text-[9px] bg-amber-500/20 text-amber-300 font-bold px-1.5 py-0.2 rounded">
+                    {lang === 'bn' ? 'বাড়িওয়ালা' : 'Owner'}
+                  </span>
+                </div>
+                <p className="text-[11px] text-slate-300 truncate mt-0.5">
+                  {t('landlordOnline', lang)}
                 </p>
               </div>
             </div>
-            <span className="text-xs text-sky-600 dark:text-sky-400 font-bold">
-              Inspect Diagnostics →
-            </span>
+
+            <button
+              onClick={() => onNavigateTab('chat')}
+              className="px-3.5 py-2 rounded-xl bg-[#00B665] hover:bg-[#009E54] active:scale-95 text-white font-black text-xs uppercase tracking-wider shadow shrink-0 transition-all">
+              {t('chatNow', lang)}
+            </button>
           </div>
 
-        </div>
+          {/* 3. Essential Resident Services Grid (Hire Pro, Marketplace, Chat to Owner) */}
+          <div className="space-y-3">
+            <div className="flex items-center justify-between px-1">
+              <h3 className="font-extrabold text-base text-[#111827] dark:text-white">
+                {t('residentServicesHub', lang)}
+              </h3>
+              <span className="text-xs text-slate-400 font-medium">{t('quickAccess', lang)}</span>
+            </div>
 
-      </div>
+            <div className="grid grid-cols-3 gap-2.5 sm:gap-3">
+              
+              {/* 1. Hire Pro */}
+              <div
+                onClick={() => onNavigateTab('hirepro')}
+                className="p-3.5 sm:p-4 rounded-[24px] bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 hover:border-emerald-500/40 shadow-sm hover:shadow-md cursor-pointer active:scale-95 transition-all text-center flex flex-col items-center justify-between space-y-2 group">
+                <div className="w-11 h-11 rounded-2xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                  🛠️
+                </div>
+                <div>
+                  <h4 className="font-extrabold text-xs sm:text-sm text-[#111827] dark:text-white leading-tight">
+                    {t('navHirePro', lang)}
+                  </h4>
+                  <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold block mt-0.5">
+                    {t('acPlumber', lang)}
+                  </span>
+                </div>
+              </div>
 
-      {/* 7. Gate Security Status Card */}
-      <div className="rounded-[28px] p-5 sm:p-6 bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 shadow-[0_8px_30px_rgb(0,0,0,0.04)] space-y-4">
-        <div className="flex items-center justify-between">
-          <h3 className="font-extrabold text-base text-[#111827] dark:text-white">
-            Gate Security
-          </h3>
-          <span className="flex items-center gap-1.5 text-xs text-emerald-600 dark:text-emerald-400 font-bold">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            LIVE
-          </span>
-        </div>
+              {/* 2. Marketplace */}
+              <div
+                onClick={() => onNavigateTab('marketplace')}
+                className="p-3.5 sm:p-4 rounded-[24px] bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 hover:border-emerald-500/40 shadow-sm hover:shadow-md cursor-pointer active:scale-95 transition-all text-center flex flex-col items-center justify-between space-y-2 group">
+                <div className="w-11 h-11 rounded-2xl bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                  🛍️
+                </div>
+                <div>
+                  <h4 className="font-extrabold text-xs sm:text-sm text-[#111827] dark:text-white leading-tight">
+                    {t('marketplace', lang)}
+                  </h4>
+                  <span className="text-[10px] text-amber-600 dark:text-amber-400 font-bold block mt-0.5">
+                    {t('buySellBay', lang)}
+                  </span>
+                </div>
+              </div>
 
-        <div className="flex items-center justify-between pt-1">
-          <div className="space-y-0.5">
-            <span className="text-xs text-slate-400 font-medium">Main Gate Access</span>
-            <div className="text-sm font-extrabold text-[#111827] dark:text-white">
-              Contactless Barrier Ready
+              {/* 3. Chat to Owner */}
+              <div
+                onClick={() => onNavigateTab('chat')}
+                className="p-3.5 sm:p-4 rounded-[24px] bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 hover:border-emerald-500/40 shadow-sm hover:shadow-md cursor-pointer active:scale-95 transition-all text-center flex flex-col items-center justify-between space-y-2 group">
+                <div className="w-11 h-11 rounded-2xl bg-sky-50 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform relative">
+                  💬
+                  <span className="absolute top-1 right-1 w-2.5 h-2.5 rounded-full bg-emerald-500 border border-white dark:border-[#161B22]"></span>
+                </div>
+                <div>
+                  <h4 className="font-extrabold text-xs sm:text-sm text-[#111827] dark:text-white leading-tight">
+                    {t('chatOwner', lang)}
+                  </h4>
+                  <span className="text-[10px] text-sky-600 dark:text-sky-400 font-bold block mt-0.5">
+                    {t('directLine', lang)}
+                  </span>
+                </div>
+              </div>
+
             </div>
           </div>
 
-          <button
-            onClick={onOpenGatePass}
-            className="px-4 py-2.5 rounded-2xl bg-[#00B665] hover:bg-[#009E54] active:scale-95 text-white font-black text-xs uppercase tracking-wider shadow transition-all flex items-center gap-1.5">
-            <span>📱</span> Gate Pass
-          </button>
+          {/* 7. Gate Security Status Card */}
+          <div className="rounded-[28px] p-5 sm:p-6 bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 shadow-[0_8px_30px_rgb(0,0,0,0.04)] space-y-4">
+            <div className="flex items-center justify-between">
+              <h3 className="font-extrabold text-base text-[#111827] dark:text-white">
+                Gate Security
+              </h3>
+              <span className="flex items-center gap-1.5 text-xs text-emerald-600 dark:text-emerald-400 font-bold">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                LIVE
+              </span>
+            </div>
+
+            <div className="flex items-center justify-between pt-1">
+              <div className="space-y-0.5">
+                <span className="text-xs text-slate-400 font-medium">Main Gate Access</span>
+                <div className="text-sm font-extrabold text-[#111827] dark:text-white">
+                  Contactless Barrier Ready
+                </div>
+              </div>
+
+              <button
+                onClick={onOpenGatePass}
+                className="px-4 py-2.5 rounded-2xl bg-[#00B665] hover:bg-[#009E54] active:scale-95 text-white font-black text-xs uppercase tracking-wider shadow transition-all flex items-center gap-1.5">
+                <span>📱</span> Gate Pass
+              </button>
+            </div>
+          </div>
+
         </div>
+
       </div>
 
       {/* Unit Submeter Detail Modal */}

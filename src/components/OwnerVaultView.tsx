@@ -55,7 +55,7 @@ export const OwnerVaultView: React.FC<OwnerVaultViewProps> = ({ onBack, onSelect
   const sortedFloors = Array.from(floorMap.keys()).sort((a, b) => a - b);
 
   return (
-    <div className="space-y-5 animate-fade-in max-w-lg mx-auto pb-6">
+    <div className="space-y-6 animate-fade-in w-full pb-6">
       
       {/* 1. Header with Back Button */}
       <div className="flex items-center gap-3">
@@ -77,34 +77,34 @@ export const OwnerVaultView: React.FC<OwnerVaultViewProps> = ({ onBack, onSelect
       </div>
 
       {/* 2. Top Metric KPI Cards (Total Units, Verified, Vacant) */}
-      <div className="grid grid-cols-3 gap-2.5 sm:gap-3">
+      <div className="grid grid-cols-3 gap-2.5 sm:gap-4 lg:gap-6">
         
         {/* Total Units */}
-        <div className="rounded-[24px] p-3.5 sm:p-4 bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 shadow-[0_4px_20px_rgba(0,0,0,0.03)] text-center space-y-0.5">
-          <div className="text-2xl sm:text-3xl font-black text-[#111827] dark:text-white">
+        <div className="rounded-[24px] p-3.5 sm:p-5 bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 shadow-[0_4px_20px_rgba(0,0,0,0.03)] text-center space-y-0.5">
+          <div className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#111827] dark:text-white">
             {units.length}
           </div>
-          <p className="text-[10px] sm:text-[11px] font-bold text-slate-500 dark:text-slate-400">
+          <p className="text-[10px] sm:text-xs font-bold text-slate-500 dark:text-slate-400">
             Total Units
           </p>
         </div>
 
         {/* Verified Occupied (Green) */}
-        <div className="rounded-[24px] p-3.5 sm:p-4 bg-[#00B665] text-white shadow-lg shadow-emerald-500/20 text-center space-y-0.5">
-          <div className="text-2xl sm:text-3xl font-black">
+        <div className="rounded-[24px] p-3.5 sm:p-5 bg-[#00B665] text-white shadow-lg shadow-emerald-500/20 text-center space-y-0.5">
+          <div className="text-2xl sm:text-3xl lg:text-4xl font-black">
             {occupiedUnits.length}
           </div>
-          <p className="text-[10px] sm:text-[11px] font-bold text-emerald-100">
+          <p className="text-[10px] sm:text-xs font-bold text-emerald-100">
             Occupied
           </p>
         </div>
 
         {/* Vacant Units (Amber/Blue) */}
-        <div className="rounded-[24px] p-3.5 sm:p-4 bg-gradient-to-br from-[#E58325] to-[#D97706] text-white shadow-lg shadow-amber-500/20 text-center space-y-0.5">
-          <div className="text-2xl sm:text-3xl font-black">
+        <div className="rounded-[24px] p-3.5 sm:p-5 bg-gradient-to-br from-[#E58325] to-[#D97706] text-white shadow-lg shadow-amber-500/20 text-center space-y-0.5">
+          <div className="text-2xl sm:text-3xl lg:text-4xl font-black">
             {vacantUnits.length}
           </div>
-          <p className="text-[10px] sm:text-[11px] font-bold text-amber-100">
+          <p className="text-[10px] sm:text-xs font-bold text-amber-100">
             🟢 Vacant
           </p>
         </div>
@@ -127,7 +127,7 @@ export const OwnerVaultView: React.FC<OwnerVaultViewProps> = ({ onBack, onSelect
                 </span>
               </div>
 
-              <div className="grid grid-cols-3 gap-2.5">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4">
                 {floorUnits.map(unit => {
                   const isVacant = unit.status === 'vacant';
                   const isUnitAlert = backendState.criticalAlerts.some(a => a.unit === unit.unitNumber && a.active);

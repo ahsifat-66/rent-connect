@@ -224,7 +224,7 @@ export const OwnerMonitorView: React.FC<OwnerMonitorViewProps> = ({ onBack, onSh
   const selectedData = telemetry7Days[selectedDayIndex];
 
   return (
-    <div className="space-y-5 animate-fade-in max-w-lg mx-auto pb-6">
+    <div className="space-y-6 animate-fade-in w-full pb-6">
       
       {/* 1. Header with Back Button */}
       <div className="flex items-center gap-3">
@@ -692,70 +692,72 @@ export const OwnerMonitorView: React.FC<OwnerMonitorViewProps> = ({ onBack, onSh
           <span className="text-[11px] text-slate-400 font-medium">Tap flat for live diagnostics</span>
         </div>
 
-        {fullSubmeterRoster.map(sub => {
-          const isLeak = sub.waterStatus === 'leak';
-          const isHigh = sub.elecStatus === 'high';
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3.5">
+          {fullSubmeterRoster.map(sub => {
+            const isLeak = sub.waterStatus === 'leak';
+            const isHigh = sub.elecStatus === 'high';
 
-          return (
-            <div
-              key={sub.unit}
-              onClick={() => setSelectedSubmeterUnit(sub)}
-              className={`p-4 rounded-[24px] transition-all flex items-center justify-between shadow-sm cursor-pointer hover:shadow-md active:scale-98 ${
-                isLeak
-                  ? 'bg-red-500/5 dark:bg-red-950/20 border-2 border-red-500/60'
-                  : 'bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 hover:border-emerald-500/30'
-              }`}>
-              
-              {/* Left Info */}
-              <div className="flex items-center gap-3.5 min-w-0">
-                <div className={`w-11 h-11 rounded-2xl flex items-center justify-center text-base font-black shrink-0 ${
+            return (
+              <div
+                key={sub.unit}
+                onClick={() => setSelectedSubmeterUnit(sub)}
+                className={`p-4 rounded-[24px] transition-all flex items-center justify-between shadow-sm cursor-pointer hover:shadow-md active:scale-98 ${
                   isLeak
-                    ? 'bg-red-100 text-red-600 dark:bg-red-950 dark:text-red-300'
-                    : 'bg-slate-100 dark:bg-[#0D1117] text-[#111827] dark:text-white border border-slate-200 dark:border-slate-800'
+                    ? 'bg-red-500/5 dark:bg-red-950/20 border-2 border-red-500/60'
+                    : 'bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 hover:border-emerald-500/30'
                 }`}>
-                  {sub.unit}
-                </div>
+                
+                {/* Left Info */}
+                <div className="flex items-center gap-3.5 min-w-0">
+                  <div className={`w-11 h-11 rounded-2xl flex items-center justify-center text-base font-black shrink-0 ${
+                    isLeak
+                      ? 'bg-red-100 text-red-600 dark:bg-red-950 dark:text-red-300'
+                      : 'bg-slate-100 dark:bg-[#0D1117] text-[#111827] dark:text-white border border-slate-200 dark:border-slate-800'
+                  }`}>
+                    {sub.unit}
+                  </div>
 
-                <div className="min-w-0">
-                  <div className="flex items-center gap-2">
-                    <h4 className="font-extrabold text-sm text-[#111827] dark:text-white truncate">
-                      Flat {sub.unit} · {sub.tenantName}
-                    </h4>
-                    {isLeak && (
-                      <span className="bg-red-100 text-red-600 text-[9px] font-black uppercase px-2 py-0.5 rounded-full animate-pulse">
-                        LEAK
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-2">
+                      <h4 className="font-extrabold text-sm text-[#111827] dark:text-white truncate">
+                        Flat {sub.unit} · {sub.tenantName}
+                      </h4>
+                      {isLeak && (
+                        <span className="bg-red-100 text-red-600 text-[9px] font-black uppercase px-2 py-0.5 rounded-full animate-pulse">
+                          LEAK
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="flex items-center gap-3 text-xs text-slate-400 mt-0.5">
+                      <span className="flex items-center gap-1 font-mono text-[11px]">
+                        <span>💧</span> {sub.waterFlow} L/d
                       </span>
-                    )}
-                  </div>
-
-                  <div className="flex items-center gap-3 text-xs text-slate-400 mt-0.5">
-                    <span className="flex items-center gap-1 font-mono text-[11px]">
-                      <span>💧</span> {sub.waterFlow} L/d
-                    </span>
-                    <span className="flex items-center gap-1 font-mono text-[11px]">
-                      <span>⚡</span> {sub.elecUsage} kWh
-                    </span>
-                    <span className="text-[10px]">· {sub.lastUpdated}</span>
+                      <span className="flex items-center gap-1 font-mono text-[11px]">
+                        <span>⚡</span> {sub.elecUsage} kWh
+                      </span>
+                      <span className="text-[10px]">· {sub.lastUpdated}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Right Metrics */}
-              <div className="text-right shrink-0">
-                <div className="text-xs font-black font-mono text-[#00B665]">
-                  ৳{((sub.waterCostEst * 30) + (sub.elecCostEst * 30)).toFixed(0)}/mo
+                {/* Right Metrics */}
+                <div className="text-right shrink-0">
+                  <div className="text-xs font-black font-mono text-[#00B665]">
+                    ৳{((sub.waterCostEst * 30) + (sub.elecCostEst * 30)).toFixed(0)}/mo
+                  </div>
+                  <span className="text-[10px] text-slate-400 font-medium block mt-0.5">
+                    Est. Utility Bill
+                  </span>
+                  <span className="text-[10px] text-sky-600 dark:text-sky-400 font-bold block mt-0.5">
+                    Inspect →
+                  </span>
                 </div>
-                <span className="text-[10px] text-slate-400 font-medium block mt-0.5">
-                  Est. Utility Bill
-                </span>
-                <span className="text-[10px] text-sky-600 dark:text-sky-400 font-bold block mt-0.5">
-                  Inspect →
-                </span>
-              </div>
 
-            </div>
-          );
-        })}
+              </div>
+            );
+          })}
+        </div>
       </div>
 
       {/* Diagnosis Modal for Flat 1B */}
