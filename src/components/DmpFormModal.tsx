@@ -89,13 +89,15 @@ export const DmpFormModal: React.FC<DmpFormModalProps> = ({ isOpen, onClose, use
         {/* Actions */}
         <div className="flex justify-end gap-2 pt-2">
           <button
-            onClick={() => alert("Downloading official Bangladesh Police DMP Form PDF...")}
-            className="px-4 py-2 bg-emerald-600 text-white text-xs font-bold rounded-xl shadow active:scale-95">
-            📄 Download Official DMP PDF
+            onClick={() => {
+              window.print();
+            }}
+            className="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow active:scale-95 transition-all flex items-center gap-1.5">
+            <span>📄</span> Download / Print DMP PDF
           </button>
           <button
             onClick={onClose}
-            className="px-4 py-2 bg-[var(--bg-input)] text-[var(--text-main)] text-xs font-bold rounded-xl">
+            className="px-4 py-2.5 bg-[var(--bg-input)] text-[var(--text-main)] text-xs font-bold rounded-xl hover:bg-slate-200 dark:hover:bg-slate-800 transition-all">
             Close
           </button>
         </div>

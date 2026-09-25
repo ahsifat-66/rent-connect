@@ -300,8 +300,17 @@ export const App: React.FC = () => {
               <OwnerVaultView
                 onBack={() => setActiveTab('home')}
                 onSelectUnit={(unitNo) => {
+                  setActiveTab('marketplace');
+                  showToast(lang === 'bn' ? `ফ্ল্যাট ${unitNo}-এর মার্কেটপ্লেস ও শেয়ারিং ভিউ খোলা হয়েছে` : `Marketplace & syndication view opened for Flat ${unitNo}`);
+                }}
+                onMessageTenant={(unitNo) => {
+                  const matchConv = backendState.conversations.find(c => c.unitNumber.toUpperCase().includes(unitNo.toUpperCase()));
+                  if (matchConv) {
+                    setActiveChatId(matchConv.id);
+                  }
                   setActiveTab('messenger');
                   setMobileChatThreadOpen(true);
+                  showToast(lang === 'bn' ? `ফ্ল্যাট ${unitNo}-এর ভাড়াটিয়ার সাথে চ্যাট খোলা হয়েছে` : `Direct chat opened with resident of Flat ${unitNo}`);
                 }}
                 onShowToast={showToast}
               />

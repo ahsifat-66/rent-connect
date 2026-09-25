@@ -7,10 +7,11 @@ import { RentReceipt, Unit } from '../types';
 interface OwnerVaultViewProps {
   onBack?: () => void;
   onSelectUnit?: (unitNo: string) => void;
+  onMessageTenant?: (unitNo: string) => void;
   onShowToast?: (msg: string) => void;
 }
 
-export const OwnerVaultView: React.FC<OwnerVaultViewProps> = ({ onBack, onSelectUnit, onShowToast }) => {
+export const OwnerVaultView: React.FC<OwnerVaultViewProps> = ({ onBack, onSelectUnit, onMessageTenant, onShowToast }) => {
   const [backendState, setBackendState] = useState<BackendState>(backend.getState());
   const [selectedReceipt, setSelectedReceipt] = useState<RentReceipt | null>(null);
   const [selectedUnitForReceipt, setSelectedUnitForReceipt] = useState<{ unit: string; tenant: string } | null>(null);
@@ -217,11 +218,22 @@ export const OwnerVaultView: React.FC<OwnerVaultViewProps> = ({ onBack, onSelect
                         </div>
                       </div>
 
-                      <button
-                        onClick={() => openReceiptForUnit(unit.unitNumber, unit.tenant?.name || 'Resident', unit.rentAmount)}
-                        className="w-full py-1.5 rounded-xl bg-slate-50 dark:bg-[#0D1117] text-[10px] font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 active:scale-95 transition-all">
-                        Quick Receipt
-                      </button>
+                      <div className="flex gap-1.5 w-full">
+                        <button
+                          onClick={() => openReceiptForUnit(unit.unitNumber, unit.tenant?.name || 'Resident', unit.rentAmount)}
+                          className="flex-1 py-1.5 rounded-xl bg-slate-50 dark:bg-[#0D1117] text-[10px] font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 active:scale-95 transition-all">
+                          Quick Receipt
+                        </button>
+                        {onMessageTenant && (
+                          <button
+                            type="button"
+                            onClick={() => onMessageTenant(unit.unitNumber)}
+                            title={`Chat with resident of Flat ${unit.unitNumber}`}
+                            className="px-2.5 py-1.5 rounded-xl bg-purple-50 dark:bg-purple-950/40 text-purple-600 dark:text-purple-300 text-[11px] font-bold hover:bg-purple-100 active:scale-95 transition-all">
+                            💬
+                          </button>
+                        )}
+                      </div>
                     </div>
                   );
                 })}

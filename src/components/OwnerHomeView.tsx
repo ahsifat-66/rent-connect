@@ -108,7 +108,10 @@ export const OwnerHomeView: React.FC<OwnerHomeViewProps> = ({
         <div className="lg:col-span-7 space-y-6">
           
           {/* Rent Collection Card (Deep Navy with Donut Ring) */}
-          <div className="rounded-[28px] p-5 sm:p-7 bg-gradient-to-br from-[#121632] via-[#161B3D] to-[#1C224B] text-white shadow-xl flex items-center justify-between gap-4">
+          <div 
+            onClick={() => onNavigateTab('vault')}
+            title="Click to view building rent ledger, collection breakdown & receipts in NID Vault"
+            className="rounded-[28px] p-5 sm:p-7 bg-gradient-to-br from-[#121632] via-[#161B3D] to-[#1C224B] text-white shadow-xl flex items-center justify-between gap-4 cursor-pointer hover:shadow-2xl hover:border-emerald-500/30 border border-transparent active:scale-[0.99] transition-all group">
             
             {/* Donut Progress Circle */}
             <div className="relative w-24 h-24 sm:w-28 sm:h-28 shrink-0 flex items-center justify-center">
@@ -153,24 +156,37 @@ export const OwnerHomeView: React.FC<OwnerHomeViewProps> = ({
                 {lang === 'bn' ? 'মোট লক্ষ্যমাত্রা' : 'of'} <span className="text-slate-300 font-bold font-mono">৳{backendState.rentTotal.toLocaleString()}</span>
               </p>
             </div>
+            
+            <span className="text-xs font-bold text-emerald-400 opacity-80 group-hover:opacity-100 hidden sm:inline transition-opacity self-center">
+              View Ledger →
+            </span>
           </div>
 
-          {/* Quick Metrics Bar: 3 KPI Cards */}
+          {/* Quick Metrics Bar: 3 Interactive KPI Cards */}
           <div className="grid grid-cols-3 gap-3">
-            <div className="card-luxury p-3.5 sm:p-4 text-center">
+            <div 
+              onClick={() => onNavigateTab('vault')}
+              title="Click to view building occupancy & units in Vault"
+              className="card-luxury p-3.5 sm:p-4 text-center cursor-pointer hover:border-emerald-500/50 hover:shadow-md active:scale-95 transition-all">
               <span className="text-[10px] sm:text-xs font-bold text-slate-400 block uppercase">Occupancy</span>
               <span className="text-xl sm:text-2xl font-black text-[#111827] dark:text-white">91%</span>
-              <span className="text-[10px] text-emerald-500 font-bold block">10/11 Units</span>
+              <span className="text-[10px] text-emerald-500 font-bold block">10/11 Units →</span>
             </div>
-            <div className="card-luxury p-3.5 sm:p-4 text-center">
+            <div 
+              onClick={() => onNavigateTab('security')}
+              title="Click to view gate check-ins & security pass log"
+              className="card-luxury p-3.5 sm:p-4 text-center cursor-pointer hover:border-blue-500/50 hover:shadow-md active:scale-95 transition-all">
               <span className="text-[10px] sm:text-xs font-bold text-slate-400 block uppercase">Check-ins</span>
               <span className="text-xl sm:text-2xl font-black text-blue-600 font-mono">{backendState.checkinsToday}</span>
-              <span className="text-[10px] text-slate-400 font-semibold block">Today · Pass</span>
+              <span className="text-[10px] text-slate-400 font-semibold block">Today · Pass →</span>
             </div>
-            <div className="card-luxury p-3.5 sm:p-4 text-center">
+            <div 
+              onClick={() => onNavigateTab('vault')}
+              title="Click to view DMP police verification status & compliance"
+              className="card-luxury p-3.5 sm:p-4 text-center cursor-pointer hover:border-emerald-500/50 hover:shadow-md active:scale-95 transition-all">
               <span className="text-[10px] sm:text-xs font-bold text-slate-400 block uppercase">Compliance</span>
               <span className="text-xl sm:text-2xl font-black text-emerald-600 font-mono">{backendState.complianceRate}%</span>
-              <span className="text-[10px] text-emerald-500 font-bold block">DMP Verified</span>
+              <span className="text-[10px] text-emerald-500 font-bold block">DMP Verified →</span>
             </div>
           </div>
 

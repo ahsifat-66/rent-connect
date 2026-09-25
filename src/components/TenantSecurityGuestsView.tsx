@@ -137,9 +137,10 @@ export const TenantSecurityGuestsView: React.FC<TenantSecurityGuestsViewProps> =
               {recentGuests.map(guest => (
                 <div
                   key={guest.id}
-                  className="p-4 rounded-2xl bg-slate-50 dark:bg-[#0D1117] border border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                  onClick={() => onOpenGuestQr(guest.name)}
+                  className="p-4 rounded-2xl bg-slate-50 dark:bg-[#0D1117] border border-slate-100 dark:border-slate-800 hover:border-purple-500/40 cursor-pointer flex items-center justify-between transition-all active:scale-[0.99] group">
                   <div>
-                    <h4 className="font-extrabold text-sm text-[#111827] dark:text-white">
+                    <h4 className="font-extrabold text-sm text-[#111827] dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
                       {guest.name}
                     </h4>
                     <p className="text-xs text-slate-400 font-medium mt-0.5">
@@ -147,9 +148,20 @@ export const TenantSecurityGuestsView: React.FC<TenantSecurityGuestsViewProps> =
                     </p>
                   </div>
 
-                  <span className="bg-emerald-50 text-emerald-600 dark:bg-emerald-950/60 dark:text-emerald-400 text-[11px] font-extrabold px-3 py-1 rounded-full border border-emerald-500/20">
-                    Verified
-                  </span>
+                  <div className="flex items-center gap-2">
+                    <span className="bg-emerald-50 text-emerald-600 dark:bg-emerald-950/60 dark:text-emerald-400 text-[11px] font-extrabold px-3 py-1 rounded-full border border-emerald-500/20">
+                      Verified
+                    </span>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onOpenGuestQr(guest.name);
+                      }}
+                      className="px-3 py-1 rounded-xl bg-purple-50 dark:bg-purple-950/50 text-purple-600 dark:text-purple-300 font-bold text-xs border border-purple-500/30 hover:bg-purple-100 active:scale-95 transition-all">
+                      📱 Pass
+                    </button>
+                  </div>
                 </div>
               ))}
             </div>

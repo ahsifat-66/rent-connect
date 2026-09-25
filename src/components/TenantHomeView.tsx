@@ -21,6 +21,14 @@ export const TenantHomeView: React.FC<TenantHomeViewProps> = ({
   const [selectedSubmeter, setSelectedSubmeter] = useState<UnitSubmeterData | null>(null);
   const [utilityFilter, setUtilityFilter] = useState<'both' | 'water' | 'electricity'>('both');
   const [selectedDayIndex, setSelectedDayIndex] = useState<number>(5); // Default to Saturday (Peak AC day)
+  const [selectedNotice, setSelectedNotice] = useState<{
+    category: string;
+    categoryColor: string;
+    title: string;
+    date: string;
+    details: string;
+    actionText?: string;
+  } | null>(null);
 
   const tenantSubmeterData: UnitSubmeterData = {
     unit: user.unitNumber || '2B',
@@ -528,30 +536,66 @@ export const TenantHomeView: React.FC<TenantHomeViewProps> = ({
             <div className="flex gap-3.5 overflow-x-auto pb-2 scrollbar-none snap-x sm:grid sm:grid-cols-3 sm:overflow-visible">
               
               {/* Notice Card 1 */}
-              <div className="min-w-[240px] sm:min-w-0 rounded-[24px] p-4 bg-gradient-to-br from-[#121632] to-[#1E2348] text-white shadow-md flex flex-col justify-between space-y-3 shrink-0 snap-start">
-                <span className="self-start text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/30">
-                  MAINTENANCE
-                </span>
+              <div 
+                onClick={() => setSelectedNotice({
+                  category: 'MAINTENANCE',
+                  categoryColor: 'amber',
+                  title: 'Elevator service scheduled for Sunday 10 AM',
+                  date: 'Sunday, Mar 8 · 10:00 AM - 12:00 PM',
+                  details: 'Routine safety inspection and cable tensioning of Passenger Lift #1 by Otis Bangladesh engineers. Service elevator #2 will remain fully operational during this window.',
+                  actionText: 'Got It, Noted'
+                })}
+                className="min-w-[240px] sm:min-w-0 rounded-[24px] p-4 bg-gradient-to-br from-[#121632] to-[#1E2348] text-white shadow-md hover:shadow-lg hover:border-amber-400/50 border border-transparent flex flex-col justify-between space-y-3 shrink-0 snap-start cursor-pointer active:scale-95 transition-all group">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/30">
+                    MAINTENANCE
+                  </span>
+                  <span className="text-[10px] text-amber-300/80 font-bold group-hover:text-amber-300 transition-colors">Read Details →</span>
+                </div>
                 <p className="text-xs font-semibold leading-relaxed text-slate-100">
                   Elevator service scheduled for Sunday 10 AM
                 </p>
               </div>
 
               {/* Notice Card 2 */}
-              <div className="min-w-[240px] sm:min-w-0 rounded-[24px] p-4 bg-gradient-to-br from-[#121632] to-[#1E2348] text-white shadow-md flex flex-col justify-between space-y-3 shrink-0 snap-start">
-                <span className="self-start text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
-                  SECURITY
-                </span>
+              <div 
+                onClick={() => setSelectedNotice({
+                  category: 'SECURITY',
+                  categoryColor: 'emerald',
+                  title: 'New facial recognition gate sensors live at Lobby',
+                  date: 'Active from March 1, 2026',
+                  details: 'Automated biometric turnstiles and ANPR camera barrier are now live at the main entrance. Registered residents and pre-cleared guests can scan contactless QR passes.',
+                  actionText: 'Understood'
+                })}
+                className="min-w-[240px] sm:min-w-0 rounded-[24px] p-4 bg-gradient-to-br from-[#121632] to-[#1E2348] text-white shadow-md hover:shadow-lg hover:border-emerald-400/50 border border-transparent flex flex-col justify-between space-y-3 shrink-0 snap-start cursor-pointer active:scale-95 transition-all group">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
+                    SECURITY
+                  </span>
+                  <span className="text-[10px] text-emerald-300/80 font-bold group-hover:text-emerald-300 transition-colors">Read Details →</span>
+                </div>
                 <p className="text-xs font-semibold leading-relaxed text-slate-100">
                   New facial recognition gate sensors live at Lobby
                 </p>
               </div>
 
               {/* Notice Card 3 */}
-              <div className="min-w-[240px] sm:min-w-0 rounded-[24px] p-4 bg-gradient-to-br from-[#121632] to-[#1E2348] text-white shadow-md flex flex-col justify-between space-y-3 shrink-0 snap-start">
-                <span className="self-start text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-sky-500/20 text-sky-300 border border-sky-400/30">
-                  COMMUNITY
-                </span>
+              <div 
+                onClick={() => setSelectedNotice({
+                  category: 'COMMUNITY',
+                  categoryColor: 'sky',
+                  title: 'Rooftop garden open for evening resident walks',
+                  date: 'Daily 5:00 PM – 10:00 PM',
+                  details: 'Residents and family members can access the rooftop botanical garden. Please ensure rooftop smart lock is cleared via Security or intercom.',
+                  actionText: 'Enjoy Rooftop'
+                })}
+                className="min-w-[240px] sm:min-w-0 rounded-[24px] p-4 bg-gradient-to-br from-[#121632] to-[#1E2348] text-white shadow-md hover:shadow-lg hover:border-sky-400/50 border border-transparent flex flex-col justify-between space-y-3 shrink-0 snap-start cursor-pointer active:scale-95 transition-all group">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-sky-500/20 text-sky-300 border border-sky-400/30">
+                    COMMUNITY
+                  </span>
+                  <span className="text-[10px] text-sky-300/80 font-bold group-hover:text-sky-300 transition-colors">Read Details →</span>
+                </div>
                 <p className="text-xs font-semibold leading-relaxed text-slate-100">
                   Rooftop garden open for evening resident walks
                 </p>
@@ -702,6 +746,58 @@ export const TenantHomeView: React.FC<TenantHomeViewProps> = ({
         data={selectedSubmeter}
         onShowToast={onShowToast}
       />
+
+      {/* Interactive Building Notice Detail Modal */}
+      {selectedNotice && (
+        <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-md flex items-end sm:items-center justify-center p-0 sm:p-4 animate-fade-in">
+          <div className="w-full max-w-md bg-white dark:bg-[#161B22] rounded-t-[32px] sm:rounded-[32px] p-6 space-y-4 border border-slate-200 dark:border-slate-800 shadow-2xl animate-slide-up">
+            <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
+              <div className="flex items-center gap-2">
+                <span className={`px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider ${
+                  selectedNotice.categoryColor === 'amber'
+                    ? 'bg-amber-500/20 text-amber-600 dark:text-amber-400 border border-amber-400/30'
+                    : selectedNotice.categoryColor === 'emerald'
+                    ? 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-400/30'
+                    : 'bg-sky-500/20 text-sky-600 dark:text-sky-400 border border-sky-400/30'
+                }`}>
+                  {selectedNotice.category}
+                </span>
+                <span className="text-xs text-slate-400 font-medium">Building Notice</span>
+              </div>
+              <button
+                onClick={() => setSelectedNotice(null)}
+                className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 font-bold flex items-center justify-center hover:bg-slate-200">
+                ✕
+              </button>
+            </div>
+
+            <div className="space-y-2">
+              <h3 className="text-base sm:text-lg font-black text-[#111827] dark:text-white leading-snug">
+                {selectedNotice.title}
+              </h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400 font-mono">
+                📅 {selectedNotice.date}
+              </p>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-slate-50 dark:bg-[#0D1117] border border-slate-200 dark:border-slate-800 text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
+              {selectedNotice.details}
+            </div>
+
+            <div className="flex gap-2.5 pt-1">
+              <button
+                type="button"
+                onClick={() => {
+                  if (onShowToast) onShowToast(`Notice acknowledged: "${selectedNotice.title}"`);
+                  setSelectedNotice(null);
+                }}
+                className="w-full py-3.5 rounded-2xl bg-[#00B665] hover:bg-[#009E54] active:scale-95 text-white font-extrabold text-xs uppercase tracking-wider shadow transition-all">
+                {selectedNotice.actionText || 'Acknowledge Notice'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
     </div>
   );
