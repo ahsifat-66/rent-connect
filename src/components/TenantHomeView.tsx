@@ -1,19 +1,22 @@
 import React, { useState } from 'react';
 import { User } from '../types';
 import { UnitSubmeterDetailModal, UnitSubmeterData } from './UnitSubmeterDetailModal';
+import { Language, t } from '../utils/i18n';
 
 interface TenantHomeViewProps {
   user: User;
   onNavigateTab: (tab: string) => void;
   onOpenGatePass: () => void;
   onShowToast?: (msg: string) => void;
+  lang?: Language;
 }
 
 export const TenantHomeView: React.FC<TenantHomeViewProps> = ({
   user,
   onNavigateTab,
   onOpenGatePass,
-  onShowToast
+  onShowToast,
+  lang = 'en'
 }) => {
   const [selectedSubmeter, setSelectedSubmeter] = useState<UnitSubmeterData | null>(null);
   const [utilityFilter, setUtilityFilter] = useState<'both' | 'water' | 'electricity'>('both');
@@ -37,13 +40,13 @@ export const TenantHomeView: React.FC<TenantHomeViewProps> = ({
 
   // Flat 2B 7-Day IoT Telemetry Dataset
   const tenantTelemetry7Days = [
-    { day: 'Mon', water: 122, waterCost: '৳2.01', elec: 38, elecCost: '৳311.60', isWaterLeak: false, isElecPeak: false, desc: 'Normal weekday baseline' },
-    { day: 'Tue', water: 118, waterCost: '৳1.95', elec: 36, elecCost: '৳295.20', isWaterLeak: false, isElecPeak: false, desc: 'Normal weekday baseline' },
-    { day: 'Wed', water: 125, waterCost: '৳2.06', elec: 44, elecCost: '৳360.80', isWaterLeak: false, isElecPeak: false, desc: 'Geyser & laundry cycle' },
-    { day: 'Thu', water: 120, waterCost: '৳1.98', elec: 39, elecCost: '৳319.80', isWaterLeak: false, isElecPeak: false, desc: 'Normal weekday baseline' },
-    { day: 'Fri', water: 135, waterCost: '৳2.23', elec: 48, elecCost: '৳393.60', isWaterLeak: false, isElecPeak: false, desc: 'Weekend family cooking' },
-    { day: 'Sat', water: 142, waterCost: '৳2.34', elec: 52, elecCost: '৳426.40', isWaterLeak: false, isElecPeak: true, desc: '⚡ Weekend Inverter AC Peak (52 kWh)' },
-    { day: 'Sun', water: 128, waterCost: '৳2.11', elec: 45, elecCost: '৳369.00', isWaterLeak: false, isElecPeak: false, desc: 'Routine household baseline' }
+    { day: lang === 'bn' ? 'সোম' : 'Mon', water: 122, waterCost: '৳2.01', elec: 38, elecCost: '৳311.60', isWaterLeak: false, isElecPeak: false, desc: 'Normal weekday baseline' },
+    { day: lang === 'bn' ? 'মঙ্গল' : 'Tue', water: 118, waterCost: '৳1.95', elec: 36, elecCost: '৳295.20', isWaterLeak: false, isElecPeak: false, desc: 'Normal weekday baseline' },
+    { day: lang === 'bn' ? 'বুধ' : 'Wed', water: 125, waterCost: '৳2.06', elec: 44, elecCost: '৳360.80', isWaterLeak: false, isElecPeak: false, desc: 'Geyser & laundry cycle' },
+    { day: lang === 'bn' ? 'বৃহঃ' : 'Thu', water: 120, waterCost: '৳1.98', elec: 39, elecCost: '৳319.80', isWaterLeak: false, isElecPeak: false, desc: 'Normal weekday baseline' },
+    { day: lang === 'bn' ? 'শুক্র' : 'Fri', water: 135, waterCost: '৳2.23', elec: 48, elecCost: '৳393.60', isWaterLeak: false, isElecPeak: false, desc: 'Weekend family cooking' },
+    { day: lang === 'bn' ? 'শনি' : 'Sat', water: 142, waterCost: '৳2.34', elec: 52, elecCost: '৳426.40', isWaterLeak: false, isElecPeak: true, desc: '⚡ Weekend Inverter AC Peak (52 kWh)' },
+    { day: lang === 'bn' ? 'রবি' : 'Sun', water: 128, waterCost: '৳2.11', elec: 45, elecCost: '৳369.00', isWaterLeak: false, isElecPeak: false, desc: 'Routine household baseline' }
   ];
 
   // SVG Chart Geometry Constants
@@ -98,7 +101,7 @@ export const TenantHomeView: React.FC<TenantHomeViewProps> = ({
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-[#111827] dark:text-white tracking-tight">
-            Welcome Home
+            {t('welcomeHome', lang)}
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium mt-0.5">
             Flat {user.unitNumber || '2B'} · {user.buildingName || 'Gulshan Luxury Tower'}
@@ -127,16 +130,16 @@ export const TenantHomeView: React.FC<TenantHomeViewProps> = ({
           </div>
           <div>
             <h3 className="font-extrabold text-base sm:text-lg leading-tight">
-              Verified Resident
+              {t('verifiedResident', lang)}
             </h3>
             <p className="text-xs text-emerald-100 font-medium mt-0.5">
-              NID Authentication Complete · Flat {user.unitNumber || '2B'}
+              {t('nidAuthComplete', lang)} · Flat {user.unitNumber || '2B'}
             </p>
           </div>
         </div>
 
         <span className="bg-white/25 backdrop-blur-md text-white text-xs font-black px-3.5 py-1.5 rounded-full border border-white/30 uppercase tracking-wider">
-          ACTIVE
+          {t('activeStatus', lang)}
         </span>
       </div>
 
@@ -144,9 +147,9 @@ export const TenantHomeView: React.FC<TenantHomeViewProps> = ({
       <div className="space-y-3">
         <div className="flex items-center justify-between px-1">
           <h3 className="font-extrabold text-base text-[#111827] dark:text-white">
-            Resident Services Hub
+            {t('residentServicesHub', lang)}
           </h3>
-          <span className="text-xs text-slate-400 font-medium">1-Tap Quick Access</span>
+          <span className="text-xs text-slate-400 font-medium">{t('quickAccess', lang)}</span>
         </div>
 
         <div className="grid grid-cols-3 gap-2.5 sm:gap-3">
@@ -160,10 +163,10 @@ export const TenantHomeView: React.FC<TenantHomeViewProps> = ({
             </div>
             <div>
               <h4 className="font-extrabold text-xs sm:text-sm text-[#111827] dark:text-white leading-tight">
-                Hire Pro
+                {t('navHirePro', lang)}
               </h4>
               <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold block mt-0.5">
-                AC & Plumber
+                {t('acPlumber', lang)}
               </span>
             </div>
           </div>
@@ -177,10 +180,10 @@ export const TenantHomeView: React.FC<TenantHomeViewProps> = ({
             </div>
             <div>
               <h4 className="font-extrabold text-xs sm:text-sm text-[#111827] dark:text-white leading-tight">
-                Marketplace
+                {t('marketplace', lang)}
               </h4>
               <span className="text-[10px] text-amber-600 dark:text-amber-400 font-bold block mt-0.5">
-                Buy, Sell & Bay
+                {t('buySellBay', lang)}
               </span>
             </div>
           </div>
@@ -195,10 +198,10 @@ export const TenantHomeView: React.FC<TenantHomeViewProps> = ({
             </div>
             <div>
               <h4 className="font-extrabold text-xs sm:text-sm text-[#111827] dark:text-white leading-tight">
-                Chat Owner
+                {t('chatOwner', lang)}
               </h4>
               <span className="text-[10px] text-sky-600 dark:text-sky-400 font-bold block mt-0.5">
-                Direct Line
+                {t('directLine', lang)}
               </span>
             </div>
           </div>
@@ -223,11 +226,11 @@ export const TenantHomeView: React.FC<TenantHomeViewProps> = ({
                 Md ABID HASAN SIFAT
               </h4>
               <span className="text-[9px] bg-amber-500/20 text-amber-300 font-bold px-1.5 py-0.2 rounded">
-                Owner
+                {lang === 'bn' ? 'বাড়িওয়ালা' : 'Owner'}
               </span>
             </div>
             <p className="text-[11px] text-slate-300 truncate mt-0.5">
-              Online · Fast responses for receipts & maintenance
+              {t('landlordOnline', lang)}
             </p>
           </div>
         </div>
@@ -235,7 +238,7 @@ export const TenantHomeView: React.FC<TenantHomeViewProps> = ({
         <button
           onClick={() => onNavigateTab('chat')}
           className="px-3.5 py-2 rounded-xl bg-[#00B665] hover:bg-[#009E54] active:scale-95 text-white font-black text-xs uppercase tracking-wider shadow shrink-0 transition-all">
-          Chat →
+          {t('chatNow', lang)}
         </button>
       </div>
 
@@ -243,9 +246,9 @@ export const TenantHomeView: React.FC<TenantHomeViewProps> = ({
       <div className="space-y-3">
         <div className="flex items-center justify-between px-1">
           <h3 className="font-extrabold text-base text-[#111827] dark:text-white">
-            Building Notices
+            {t('buildingNotices', lang)}
           </h3>
-          <span className="text-xs text-slate-400 font-medium">Swipe →</span>
+          <span className="text-xs text-slate-400 font-medium">{t('swipeNotice', lang)}</span>
         </div>
 
         <div className="flex gap-3.5 overflow-x-auto pb-2 scrollbar-none snap-x">
@@ -290,15 +293,15 @@ export const TenantHomeView: React.FC<TenantHomeViewProps> = ({
         <div className="flex items-center justify-between px-1">
           <div>
             <h3 className="font-extrabold text-base text-[#111827] dark:text-white">
-              Utilities Telemetry & Analytics
+              {t('telemetryAnalytics', lang)}
             </h3>
             <p className="text-xs text-slate-400">
-              Live DWASA Water & DESCO Smart Prepaid Submeters
+              {t('telemetrySub', lang)}
             </p>
           </div>
           <span className="flex items-center gap-1 text-emerald-600 font-bold text-xs">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            Online
+            {t('online', lang)}
           </span>
         </div>
 
@@ -328,7 +331,7 @@ export const TenantHomeView: React.FC<TenantHomeViewProps> = ({
                 : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
             }`}>
             <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-[#00B665] to-[#E58325]"></span>
-            Both (2 Lines)
+            {t('bothLines', lang)}
           </button>
 
           <button
@@ -339,7 +342,7 @@ export const TenantHomeView: React.FC<TenantHomeViewProps> = ({
                 : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
             }`}>
             <span className="w-1.5 h-1.5 rounded-full bg-sky-400"></span>
-            💧 Water (L)
+            {t('waterL', lang)}
           </button>
 
           <button
@@ -350,7 +353,7 @@ export const TenantHomeView: React.FC<TenantHomeViewProps> = ({
                 : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
             }`}>
             <span className="w-1.5 h-1.5 rounded-full bg-amber-300"></span>
-            ⚡ Elec (kWh)
+            {t('elecKwh', lang)}
           </button>
         </div>
 
@@ -361,10 +364,10 @@ export const TenantHomeView: React.FC<TenantHomeViewProps> = ({
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div>
               <h3 className="font-extrabold text-base text-[#111827] dark:text-white">
-                Flat {user.unitNumber || '2B'} Telemetry Trends
+                {t('telemetryTrends', lang)} · Flat {user.unitNumber || '2B'}
               </h3>
               <p className="text-xs text-slate-400">
-                Weekly Comparative Curve (DWASA & DESCO)
+                {t('weeklyComparison', lang)}
               </p>
             </div>
 

@@ -7,10 +7,13 @@ import { OwnerBottomNav } from './components/OwnerBottomNav';
 // Backend Service Layer
 import { backend, BackendState } from './services/backend';
 
-// Splash / Landing Login Screen (Exact Figma Upload)
+// Internationalization
+import { Language, t } from './utils/i18n';
+
+// Splash / Landing Login Screen
 import { SplashLoginView } from './components/SplashLoginView';
 
-// Tenant Screens (Exact Figma & Extensions)
+// Tenant Screens
 import { TenantHomeView } from './components/TenantHomeView';
 import { TenantLeaseView } from './components/TenantLeaseView';
 import { TenantPayView } from './components/TenantPayView';
@@ -20,7 +23,7 @@ import { TenantChatWithOwnerView } from './components/TenantChatWithOwnerView';
 import { TenantMarketplaceView } from './components/TenantMarketplaceView';
 import { UserProfileView } from './components/UserProfileView';
 
-// Owner Screens (Exact Figma)
+// Owner Screens
 import { OwnerHomeView } from './components/OwnerHomeView';
 import { OwnerVaultView } from './components/OwnerVaultView';
 import { OwnerMonitorView } from './components/OwnerMonitorView';
@@ -47,6 +50,15 @@ export const App: React.FC = () => {
       return (saved === 'dark' || saved === 'light') ? saved : 'light';
     } catch {
       return 'light';
+    }
+  });
+
+  const [lang, setLang] = useState<Language>(() => {
+    try {
+      const saved = localStorage.getItem('rc_lang');
+      return (saved === 'bn' || saved === 'en') ? saved : 'en';
+    } catch {
+      return 'en';
     }
   });
 
@@ -88,6 +100,12 @@ export const App: React.FC = () => {
     }
   }, [theme]);
 
+  useEffect(() => {
+    try {
+      localStorage.setItem('rc_lang', lang);
+    } catch {}
+  }, [lang]);
+
   const showToast = (msg: string) => {
     setToastMessage(msg);
     setTimeout(() => setToastMessage(null), 3500);
@@ -96,17 +114,19 @@ export const App: React.FC = () => {
   const handleJoinAsOwner = () => {
     backend.loginAsOwner();
     setActiveTab('home');
-    showToast("Welcome back, Md ABID HASAN SIFAT! Owner Command Center loaded.");
+    showToast(lang === 'bn' ? "স্বাগতম মোঃ আবিদ হাসান সিফাত! বাড়িওয়ালার কমান্ড সেন্টার লোড হয়েছে।" : "Welcome back, Md ABID HASAN SIFAT! Owner Command Center loaded.");
   };
 
   const handleJoinAsTenant = () => {
     backend.loginAsTenant();
     setActiveTab('home');
-    showToast("Welcome back, Tanvir Ahmed! Resident Sanctuary loaded.");
+    showToast(lang === 'bn' ? "স্বাগতম তানভীর আহমেদ! আবাসিক ড্যাশবোর্ড লোড হয়েছে।" : "Welcome back, Tanvir Ahmed! Resident Sanctuary loaded.");
   };
 
   const handleLogout = () => {
     backend.logout();
+    setActiveTab('home');
+    showToast(lang === 'bn' ? "সফলভাবে লগআউট হয়েছেন।" : "Successfully logged out.");
   };
 
   const handleOpenGuestQr = (guestName: string) => {
@@ -119,7 +139,7 @@ export const App: React.FC = () => {
   };
 
   // =========================================================================
-  // IF NOT LOGGED IN: Render the exact luxury Figma Splash Login Screen first!
+  // IF NOT LOGGED IN: Render the Splash Login Screen
   // =========================================================================
   if (!backendState.isLoggedIn) {
     return (
@@ -128,6 +148,8 @@ export const App: React.FC = () => {
         onJoinAsTenant={handleJoinAsTenant}
         theme={theme}
         setTheme={setTheme}
+        lang={lang}
+        setLang={setLang}
       />
     );
   }
@@ -162,13 +184,15 @@ export const App: React.FC = () => {
           backend.toggleViewMode(val);
           setActiveTab('home');
         }}
+        lang={lang}
+        setLang={setLang}
       />
 
       {/* Main Content Area */}
       <main className="flex-1 w-full max-w-md sm:max-w-4xl mx-auto p-4 sm:p-6 pb-28">
         
         {/* ========================================================= */}
-        {/* --- 1. RESIDENT / TENANT MODE (Exact Figma Screenshots) --- */}
+        {/* --- 1. RESIDENT / TENANT MODE --- */}
         {/* ========================================================= */}
         {!isOwnerView && (
           <>
@@ -178,6 +202,8 @@ export const App: React.FC = () => {
                 user={currentUser}
                 onNavigateTab={setActiveTab}
                 onOpenGatePass={() => setShowGatePassModal(true)}
+                onShowToast={showToast}
+                lang={lang}
               />
             )}
 
@@ -242,13 +268,14 @@ export const App: React.FC = () => {
                 onBack={() => setActiveTab('home')}
                 onLogout={handleLogout}
                 onShowToast={showToast}
+                lang={lang}
               />
             )}
           </>
         )}
 
         {/* ===================================================== */}
-        {/* --- 2. HOUSE OWNER MODE (Exact Figma Screenshots) --- */}
+        {/* --- 2. HOUSE OWNER MODE --- */}
         {/* ===================================================== */}
         {isOwnerView && (
           <>
@@ -262,6 +289,7 @@ export const App: React.FC = () => {
                 onOpenMessenger={() => setActiveTab('messenger')}
                 onOpenHirePro={() => setActiveTab('hirepro')}
                 onShowToast={showToast}
+                lang={lang}
               />
             )}
 
@@ -302,6 +330,7 @@ export const App: React.FC = () => {
                 onBack={() => setActiveTab('home')}
                 onLogout={handleLogout}
                 onShowToast={showToast}
+                lang={lang}
               />
             )}
 
@@ -309,13 +338,13 @@ export const App: React.FC = () => {
             {activeTab === 'marketplace' && (
               <div className="space-y-4">
                 <button onClick={() => setActiveTab('home')} className="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold">
-                  ← Back to Command Center
+                  {t('backToCommandCenter', lang)}
                 </button>
                 <MarketplaceView
                   units={backendState.units}
                   isOwner={true}
                   onOpenAddFlat={() => setShowAddFlatModal(true)}
-                  lang="en"
+                  lang={lang}
                 />
               </div>
             )}
@@ -323,7 +352,7 @@ export const App: React.FC = () => {
             {activeTab === 'messenger' && (
               <div className="space-y-4">
                 <button onClick={() => setActiveTab('home')} className="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold">
-                  ← Back to Command Center
+                  {t('backToCommandCenter', lang)}
                 </button>
                 <MessengerView
                   conversations={backendState.conversations}
@@ -333,7 +362,7 @@ export const App: React.FC = () => {
                   setMobileChatThreadOpen={setMobileChatThreadOpen}
                   onSendMessage={handleSendMessage}
                   user={currentUser}
-                  lang="en"
+                  lang={lang}
                 />
               </div>
             )}
@@ -341,14 +370,14 @@ export const App: React.FC = () => {
             {activeTab === 'hirepro' && (
               <div className="space-y-4">
                 <button onClick={() => setActiveTab('home')} className="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold">
-                  ← Back to Command Center
+                  {t('backToCommandCenter', lang)}
                 </button>
                 <ServiceDispatchView
                   dispatches={backendState.dispatches}
                   isOwner={true}
                   onOpenDispatchModal={() => setShowDispatchModal(true)}
                   onOpenTicketModal={() => setShowTicketModal(true)}
-                  lang="en"
+                  lang={lang}
                 />
               </div>
             )}
@@ -356,13 +385,13 @@ export const App: React.FC = () => {
             {activeTab === 'broadcasts' && (
               <div className="space-y-4">
                 <button onClick={() => setActiveTab('home')} className="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold">
-                  ← Back to Command Center
+                  {t('backToCommandCenter', lang)}
                 </button>
                 <BroadcastsView
                   broadcasts={backendState.broadcasts}
                   isOwner={true}
                   onOpenBroadcastModal={() => setShowBroadcastModal(true)}
-                  lang="en"
+                  lang={lang}
                 />
               </div>
             )}
@@ -376,11 +405,13 @@ export const App: React.FC = () => {
         <MobileBottomNav
           activeTab={activeTab}
           setActiveTab={setActiveTab}
+          lang={lang}
         />
       ) : (
         <OwnerBottomNav
           activeTab={activeTab}
           setActiveTab={setActiveTab}
+          lang={lang}
         />
       )}
 
@@ -405,9 +436,9 @@ export const App: React.FC = () => {
         onClose={() => setShowRentPayModal(false)}
         user={currentUser}
         onPaymentSuccess={(receipt) => {
-          showToast(`Rent paid successfully via bKash! TxID: ${receipt.transactionId}`);
+          showToast(lang === 'bn' ? `বিকাশের মাধ্যমে ভাড়া সফলভাবে পরিশোধিত! TxID: ${receipt.transactionId}` : `Rent paid successfully via bKash! TxID: ${receipt.transactionId}`);
         }}
-        lang="en"
+        lang={lang}
       />
 
       {/* Digital QR Gate Pass Modal */}
@@ -415,7 +446,7 @@ export const App: React.FC = () => {
         isOpen={showGatePassModal}
         onClose={() => setShowGatePassModal(false)}
         user={currentUser}
-        lang="en"
+        lang={lang}
       />
 
       {/* DMP Police Verification Form Modal */}
@@ -423,7 +454,7 @@ export const App: React.FC = () => {
         isOpen={showDmpFormModal}
         onClose={() => setShowDmpFormModal(false)}
         user={currentUser}
-        lang="en"
+        lang={lang}
       />
 
       {/* Add Vacant / New Flat Modal */}
@@ -431,7 +462,7 @@ export const App: React.FC = () => {
         isOpen={showAddFlatModal}
         onClose={() => setShowAddFlatModal(false)}
         onSuccess={(unit) => {
-          showToast(`🎉 Flat ${unit.unitNumber} (${unit.status === 'vacant' ? 'Vacant' : 'Occupied'}) published to portfolio!`);
+          showToast(`🎉 Flat ${unit.unitNumber} (${unit.status === 'vacant' ? (lang === 'bn' ? 'খালি' : 'Vacant') : (lang === 'bn' ? 'ভাড়া দেওয়া' : 'Occupied')}) published to portfolio!`);
         }}
       />
 

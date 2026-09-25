@@ -599,6 +599,108 @@ class BackendService {
     }).catch(() => {});
   }
 
+  public registerOwner(data: {
+    name: string;
+    phone: string;
+    email: string;
+    buildingName?: string;
+    nid?: string;
+    totalUnits?: number;
+  }) {
+    const ownerUser: User = {
+      id: `usr-owner-${Date.now()}`,
+      name: data.name || 'Md ABID HASAN SIFAT',
+      phone: data.phone || '+880 1911-554433',
+      email: data.email || 'sifat.owner@gulshantower.com',
+      role: 'owner',
+      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=60',
+      nid: data.nid || '19652692610000111',
+      nidVerified: true,
+      buildingName: data.buildingName || 'Gulshan Luxury Tower Portfolio',
+      occupation: 'Property Managing Director & Investor'
+    };
+    this.state.currentUser = ownerUser;
+    this.state.isLoggedIn = true;
+    this.state.isOwnerView = true;
+    this.saveState();
+    fetch(`${API_BASE}/auth/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ...data, role: 'owner' })
+    }).catch(() => {});
+  }
+
+  public registerTenant(data: {
+    name: string;
+    phone: string;
+    email: string;
+    unitNumber?: string;
+    buildingName?: string;
+    nid?: string;
+    occupation?: string;
+    emergencyPhone?: string;
+  }) {
+    const tenantUser: User = {
+      id: `usr-tenant-${Date.now()}`,
+      name: data.name || 'Tanvir Ahmed',
+      phone: data.phone || '+880 1711-234567',
+      email: data.email || 'tanvir.ahmed@example.com',
+      role: 'tenant',
+      avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=60',
+      nid: data.nid || '19882692610000452',
+      nidVerified: true,
+      unitNumber: data.unitNumber || '2B',
+      buildingName: data.buildingName || 'Gulshan Luxury Tower',
+      leaseStartDate: 'Jan 1, 2026',
+      leaseEndDate: 'Dec 31, 2026',
+      rentAmount: 28000,
+      securityDeposit: 56000,
+      parkingSlot: 'P-14',
+      occupation: data.occupation || 'Senior Software Architect',
+      emergencyContact: {
+        name: 'Dr. Rehana Parvin',
+        relationship: 'Spouse',
+        phone: data.emergencyPhone || '+880 1712-998877'
+      },
+      familyMembersCount: 3
+    };
+    this.state.currentUser = tenantUser;
+    this.state.isLoggedIn = true;
+    this.state.isOwnerView = false;
+    this.saveState();
+    fetch(`${API_BASE}/auth/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ...data, role: 'tenant' })
+    }).catch(() => {});
+  }
+
+  public loginWithCredentials(identifier: string, role: 'owner' | 'tenant') {
+    if (role === 'owner') {
+      this.state.isLoggedIn = true;
+      this.state.isOwnerView = true;
+      this.state.currentUser = {
+        ...defaultOwnerUser,
+        phone: identifier.includes('@') ? defaultOwnerUser.phone : identifier,
+        email: identifier.includes('@') ? identifier : defaultOwnerUser.email
+      };
+    } else {
+      this.state.isLoggedIn = true;
+      this.state.isOwnerView = false;
+      this.state.currentUser = {
+        ...defaultTenantUser,
+        phone: identifier.includes('@') ? defaultTenantUser.phone : identifier,
+        email: identifier.includes('@') ? identifier : defaultTenantUser.email
+      };
+    }
+    this.saveState();
+    fetch(`${API_BASE}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ identifier, role })
+    }).catch(() => {});
+  }
+
   public logout() {
     this.state.isLoggedIn = false;
     this.saveState();

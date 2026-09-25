@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { User } from '../types';
 import { backend } from '../services/backend';
+import { Language, t } from '../utils/i18n';
 
 interface UserProfileViewProps {
   user: User;
@@ -8,6 +9,7 @@ interface UserProfileViewProps {
   onBack: () => void;
   onLogout: () => void;
   onShowToast?: (msg: string) => void;
+  lang?: Language;
 }
 
 export const UserProfileView: React.FC<UserProfileViewProps> = ({
@@ -15,7 +17,8 @@ export const UserProfileView: React.FC<UserProfileViewProps> = ({
   isOwner,
   onBack,
   onLogout,
-  onShowToast
+  onShowToast,
+  lang = 'en'
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState(user.name);
@@ -358,7 +361,7 @@ export const UserProfileView: React.FC<UserProfileViewProps> = ({
             onClick={onLogout}
             className="w-full py-4 rounded-2xl bg-red-500/10 hover:bg-red-500/20 text-red-600 dark:text-red-400 font-extrabold text-xs uppercase tracking-wider border border-red-500/20 shadow-sm active:scale-95 transition-all flex items-center justify-center gap-2">
             <span>🚪</span>
-            <span>Log Out of RentConnect</span>
+            <span>{t('logout', lang)} {t('brandName', lang)}</span>
           </button>
 
         </div>

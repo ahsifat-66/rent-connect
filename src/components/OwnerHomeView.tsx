@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { User } from '../types';
 import { backend, BackendState } from '../services/backend';
+import { Language, t } from '../utils/i18n';
 
 interface OwnerHomeViewProps {
   user: User;
@@ -10,6 +11,7 @@ interface OwnerHomeViewProps {
   onOpenMessenger: () => void;
   onOpenHirePro: () => void;
   onShowToast?: (msg: string) => void;
+  lang?: Language;
 }
 
 export const OwnerHomeView: React.FC<OwnerHomeViewProps> = ({
@@ -19,7 +21,8 @@ export const OwnerHomeView: React.FC<OwnerHomeViewProps> = ({
   onOpenMarketplace,
   onOpenMessenger,
   onOpenHirePro,
-  onShowToast
+  onShowToast,
+  lang = 'en'
 }) => {
   const [backendState, setBackendState] = useState<BackendState>(backend.getState());
 
@@ -36,7 +39,7 @@ export const OwnerHomeView: React.FC<OwnerHomeViewProps> = ({
   const handleGasShutoff = () => {
     backend.resolveGasLeakAlert('2B');
     if (onShowToast) {
-      onShowToast("Emergency solenoid valve closed for Flat 2B. Resident & technician notified.");
+      onShowToast(lang === 'bn' ? "ফ্ল্যাট ২বি-এর ইমার্জেন্সি ভালভ বন্ধ করা হয়েছে।" : "Emergency solenoid valve closed for Flat 2B. Resident & technician notified.");
     }
   };
 
@@ -47,7 +50,7 @@ export const OwnerHomeView: React.FC<OwnerHomeViewProps> = ({
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-[#111827] dark:text-white tracking-tight">
-            Command Center
+            {t('commandCenter', lang)}
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-semibold uppercase tracking-wider mt-0.5">
             {user.name || 'Md ABID HASAN SIFAT'}
@@ -82,10 +85,10 @@ export const OwnerHomeView: React.FC<OwnerHomeViewProps> = ({
             </div>
             <div className="min-w-0">
               <h3 className="font-black text-xs sm:text-sm uppercase tracking-wider truncate">
-                CRITICAL ALERT
+                {t('criticalAlert', lang)}
               </h3>
               <p className="text-xs text-red-100 font-medium truncate">
-                Gas Leak in Flat 2B
+                {t('gasLeakAlert', lang)}
               </p>
             </div>
           </div>
@@ -93,7 +96,7 @@ export const OwnerHomeView: React.FC<OwnerHomeViewProps> = ({
           <button
             onClick={handleGasShutoff}
             className="px-4 py-2 rounded-xl bg-white text-[#FF3B30] hover:bg-red-50 font-black text-xs uppercase tracking-wider shadow active:scale-95 shrink-0 transition-all">
-            SHUTOFF
+            {t('shutoff', lang)}
           </button>
         </div>
       )}
@@ -135,13 +138,13 @@ export const OwnerHomeView: React.FC<OwnerHomeViewProps> = ({
         {/* Amount Metrics */}
         <div className="space-y-1 flex-1 text-left">
           <span className="text-xs text-slate-300 font-semibold block">
-            Rent Collection
+            {t('totalRentCollected', lang)}
           </span>
           <div className="text-2xl sm:text-3xl font-black text-[#00B665] font-mono tracking-tight">
             ৳{backendState.rentCollected.toLocaleString()}
           </div>
           <p className="text-xs text-slate-400 font-medium">
-            of <span className="text-slate-300 font-bold font-mono">৳{backendState.rentTotal.toLocaleString()}</span>
+            {lang === 'bn' ? 'মোট লক্ষ্যমাত্রা' : 'of'} <span className="text-slate-300 font-bold font-mono">৳{backendState.rentTotal.toLocaleString()}</span>
           </p>
         </div>
       </div>
@@ -149,7 +152,7 @@ export const OwnerHomeView: React.FC<OwnerHomeViewProps> = ({
       {/* 4. Management Grid (6 Action Cards) */}
       <div className="space-y-3">
         <h3 className="font-black text-sm uppercase tracking-wider text-[#111827] dark:text-white px-1">
-          Management Grid
+          {lang === 'bn' ? 'ম্যানেজমেন্ট হাব' : 'Management Grid'}
         </h3>
 
         <div className="grid grid-cols-2 gap-3.5">
@@ -162,7 +165,7 @@ export const OwnerHomeView: React.FC<OwnerHomeViewProps> = ({
               📣
             </div>
             <span className="font-extrabold text-xs sm:text-sm text-[#111827] dark:text-white">
-              Broadcast Notice
+              {lang === 'bn' ? 'জরুরী নোটিশ' : 'Broadcast Notice'}
             </span>
           </div>
 
@@ -175,7 +178,7 @@ export const OwnerHomeView: React.FC<OwnerHomeViewProps> = ({
               🏢
             </div>
             <span className="font-extrabold text-xs sm:text-sm text-[#111827] dark:text-white">
-              Marketplace
+              {t('buildingPortfolio', lang)}
             </span>
           </div>
 
@@ -188,7 +191,7 @@ export const OwnerHomeView: React.FC<OwnerHomeViewProps> = ({
               💬
             </div>
             <span className="font-extrabold text-xs sm:text-sm text-[#111827] dark:text-white">
-              Messenger
+              {t('navChat', lang)}
             </span>
           </div>
 
@@ -200,7 +203,7 @@ export const OwnerHomeView: React.FC<OwnerHomeViewProps> = ({
               🔧
             </div>
             <span className="font-extrabold text-xs sm:text-sm text-[#111827] dark:text-white">
-              Hire Pro
+              {t('navHirePro', lang)}
             </span>
           </div>
 
@@ -212,7 +215,7 @@ export const OwnerHomeView: React.FC<OwnerHomeViewProps> = ({
               🛡️
             </div>
             <span className="font-extrabold text-xs sm:text-sm text-[#111827] dark:text-white">
-              NID Vault
+              {t('navVault', lang)}
             </span>
           </div>
 
@@ -224,7 +227,7 @@ export const OwnerHomeView: React.FC<OwnerHomeViewProps> = ({
               📊
             </div>
             <span className="font-extrabold text-xs sm:text-sm text-[#111827] dark:text-white">
-              Analytics
+              {t('ghostBillMonitor', lang)}
             </span>
           </div>
 
@@ -236,7 +239,7 @@ export const OwnerHomeView: React.FC<OwnerHomeViewProps> = ({
         <div className="flex items-center gap-2">
           <span className="text-lg">📈</span>
           <h3 className="font-extrabold text-base text-[#111827] dark:text-white">
-            Recent Activity
+            {lang === 'bn' ? 'সাম্প্রতিক কার্যক্রম' : 'Recent Activity'}
           </h3>
         </div>
 

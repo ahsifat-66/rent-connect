@@ -1,14 +1,16 @@
 import React from 'react';
+import { Language, t } from '../utils/i18n';
 
 interface MobileBottomNavProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;
-  lang?: 'en' | 'bn';
+  lang?: Language;
 }
 
 export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
   activeTab,
-  setActiveTab
+  setActiveTab,
+  lang = 'en'
 }) => {
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-[#161B22]/95 backdrop-blur-xl border-t border-slate-200/80 dark:border-slate-800 pb-safe pt-1.5 px-3 shadow-[0_-4px_20px_rgba(0,0,0,0.03)]">
@@ -17,43 +19,43 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
         {/* 1. Home Tab */}
         <button
           onClick={() => setActiveTab('home')}
-          className={`flex flex-col items-center py-1.5 px-3 rounded-2xl transition-all ${
+          className={`flex flex-col items-center py-1.5 px-2.5 rounded-2xl transition-all ${
             activeTab === 'home'
               ? 'text-[#111827] dark:text-white font-extrabold scale-105'
               : 'text-slate-400 dark:text-slate-500 hover:text-slate-600'
           }`}>
           <span className="text-xl">🏠</span>
-          <span className="text-[11px] mt-0.5 font-bold">Home</span>
+          <span className="text-[11px] mt-0.5 font-bold">{t('navHome', lang)}</span>
         </button>
 
         {/* 2. Lease Tab */}
         <button
           onClick={() => setActiveTab('lease')}
-          className={`flex flex-col items-center py-1.5 px-3 rounded-2xl transition-all ${
+          className={`flex flex-col items-center py-1.5 px-2.5 rounded-2xl transition-all ${
             activeTab === 'lease'
               ? 'text-[#111827] dark:text-white font-extrabold scale-105'
               : 'text-slate-400 dark:text-slate-500 hover:text-slate-600'
           }`}>
           <span className="text-xl">📄</span>
-          <span className="text-[11px] mt-0.5 font-bold">Lease</span>
+          <span className="text-[11px] mt-0.5 font-bold">{t('navLease', lang)}</span>
         </button>
 
         {/* 3. Pay Tab */}
         <button
           onClick={() => setActiveTab('pay')}
-          className={`flex flex-col items-center py-1.5 px-3 rounded-2xl transition-all ${
+          className={`flex flex-col items-center py-1.5 px-2.5 rounded-2xl transition-all ${
             activeTab === 'pay'
               ? 'text-[#00B665] font-extrabold scale-105'
               : 'text-slate-400 dark:text-slate-500 hover:text-slate-600'
           }`}>
           <span className="text-xl">💲</span>
-          <span className="text-[11px] mt-0.5 font-bold">Pay</span>
+          <span className="text-[11px] mt-0.5 font-bold">{t('navPay', lang)}</span>
         </button>
 
         {/* 4. Chat to Owner Tab */}
         <button
           onClick={() => setActiveTab('chat')}
-          className={`flex flex-col items-center py-1.5 px-3 rounded-2xl transition-all relative ${
+          className={`flex flex-col items-center py-1.5 px-2.5 rounded-2xl transition-all relative ${
             activeTab === 'chat' || activeTab === 'messenger'
               ? 'text-sky-500 font-extrabold scale-105'
               : 'text-slate-400 dark:text-slate-500 hover:text-slate-600'
@@ -62,7 +64,7 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
             💬
             <span className="absolute -top-0.5 -right-1 w-2 h-2 rounded-full bg-emerald-500 border border-white dark:border-[#161B22]"></span>
           </span>
-          <span className="text-[11px] mt-0.5 font-bold">Chat</span>
+          <span className="text-[11px] mt-0.5 font-bold">{t('navChat', lang)}</span>
         </button>
 
         {/* 5. Guests / Security Tab */}
@@ -74,7 +76,7 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
               : 'text-slate-400 dark:text-slate-500 hover:text-slate-600'
           }`}>
           <span className="text-xl">👥</span>
-          <span className="text-[11px] mt-0.5 font-bold">Guests</span>
+          <span className="text-[11px] mt-0.5 font-bold">{t('navGuests', lang)}</span>
         </button>
 
         {/* 6. Profile Tab */}
@@ -86,11 +88,10 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
               : 'text-slate-400 dark:text-slate-500 hover:text-slate-600'
           }`}>
           <span className="text-xl">👤</span>
-          <span className="text-[11px] mt-0.5 font-bold">Profile</span>
+          <span className="text-[11px] mt-0.5 font-bold">{t('navProfile', lang)}</span>
         </button>
 
       </div>
     </nav>
   );
 };
-
