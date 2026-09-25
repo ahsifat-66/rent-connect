@@ -1,4 +1,5 @@
 import React from 'react';
+import { X, Share2 } from 'lucide-react';
 import { User } from '../types';
 
 interface GuestQrModalProps {
@@ -15,19 +16,21 @@ export const GuestQrModal: React.FC<GuestQrModalProps> = ({ isOpen, onClose, gue
 
   return (
     <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-md flex items-end sm:items-center justify-center p-0 sm:p-4 animate-fade-in">
-      <div className="card-luxury w-full max-w-md bg-[var(--bg-surface)] p-6 sm:p-8 space-y-5 rounded-b-none sm:rounded-b-[28px] text-center max-h-[92vh] overflow-y-auto">
+      <div className="card-luxury w-full max-w-md bg-[var(--bg-surface)] p-6 sm:p-8 space-y-5 rounded-b-none sm:rounded-2xl text-center max-h-[92vh] overflow-y-auto">
         
         <div className="flex justify-between items-center border-b border-[var(--border-main)] pb-3">
           <div className="text-left">
             <h3 className="font-extrabold text-base sm:text-lg text-[var(--text-main)]">Guest QR Access Pass</h3>
             <p className="text-xs text-[var(--text-muted)]">Unit {user.unitNumber || '2B'} · Gulshan Building</p>
           </div>
-          <button onClick={onClose} className="p-1 rounded-lg text-xl font-bold">✕</button>
+          <button onClick={onClose} className="p-1 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-white">
+            <X size={18} strokeWidth={1.75} />
+          </button>
         </div>
 
         {/* QR Box */}
-        <div className="p-6 rounded-3xl bg-white border-2 border-purple-500 shadow-xl max-w-[260px] mx-auto flex flex-col items-center justify-center space-y-3">
-          <div className="w-44 h-44 bg-slate-900 rounded-2xl flex items-center justify-center p-3 text-white">
+        <div className="p-6 rounded-2xl bg-white border-2 border-purple-500 shadow-xl max-w-[260px] mx-auto flex flex-col items-center justify-center space-y-3">
+          <div className="w-44 h-44 bg-slate-900 rounded-xl flex items-center justify-center p-3 text-white">
             <svg viewBox="0 0 100 100" className="w-full h-full text-white fill-current">
               <path d="M0,0 h30 v30 h-30 z M10,10 h10 v10 h-10 z" />
               <path d="M70,0 h30 v30 h-30 z M80,10 h10 v10 h-10 z" />
@@ -66,8 +69,9 @@ export const GuestQrModal: React.FC<GuestQrModalProps> = ({ isOpen, onClose, gue
           )}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="w-full py-3.5 bg-[#25D366] hover:bg-[#1ebd59] text-white font-bold text-xs rounded-2xl flex items-center justify-center gap-2 shadow transition-all active:scale-98">
-          <span>📱</span> Send Pass to Guest on WhatsApp
+          className="w-full py-3.5 bg-[#25D366] hover:bg-[#1ebd59] text-white font-bold text-xs rounded-xl flex items-center justify-center gap-2 shadow transition-all active:scale-98">
+          <Share2 size={14} strokeWidth={1.75} />
+          <span>Send Pass to Guest on WhatsApp</span>
         </a>
 
       </div>

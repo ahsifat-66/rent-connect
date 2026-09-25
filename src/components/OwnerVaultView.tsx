@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { ShieldCheck, AlertTriangle, MessageSquare, TrendingUp } from 'lucide-react';
 import { backend, BackendState } from '../services/backend';
 import { QuickReceiptModal } from './QuickReceiptModal';
 import { TelemetryDiagnosisModal } from './TelemetryDiagnosisModal';
@@ -100,13 +101,13 @@ export const OwnerVaultView: React.FC<OwnerVaultViewProps> = ({ onBack, onSelect
           </p>
         </div>
 
-        {/* Vacant Units (Amber/Blue) */}
-        <div className="rounded-[24px] p-3.5 sm:p-5 bg-gradient-to-br from-[#E58325] to-[#D97706] text-white shadow-lg shadow-amber-500/20 text-center space-y-0.5">
-          <div className="text-2xl sm:text-3xl lg:text-4xl font-black">
+        {/* Vacant Units */}
+        <div className="rounded-2xl p-3.5 sm:p-5 bg-amber-600 text-white shadow-sm text-center space-y-0.5">
+          <div className="text-2xl sm:text-3xl lg:text-4xl font-bold">
             {vacantUnits.length}
           </div>
-          <p className="text-[10px] sm:text-xs font-bold text-amber-100">
-            🟢 Vacant
+          <p className="text-[10px] sm:text-xs font-semibold text-amber-100">
+            Vacant Ready
           </p>
         </div>
 
@@ -120,7 +121,7 @@ export const OwnerVaultView: React.FC<OwnerVaultViewProps> = ({ onBack, onSelect
           return (
             <div key={floorNum} className="space-y-3">
               <div className="flex items-center justify-between">
-                <span className="inline-block px-3.5 py-1 rounded-full bg-[#121632] text-white text-xs font-black tracking-wide">
+                <span className="inline-block px-3 py-1 rounded-full bg-slate-900 dark:bg-slate-800 text-white text-xs font-semibold tracking-wide">
                   Floor {floorNum}
                 </span>
                 <span className="text-[11px] text-slate-400 font-medium">
@@ -138,16 +139,16 @@ export const OwnerVaultView: React.FC<OwnerVaultViewProps> = ({ onBack, onSelect
                     return (
                       <div
                         key={unit.id}
-                        className="rounded-[20px] p-3 bg-gradient-to-b from-[#FF4D2D] to-[#E63518] text-white shadow-lg shadow-red-500/35 text-center flex flex-col justify-between space-y-2 relative overflow-hidden animate-pulse">
+                        className="rounded-2xl p-3 bg-rose-600 text-white shadow-sm text-center flex flex-col justify-between space-y-2 relative overflow-hidden">
                         <div className="space-y-1">
                           <span className="w-6 h-6 mx-auto rounded-full bg-white/20 text-white flex items-center justify-center text-xs font-bold">
-                            ⚠️
+                            <AlertTriangle size={13} strokeWidth={2} />
                           </span>
-                          <h4 className="font-black text-sm">{unit.unitNumber}</h4>
-                          <p className="text-[10px] text-red-100 truncate font-semibold">
+                          <h4 className="font-bold text-sm">{unit.unitNumber}</h4>
+                          <p className="text-[10px] text-rose-100 truncate font-medium">
                             {unit.tenant?.name || 'Resident'}
                           </p>
-                          <div className="text-[10px] font-extrabold text-white uppercase tracking-wider">
+                          <div className="text-[10px] font-semibold text-white uppercase tracking-wider">
                             {alertItem?.type === 'gas_leak' ? 'Gas Alert' : 'Water Leak'}
                           </div>
                         </div>
@@ -160,7 +161,7 @@ export const OwnerVaultView: React.FC<OwnerVaultViewProps> = ({ onBack, onSelect
                               setDiagnosisUnit(unit.unitNumber);
                             }
                           }}
-                          className="w-full py-1.5 rounded-xl bg-black/20 hover:bg-black/30 text-[9px] font-black uppercase tracking-wider text-white active:scale-95 transition-all">
+                          className="w-full py-1.5 rounded-xl bg-black/20 hover:bg-black/30 text-[9px] font-semibold uppercase tracking-wider text-white active:scale-95 transition-all">
                           {alertItem?.type === 'gas_leak' ? 'SHUTOFF VALVE' : 'DIAGNOSIS'}
                         </button>
                       </div>
@@ -171,18 +172,18 @@ export const OwnerVaultView: React.FC<OwnerVaultViewProps> = ({ onBack, onSelect
                     return (
                       <div
                         key={unit.id}
-                        className="rounded-[20px] p-3 bg-emerald-50/50 dark:bg-emerald-950/20 border-2 border-dashed border-emerald-500/40 text-center flex flex-col justify-between space-y-2">
+                        className="rounded-2xl p-3 bg-emerald-500/5 dark:bg-emerald-950/20 border-2 border-dashed border-emerald-500/40 text-center flex flex-col justify-between space-y-2">
                         <div className="space-y-1">
-                          <span className="w-6 h-6 mx-auto rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-xs font-black">
-                            🟢
+                          <span className="w-6 h-6 mx-auto rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-xs font-semibold">
+                            <span className="w-2 h-2 rounded-full bg-emerald-500" />
                           </span>
-                          <h4 className="font-black text-sm text-emerald-800 dark:text-emerald-300">
+                          <h4 className="font-bold text-sm text-emerald-800 dark:text-emerald-300">
                             {unit.unitNumber}
                           </h4>
-                          <p className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">
+                          <p className="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold">
                             Vacant Ready
                           </p>
-                          <div className="font-mono font-black text-xs text-emerald-700 dark:text-emerald-300">
+                          <div className="font-mono font-bold text-xs text-emerald-700 dark:text-emerald-300">
                             ৳{unit.rentAmount.toLocaleString()}
                           </div>
                         </div>
@@ -192,7 +193,7 @@ export const OwnerVaultView: React.FC<OwnerVaultViewProps> = ({ onBack, onSelect
                             if (onSelectUnit) onSelectUnit(unit.unitNumber);
                             if (onShowToast) onShowToast(`Opening Flat ${unit.unitNumber} on Marketplace...`);
                           }}
-                          className="w-full py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-[10px] font-extrabold shadow-sm active:scale-95 transition-all">
+                          className="w-full py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-[10px] font-semibold shadow-sm active:scale-95 transition-all">
                           Market Flat
                         </button>
                       </div>
@@ -202,18 +203,18 @@ export const OwnerVaultView: React.FC<OwnerVaultViewProps> = ({ onBack, onSelect
                   return (
                     <div
                       key={unit.id}
-                      className="rounded-[20px] p-3 bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 shadow-sm text-center flex flex-col justify-between space-y-2">
+                      className="rounded-2xl p-3 bg-white dark:bg-[#161B22] border border-slate-200/80 dark:border-slate-800 shadow-sm text-center flex flex-col justify-between space-y-2">
                       <div className="space-y-1">
-                        <span className="w-6 h-6 mx-auto rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-[#00B665] flex items-center justify-center text-xs font-bold">
-                          🛡️
+                        <span className="w-6 h-6 mx-auto rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-xs font-semibold">
+                          <ShieldCheck size={13} strokeWidth={1.75} />
                         </span>
-                        <h4 className="font-black text-sm text-[#111827] dark:text-white">
+                        <h4 className="font-bold text-sm text-slate-900 dark:text-white">
                           {unit.unitNumber}
                         </h4>
                         <p className="text-[10px] text-slate-500 truncate">
                           {unit.tenant?.name || 'Verified Resident'}
                         </p>
-                        <div className="font-mono font-bold text-xs text-slate-800 dark:text-slate-200">
+                        <div className="font-mono font-semibold text-xs text-slate-800 dark:text-slate-200">
                           ৳{unit.rentAmount.toLocaleString()}
                         </div>
                       </div>
@@ -221,16 +222,16 @@ export const OwnerVaultView: React.FC<OwnerVaultViewProps> = ({ onBack, onSelect
                       <div className="flex gap-1.5 w-full">
                         <button
                           onClick={() => openReceiptForUnit(unit.unitNumber, unit.tenant?.name || 'Resident', unit.rentAmount)}
-                          className="flex-1 py-1.5 rounded-xl bg-slate-50 dark:bg-[#0D1117] text-[10px] font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 active:scale-95 transition-all">
-                          Quick Receipt
+                          className="flex-1 py-1.5 rounded-xl bg-slate-50 dark:bg-[#161B22] border border-slate-200/60 dark:border-slate-700 text-[10px] font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 active:scale-95 transition-all">
+                          Receipt
                         </button>
                         {onMessageTenant && (
                           <button
                             type="button"
                             onClick={() => onMessageTenant(unit.unitNumber)}
                             title={`Chat with resident of Flat ${unit.unitNumber}`}
-                            className="px-2.5 py-1.5 rounded-xl bg-purple-50 dark:bg-purple-950/40 text-purple-600 dark:text-purple-300 text-[11px] font-bold hover:bg-purple-100 active:scale-95 transition-all">
-                            💬
+                            className="px-2.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-[11px] font-semibold hover:bg-slate-200 dark:hover:bg-slate-700 active:scale-95 transition-all flex items-center justify-center">
+                            <MessageSquare size={13} strokeWidth={1.75} />
                           </button>
                         )}
                       </div>
@@ -244,10 +245,10 @@ export const OwnerVaultView: React.FC<OwnerVaultViewProps> = ({ onBack, onSelect
       </div>
 
       {/* 4. Portfolio Summary Card */}
-      <div className="rounded-[28px] p-5 sm:p-6 bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 shadow-[0_8px_30px_rgb(0,0,0,0.04)] space-y-3">
+      <div className="rounded-2xl p-5 sm:p-6 bg-white dark:bg-[#161B22] border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-3">
         <div className="flex items-center gap-2">
-          <span className="text-lg">📈</span>
-          <h3 className="font-extrabold text-base text-[#111827] dark:text-white">
+          <TrendingUp size={18} strokeWidth={1.75} className="text-emerald-600 dark:text-emerald-400" />
+          <h3 className="font-semibold text-base text-slate-900 dark:text-white">
             Portfolio Summary
           </h3>
         </div>

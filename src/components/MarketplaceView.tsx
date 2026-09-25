@@ -1,4 +1,17 @@
 import React, { useState } from 'react';
+import { 
+  Building2, 
+  Search, 
+  X, 
+  Check, 
+  Bed, 
+  Bath, 
+  Share2, 
+  Sparkles, 
+  Plus, 
+  Users, 
+  LayoutGrid 
+} from 'lucide-react';
 import { Unit } from '../types';
 import { backend } from '../services/backend';
 
@@ -72,7 +85,7 @@ export const MarketplaceView: React.FC<MarketplaceViewProps> = ({
           <button
             onClick={onOpenAddFlat}
             className="px-5 py-3 rounded-2xl bg-gradient-to-r from-[#00B665] to-[#009E54] hover:from-[#00A35B] hover:to-[#008C4A] text-white font-black text-xs sm:text-sm shadow-lg shadow-emerald-600/30 active:scale-95 transition-all flex items-center justify-center gap-2 shrink-0 self-start sm:self-auto">
-            <span className="text-base">+</span>
+            <Plus size={16} strokeWidth={2} />
             <span>Add Vacant Flat (নতুন ফ্ল্যাট)</span>
           </button>
         )}
@@ -93,18 +106,24 @@ export const MarketplaceView: React.FC<MarketplaceViewProps> = ({
           <div className="text-xl sm:text-2xl font-black text-emerald-600 dark:text-emerald-400">
             {vacantUnits.length}
           </div>
-          <p className="text-[11px] font-extrabold text-emerald-700 dark:text-emerald-300 uppercase tracking-wider mt-0.5">
-            🟢 Vacant Ready
-          </p>
+          <div className="flex items-center justify-center gap-1.5 mt-0.5">
+            <span className="w-2 h-2 rounded-full bg-emerald-500" />
+            <span className="text-[11px] font-extrabold text-emerald-700 dark:text-emerald-300 uppercase tracking-wider">
+              Vacant Ready
+            </span>
+          </div>
         </div>
 
         <div className="p-3.5 sm:p-4 rounded-2xl bg-slate-50 dark:bg-[#121632]/60 border border-slate-200 dark:border-slate-800 text-center">
           <div className="text-xl sm:text-2xl font-black text-slate-800 dark:text-slate-200">
             {occupiedUnits.length}
           </div>
-          <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mt-0.5">
-            👥 Occupied
-          </p>
+          <div className="flex items-center justify-center gap-1.5 mt-0.5">
+            <Users size={13} strokeWidth={1.75} className="text-slate-400" />
+            <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+              Occupied
+            </span>
+          </div>
         </div>
       </div>
 
@@ -120,14 +139,12 @@ export const MarketplaceView: React.FC<MarketplaceViewProps> = ({
             placeholder="Search by Flat number (e.g. 4A), amenities, or resident name..."
             className="w-full pl-10 pr-4 py-3 rounded-2xl bg-white dark:bg-[#161B22] border border-slate-200 dark:border-slate-800 text-xs text-[#111827] dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 shadow-sm"
           />
-          <span className="absolute left-3.5 top-3.5 text-slate-400 text-sm">
-            🔍
-          </span>
+          <Search size={16} strokeWidth={1.75} className="absolute left-3.5 top-3.5 text-slate-400" />
           {searchQuery && (
             <button
               onClick={() => setSearchQuery('')}
               className="absolute right-3.5 top-3 text-slate-400 hover:text-slate-600 font-bold text-xs">
-              ✕
+              <X size={14} strokeWidth={2} />
             </button>
           )}
         </div>
@@ -141,7 +158,8 @@ export const MarketplaceView: React.FC<MarketplaceViewProps> = ({
                 ? 'bg-[#121632] text-white shadow-md'
                 : 'bg-white dark:bg-[#161B22] border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:border-slate-400'
             }`}>
-            <span>✨ All Listings</span>
+            <LayoutGrid size={13} strokeWidth={1.75} />
+            <span>All Listings</span>
             <span className="px-1.5 py-0.2 rounded-full bg-white/20 text-[10px]">{safeUnits.length}</span>
           </button>
 
@@ -153,7 +171,7 @@ export const MarketplaceView: React.FC<MarketplaceViewProps> = ({
                 : 'bg-white dark:bg-[#161B22] border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:border-emerald-500'
             }`}>
             <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
-            <span>🟢 Vacant Only (খালি ফ্ল্যাট)</span>
+            <span>Vacant Only (খালি ফ্ল্যাট)</span>
             <span className="px-1.5 py-0.2 rounded-full bg-emerald-500/30 text-[10px]">{vacantUnits.length}</span>
           </button>
 
@@ -164,7 +182,8 @@ export const MarketplaceView: React.FC<MarketplaceViewProps> = ({
                 ? 'bg-[#121632] text-white shadow-md'
                 : 'bg-white dark:bg-[#161B22] border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:border-slate-400'
             }`}>
-            <span>👥 Occupied Units</span>
+            <Users size={13} strokeWidth={1.75} />
+            <span>Occupied Units</span>
             <span className="px-1.5 py-0.2 rounded-full bg-white/20 text-[10px]">{occupiedUnits.length}</span>
           </button>
         </div>
@@ -172,8 +191,8 @@ export const MarketplaceView: React.FC<MarketplaceViewProps> = ({
 
       {/* 4. Units Card Grid */}
       {filteredUnits.length === 0 ? (
-        <div className="p-10 rounded-[28px] bg-white dark:bg-[#161B22] border border-slate-200 dark:border-slate-800 text-center space-y-3">
-          <div className="text-4xl">🏢</div>
+        <div className="p-10 rounded-2xl bg-white dark:bg-[#161B22] border border-slate-200 dark:border-slate-800 text-center space-y-3">
+          <Building2 size={36} strokeWidth={1.75} className="mx-auto text-slate-400" />
           <h3 className="font-extrabold text-base text-[#111827] dark:text-white">
             No listings found
           </h3>
@@ -183,8 +202,9 @@ export const MarketplaceView: React.FC<MarketplaceViewProps> = ({
           {isOwner && (
             <button
               onClick={onOpenAddFlat}
-              className="px-4 py-2.5 rounded-xl bg-[#00B665] text-white font-bold text-xs shadow-md">
-              + Add Flat Now
+              className="px-4 py-2.5 rounded-xl bg-[#00B665] text-white font-bold text-xs shadow-md inline-flex items-center gap-1.5">
+              <Plus size={14} strokeWidth={2} />
+              <span>Add Flat Now</span>
             </button>
           )}
         </div>
@@ -206,7 +226,7 @@ export const MarketplaceView: React.FC<MarketplaceViewProps> = ({
             return (
               <div
                 key={unit.id}
-                className="rounded-[28px] overflow-hidden bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+                className="rounded-2xl overflow-hidden bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
                 
                 {/* Photo & Rent Floating Tag */}
                 <div className="relative h-48 sm:h-52 overflow-hidden bg-slate-900">
@@ -219,7 +239,7 @@ export const MarketplaceView: React.FC<MarketplaceViewProps> = ({
                   {/* Vacancy Status Badge */}
                   <div className="absolute top-3 left-3">
                     {isVacant ? (
-                      <span className="px-3 py-1 rounded-full bg-emerald-600/95 backdrop-blur-md text-white font-black text-[10px] tracking-wider uppercase shadow-lg border border-emerald-400/40 flex items-center gap-1.5 animate-pulse">
+                      <span className="px-3 py-1 rounded-full bg-emerald-600/95 backdrop-blur-md text-white font-black text-[10px] tracking-wider uppercase shadow-lg border border-emerald-400/40 flex items-center gap-1.5">
                         <span className="w-1.5 h-1.5 rounded-full bg-white"></span>
                         VACANT · READY TO MOVE
                       </span>
@@ -252,17 +272,20 @@ export const MarketplaceView: React.FC<MarketplaceViewProps> = ({
                         </p>
                       </div>
 
-                      <div className="flex items-center gap-2 text-xs font-bold text-slate-600 dark:text-slate-300 bg-slate-50 dark:bg-[#0D1117] px-2.5 py-1 rounded-xl border border-slate-200 dark:border-slate-800">
-                        <span>🛏️ {beds}</span>
+                      <div className="flex items-center gap-2.5 text-xs font-bold text-slate-600 dark:text-slate-300 bg-slate-50 dark:bg-[#0D1117] px-2.5 py-1 rounded-xl border border-slate-200 dark:border-slate-800">
+                        <span className="flex items-center gap-1"><Bed size={13} strokeWidth={1.75} /> {beds}</span>
                         <span>·</span>
-                        <span>🚿 {baths}</span>
+                        <span className="flex items-center gap-1"><Bath size={13} strokeWidth={1.75} /> {baths}</span>
                       </div>
                     </div>
 
                     {/* Resident Info or Vacancy Notice */}
                     {isVacant ? (
                       <div className="p-2.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-500/20 text-xs text-emerald-800 dark:text-emerald-300 flex items-center justify-between">
-                        <span className="font-bold">✨ Available for immediate lease</span>
+                        <div className="flex items-center gap-1.5 font-bold">
+                          <Sparkles size={13} strokeWidth={1.75} className="text-emerald-500" />
+                          <span>Available for immediate lease</span>
+                        </div>
                         <span className="text-[10px] font-black uppercase text-emerald-600 bg-white dark:bg-[#161B22] px-2 py-0.5 rounded-md">
                           Floor {String(unit.unitNumber).replace(/\D/g, '') || '4'}
                         </span>
@@ -271,7 +294,7 @@ export const MarketplaceView: React.FC<MarketplaceViewProps> = ({
                       <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-[#0D1117] border border-slate-200 dark:border-slate-800 text-xs flex items-center justify-between">
                         <div className="flex items-center gap-2">
                           <span className="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-600 flex items-center justify-center text-[10px] font-black">
-                            ✓
+                            <Check size={11} strokeWidth={2.5} />
                           </span>
                           <span className="font-bold text-slate-700 dark:text-slate-200 truncate">
                             {tenantName}
@@ -319,12 +342,12 @@ export const MarketplaceView: React.FC<MarketplaceViewProps> = ({
                     {/* WhatsApp Syndication Button */}
                     <a
                       href={`https://api.whatsapp.com/send?text=${encodeURIComponent(
-                        `✨ LUXURY FLAT AVAILABLE FOR RENT ✨\n\n🏢 Unit: Flat ${unit.unitNumber} (${sqft} Sq. Ft.)\n📍 Location: ${unit.building || 'Gulshan Luxury Tower'}, Gulshan-2, Dhaka\n💰 Asking Rent: ৳${rent.toLocaleString()} / month\n🛏️ Rooms: ${beds} Bedrooms, ${baths} Bathrooms\n🌟 Highlights: ${amenitiesList.join(', ') || 'Lift, Generator Backup, 24/7 Security'}\n\nManaged by Md ABID HASAN SIFAT via RentConnect. Contact directly for private viewing.`
+                        `LUXURY FLAT AVAILABLE FOR RENT\n\nUnit: Flat ${unit.unitNumber} (${sqft} Sq. Ft.)\nLocation: ${unit.building || 'Gulshan Luxury Tower'}, Gulshan-2, Dhaka\nAsking Rent: ৳${rent.toLocaleString()} / month\nRooms: ${beds} Bedrooms, ${baths} Bathrooms\nHighlights: ${amenitiesList.join(', ') || 'Lift, Generator Backup, 24/7 Security'}\n\nManaged by Md ABID HASAN SIFAT via RentConnect. Contact directly for private viewing.`
                       )}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="w-full py-2.5 px-3 bg-[#25D366] hover:bg-[#1ebd59] text-white font-extrabold text-xs rounded-xl flex items-center justify-center gap-2 active:scale-95 shadow transition-all">
-                      <span>📱</span>
+                      <Share2 size={14} strokeWidth={1.75} />
                       <span>Share on WhatsApp</span>
                     </a>
 

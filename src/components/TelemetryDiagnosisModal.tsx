@@ -1,4 +1,5 @@
 import React from 'react';
+import { AlertTriangle, X, Wrench } from 'lucide-react';
 import { backend } from '../services/backend';
 
 interface TelemetryDiagnosisModalProps {
@@ -24,20 +25,22 @@ export const TelemetryDiagnosisModal: React.FC<TelemetryDiagnosisModalProps> = (
 
   return (
     <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-end sm:items-center justify-center p-0 sm:p-4 animate-fade-in">
-      <div className="card-luxury w-full max-w-md bg-white dark:bg-[#161B22] p-6 rounded-b-none sm:rounded-b-[28px] space-y-4 border border-slate-200 dark:border-slate-800 shadow-2xl">
+      <div className="card-luxury w-full max-w-md bg-white dark:bg-[#161B22] p-6 rounded-b-none sm:rounded-2xl space-y-4 border border-slate-200 dark:border-slate-800 shadow-2xl">
         
         {/* Header */}
         <div className="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-3">
           <div className="flex items-center gap-2">
-            <span className="w-8 h-8 rounded-xl bg-red-100 dark:bg-red-950 text-red-600 flex items-center justify-center text-sm font-bold">
-              ⚠️
+            <span className="w-8 h-8 rounded-xl bg-red-100 dark:bg-red-950 text-red-600 flex items-center justify-center font-bold">
+              <AlertTriangle size={16} strokeWidth={2} />
             </span>
             <div>
               <h3 className="font-extrabold text-base text-[#111827] dark:text-white">Water Telemetry Diagnosis</h3>
               <p className="text-[11px] text-slate-400">IoT Submeter Sensor Diagnostic</p>
             </div>
           </div>
-          <button onClick={onClose} className="text-xl font-bold text-slate-400 hover:text-slate-600">✕</button>
+          <button onClick={onClose} className="p-1 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-white">
+            <X size={18} strokeWidth={1.75} />
+          </button>
         </div>
         
         {/* Diagnosis Data */}
@@ -67,8 +70,9 @@ export const TelemetryDiagnosisModal: React.FC<TelemetryDiagnosisModalProps> = (
         {/* Dispatch Action */}
         <button
           onClick={handleDispatchPlumber}
-          className="w-full py-3.5 bg-[#00B665] hover:bg-[#009E54] text-white font-bold text-xs rounded-2xl shadow active:scale-95 transition-all flex items-center justify-center gap-2">
-          <span>🔧</span> Dispatch Emergency Plumber to Flat {unitNumber} →
+          className="w-full py-3.5 bg-[#00B665] hover:bg-[#009E54] text-white font-bold text-xs rounded-xl shadow active:scale-95 transition-all flex items-center justify-center gap-2">
+          <Wrench size={14} strokeWidth={1.75} />
+          <span>Dispatch Emergency Plumber to Flat {unitNumber} &rarr;</span>
         </button>
 
       </div>

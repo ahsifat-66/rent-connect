@@ -1,4 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { 
+  ArrowLeft, 
+  Phone, 
+  Paperclip, 
+  Send, 
+  CheckCheck, 
+  Crown 
+} from 'lucide-react';
 import { User, ChatMessage } from '../types';
 import { backend } from '../services/backend';
 
@@ -57,10 +65,10 @@ export const TenantChatWithOwnerView: React.FC<TenantChatWithOwnerViewProps> = (
   }, [messages, isTyping]);
 
   const quickPills = [
-    '📄 Can you confirm my latest rent receipt?',
-    '🚰 I reported a bathroom tap issue.',
-    '🅿️ Can my guest use parking slot P-14?',
-    '⚡ When is the next DESCO recharge cycle?'
+    'Can you confirm my latest rent receipt?',
+    'I reported a bathroom tap issue.',
+    'Can my guest use parking slot P-14?',
+    'When is the next DESCO recharge cycle?'
   ];
 
   const handleSendMessage = (textToSend?: string) => {
@@ -105,13 +113,13 @@ export const TenantChatWithOwnerView: React.FC<TenantChatWithOwnerViewProps> = (
 
       setMessages(prev => [...prev, replyMsg]);
       if (onShowToast) {
-        onShowToast("💬 New reply from House Owner: Md ABID HASAN SIFAT");
+        onShowToast("New reply from House Owner: Md ABID HASAN SIFAT");
       }
     }, 1300);
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-140px)] md:h-[calc(100vh-160px)] min-h-[560px] w-full max-w-5xl mx-auto bg-white dark:bg-[#161B22] rounded-[32px] border border-slate-100 dark:border-slate-800 shadow-xl overflow-hidden animate-fade-in">
+    <div className="flex flex-col h-[calc(100vh-140px)] md:h-[calc(100vh-160px)] min-h-[560px] w-full max-w-5xl mx-auto bg-white dark:bg-[#161B22] rounded-2xl border border-slate-100 dark:border-slate-800 shadow-xl overflow-hidden animate-fade-in">
       
       {/* 1. Owner Profile Header */}
       <div className="p-4 bg-gradient-to-r from-[#121632] via-[#1E2348] to-[#121632] text-white flex items-center justify-between shadow-md shrink-0">
@@ -119,10 +127,10 @@ export const TenantChatWithOwnerView: React.FC<TenantChatWithOwnerViewProps> = (
           <button
             onClick={onBack}
             className="w-9 h-9 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center font-bold text-sm active:scale-95 transition-all shrink-0">
-            ←
+            <ArrowLeft size={16} strokeWidth={1.75} />
           </button>
 
-          <div className="relative w-11 h-11 rounded-2xl overflow-hidden ring-2 ring-emerald-500 shrink-0">
+          <div className="relative w-11 h-11 rounded-xl overflow-hidden ring-2 ring-emerald-500 shrink-0">
             <img
               src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=60"
               alt="Owner"
@@ -136,8 +144,9 @@ export const TenantChatWithOwnerView: React.FC<TenantChatWithOwnerViewProps> = (
               <h3 className="font-extrabold text-sm truncate">
                 Md ABID HASAN SIFAT
               </h3>
-              <span className="text-[10px] bg-amber-500/20 text-amber-300 font-bold px-1.5 py-0.2 rounded">
-                👑 Landlord
+              <span className="text-[10px] bg-amber-500/20 text-amber-300 font-bold px-1.5 py-0.5 rounded flex items-center gap-1">
+                <Crown size={11} strokeWidth={2} />
+                <span>Landlord</span>
               </span>
             </div>
             <p className="text-[11px] text-emerald-300 font-medium flex items-center gap-1">
@@ -150,7 +159,7 @@ export const TenantChatWithOwnerView: React.FC<TenantChatWithOwnerViewProps> = (
         <a
           href="tel:+8801911554433"
           className="w-9 h-9 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white flex items-center justify-center text-sm shadow-md active:scale-95 transition-all shrink-0">
-          📞
+          <Phone size={15} strokeWidth={1.75} />
         </a>
       </div>
 
@@ -174,7 +183,7 @@ export const TenantChatWithOwnerView: React.FC<TenantChatWithOwnerViewProps> = (
             className={`flex flex-col ${msg.isMe ? 'items-end' : 'items-start'}`}>
             
             <div
-              className={`max-w-[82%] sm:max-w-[75%] p-3.5 rounded-[22px] text-xs sm:text-sm leading-relaxed shadow-sm ${
+              className={`max-w-[82%] sm:max-w-[75%] p-3.5 rounded-2xl text-xs sm:text-sm leading-relaxed shadow-sm ${
                 msg.isMe
                   ? 'bg-gradient-to-r from-[#00B665] to-[#009E54] text-white rounded-tr-sm'
                   : 'bg-white dark:bg-[#161B22] text-[#111827] dark:text-slate-100 border border-slate-100 dark:border-slate-800 rounded-tl-sm'
@@ -184,7 +193,7 @@ export const TenantChatWithOwnerView: React.FC<TenantChatWithOwnerViewProps> = (
 
             <span className="text-[10px] text-slate-400 font-medium mt-1 px-1 flex items-center gap-1">
               <span>{msg.time}</span>
-              {msg.isMe && <span className="text-emerald-500 font-bold">✓✓</span>}
+              {msg.isMe && <CheckCheck size={12} strokeWidth={2} className="text-emerald-500" />}
             </span>
           </div>
         ))}
@@ -212,10 +221,10 @@ export const TenantChatWithOwnerView: React.FC<TenantChatWithOwnerViewProps> = (
         <button
           type="button"
           onClick={() => {
-            if (onShowToast) onShowToast("📎 Attach rent payment slip or photo of flat");
+            if (onShowToast) onShowToast("Attach rent payment slip or photo of flat");
           }}
-          className="w-10 h-10 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-500 flex items-center justify-center text-base hover:bg-slate-200 active:scale-95 shrink-0">
-          📎
+          className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-500 flex items-center justify-center hover:bg-slate-200 active:scale-95 shrink-0 transition-colors">
+          <Paperclip size={16} strokeWidth={1.75} />
         </button>
 
         <input
@@ -223,18 +232,18 @@ export const TenantChatWithOwnerView: React.FC<TenantChatWithOwnerViewProps> = (
           value={inputMsg}
           onChange={(e) => setInputMsg(e.target.value)}
           placeholder="Message Md ABID HASAN SIFAT..."
-          className="flex-1 px-4 py-2.5 rounded-2xl bg-slate-100 dark:bg-[#0D1117] border border-transparent focus:border-emerald-500 text-xs sm:text-sm text-[#111827] dark:text-white focus:outline-none"
+          className="flex-1 px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-[#0D1117] border border-transparent focus:border-emerald-500 text-xs sm:text-sm text-[#111827] dark:text-white focus:outline-none"
         />
 
         <button
           type="submit"
           disabled={!inputMsg.trim()}
-          className={`w-10 h-10 rounded-2xl flex items-center justify-center text-white text-base shadow transition-all shrink-0 active:scale-95 ${
+          className={`w-10 h-10 rounded-xl flex items-center justify-center text-white shadow transition-all shrink-0 active:scale-95 ${
             inputMsg.trim()
               ? 'bg-[#00B665] hover:bg-[#009E54]'
               : 'bg-slate-300 dark:bg-slate-700 cursor-not-allowed'
           }`}>
-          ➤
+          <Send size={15} strokeWidth={2} />
         </button>
       </form>
 

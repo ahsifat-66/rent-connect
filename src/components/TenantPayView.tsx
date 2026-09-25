@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { CreditCard, ShieldCheck, FileText } from 'lucide-react';
 import { User, RentReceipt } from '../types';
 import { backend, BackendState } from '../services/backend';
 import { QuickReceiptModal } from './QuickReceiptModal';
@@ -49,25 +50,25 @@ export const TenantPayView: React.FC<TenantPayViewProps> = ({ user, onOpenRentPa
               </p>
             </div>
 
-            {/* White Pay with bKash Button */}
+            {/* Pay with bKash Button */}
             <button
               onClick={onOpenRentPay}
-              className="w-full py-3.5 rounded-2xl bg-white hover:bg-slate-50 active:scale-98 text-slate-900 font-extrabold text-sm shadow-md flex items-center justify-center gap-2.5 transition-all">
-              <span className="w-6 h-5 rounded bg-[#E2136E] text-white flex items-center justify-center text-[10px] font-bold">
-                💳
+              className="w-full py-3 rounded-xl bg-white hover:bg-slate-50 active:scale-98 text-slate-900 font-semibold text-xs tracking-wider shadow-sm flex items-center justify-center gap-2 transition-all">
+              <span className="w-5 h-5 rounded bg-[#E2136E] text-white flex items-center justify-center text-[10px]">
+                <CreditCard size={11} strokeWidth={2} />
               </span>
-              <span className="text-[#111827]">Pay with bKash</span>
+              <span>Pay with bKash</span>
             </button>
           </div>
 
           {/* 2. Security Deposit Card */}
-          <div className="rounded-[28px] p-5 sm:p-6 bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 shadow-[0_8px_30px_rgb(0,0,0,0.04)] space-y-4">
+          <div className="rounded-2xl p-5 sm:p-6 bg-white dark:bg-[#161B22] border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-sky-100 dark:bg-sky-950/60 text-sky-600 flex items-center justify-center text-lg shrink-0">
-                🛡️
+              <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 text-sky-600 dark:text-sky-400 flex items-center justify-center shrink-0">
+                <ShieldCheck size={18} strokeWidth={1.75} />
               </div>
               <div>
-                <h3 className="font-extrabold text-base text-[#111827] dark:text-white leading-tight">
+                <h3 className="font-semibold text-base text-slate-900 dark:text-white leading-tight">
                   Security Deposit
                 </h3>
                 <p className="text-xs text-slate-400 font-medium">
@@ -80,14 +81,14 @@ export const TenantPayView: React.FC<TenantPayViewProps> = ({ user, onOpenRentPa
             <div className="space-y-3 pt-2 text-xs">
               <div className="flex items-center justify-between">
                 <span className="text-slate-500 dark:text-slate-400 font-medium">Total Amount</span>
-                <strong className="text-base font-black text-[#111827] dark:text-white font-mono">
+                <strong className="text-base font-bold text-slate-900 dark:text-white font-mono">
                   ৳{user.securityDeposit ? user.securityDeposit.toLocaleString() : '56,000'}
                 </strong>
               </div>
 
               <div className="flex items-center justify-between">
                 <span className="text-slate-500 dark:text-slate-400 font-medium">Status</span>
-                <strong className="font-bold text-[#00B665]">
+                <strong className="font-semibold text-emerald-600 dark:text-emerald-400">
                   Held in Escrow
                 </strong>
               </div>
@@ -104,9 +105,9 @@ export const TenantPayView: React.FC<TenantPayViewProps> = ({ user, onOpenRentPa
 
         {/* Right Column (7 cols): Receipt Vault Card */}
         <div className="lg:col-span-7">
-          <div className="rounded-[28px] p-5 sm:p-6 bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 shadow-[0_8px_30px_rgb(0,0,0,0.04)] space-y-4">
+          <div className="rounded-2xl p-5 sm:p-6 bg-white dark:bg-[#161B22] border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-4">
             <div className="flex items-center justify-between">
-              <h3 className="font-extrabold text-base text-[#111827] dark:text-white">
+              <h3 className="font-semibold text-base text-slate-900 dark:text-white">
                 Receipt Vault
               </h3>
               <span className="text-xs text-slate-400 font-medium">
@@ -120,9 +121,9 @@ export const TenantPayView: React.FC<TenantPayViewProps> = ({ user, onOpenRentPa
                 <div
                   key={rec.id}
                   onClick={() => setSelectedReceipt(rec)}
-                  className="p-4 rounded-2xl bg-slate-50 dark:bg-[#0D1117] border border-slate-100 dark:border-slate-800 hover:border-emerald-500/40 cursor-pointer flex items-center justify-between transition-all">
+                  className="p-4 rounded-xl bg-slate-50 dark:bg-[#161B22] border border-slate-200/80 dark:border-slate-800 hover:border-emerald-500/40 cursor-pointer flex items-center justify-between transition-all">
                   <div>
-                    <h4 className="font-extrabold text-sm text-[#111827] dark:text-white">
+                    <h4 className="font-semibold text-sm text-slate-900 dark:text-white">
                       {rec.month}
                     </h4>
                     <p className="text-xs text-slate-400 font-medium mt-0.5">
@@ -132,16 +133,16 @@ export const TenantPayView: React.FC<TenantPayViewProps> = ({ user, onOpenRentPa
 
                   <div className="flex items-center gap-3">
                     <div className="text-right">
-                      <div className="text-sm font-black text-[#111827] dark:text-white font-mono">
+                      <div className="text-sm font-bold text-slate-900 dark:text-white font-mono">
                         ৳{rec.amount.toLocaleString()}
                       </div>
-                      <div className="text-[11px] font-bold text-[#00B665]">
+                      <div className="text-[11px] font-semibold text-emerald-600 dark:text-emerald-400">
                         Paid
                       </div>
                     </div>
 
-                    <div className="w-9 h-9 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#161B22] hover:bg-slate-100 text-slate-700 dark:text-slate-200 flex items-center justify-center text-sm shadow-sm">
-                      📄
+                    <div className="w-8 h-8 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#161B22] hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 flex items-center justify-center text-sm shadow-sm">
+                      <FileText size={15} strokeWidth={1.75} />
                     </div>
                   </div>
                 </div>

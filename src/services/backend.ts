@@ -854,7 +854,7 @@ class BackendService {
   public triggerSos(unitNumber = '2B') {
     this.state.recentActivities.unshift({
       id: `act-${Date.now()}`,
-      text: `🚨 EMERGENCY SOS triggered from Unit ${unitNumber}!`,
+      text: `EMERGENCY SOS triggered from Unit ${unitNumber}!`,
       time: 'Just now',
       type: 'warning'
     });

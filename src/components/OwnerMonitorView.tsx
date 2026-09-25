@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Droplets, Zap, Flame, AlertTriangle, ArrowLeft } from 'lucide-react';
 import { backend, BackendState } from '../services/backend';
 import { TelemetryDiagnosisModal } from './TelemetryDiagnosisModal';
 import { UnitSubmeterDetailModal, UnitSubmeterData } from './UnitSubmeterDetailModal';
@@ -168,7 +169,7 @@ export const OwnerMonitorView: React.FC<OwnerMonitorViewProps> = ({ onBack, onSh
     { day: 'Wed', water: 132, waterCost: '৳2.18', elec: 42, elecCost: '৳344.40', isWaterLeak: false, isElecPeak: false, desc: 'Routine tank fill cycle' },
     { day: 'Thu', water: 120, waterCost: '৳1.98', elec: 39, elecCost: '৳319.80', isWaterLeak: false, isElecPeak: false, desc: 'Normal weekday baseline' },
     { day: 'Fri', water: 145, waterCost: '৳2.39', elec: 48, elecCost: '৳393.60', isWaterLeak: false, isElecPeak: false, desc: 'Jumma prayer & guest peak' },
-    { day: 'Sat', water: 420, waterCost: '৳6.93', elec: 52, elecCost: '৳426.40', isWaterLeak: true, isElecPeak: true, desc: '⚠️ Water Leak Spike (Flat 1B) & Weekend AC Peak' },
+    { day: 'Sat', water: 420, waterCost: '৳6.93', elec: 52, elecCost: '৳426.40', isWaterLeak: true, isElecPeak: true, desc: 'Water Leak Spike (Flat 1B) & Weekend AC Peak' },
     { day: 'Sun', water: 135, waterCost: '৳2.23', elec: 46, elecCost: '৳377.20', isWaterLeak: false, isElecPeak: false, desc: 'Post-inspection baseline' }
   ];
 
@@ -258,16 +259,22 @@ export const OwnerMonitorView: React.FC<OwnerMonitorViewProps> = ({ onBack, onSh
         </div>
 
         <div className="grid grid-cols-3 gap-2 pt-1 text-[11px]">
-          <div className="p-2 rounded-xl bg-sky-50 dark:bg-sky-950/40 border border-sky-100 dark:border-sky-900/50">
-            <span className="text-sky-700 dark:text-sky-300 font-bold block">💧 DWASA Water</span>
+          <div className="p-2 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/60 dark:border-slate-800">
+            <span className="text-sky-600 dark:text-sky-400 font-semibold flex items-center gap-1.5 mb-0.5">
+              <Droplets size={13} strokeWidth={1.75} /> DWASA Water
+            </span>
             <span className="font-mono text-[10px] text-slate-600 dark:text-slate-400">14.8 L/min · 2.8 bar</span>
           </div>
-          <div className="p-2 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-100 dark:border-amber-900/50">
-            <span className="text-amber-700 dark:text-amber-300 font-bold block">⚡ DESCO Grid</span>
+          <div className="p-2 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/60 dark:border-slate-800">
+            <span className="text-amber-600 dark:text-amber-400 font-semibold flex items-center gap-1.5 mb-0.5">
+              <Zap size={13} strokeWidth={1.75} /> DESCO Grid
+            </span>
             <span className="font-mono text-[10px] text-slate-600 dark:text-slate-400">226.4V · PF 0.98</span>
           </div>
-          <div className="p-2 rounded-xl bg-purple-50 dark:bg-purple-950/40 border border-purple-100 dark:border-purple-900/50">
-            <span className="text-purple-700 dark:text-purple-300 font-bold block">🔥 Titas Gas</span>
+          <div className="p-2 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/60 dark:border-slate-800">
+            <span className="text-purple-600 dark:text-purple-400 font-semibold flex items-center gap-1.5 mb-0.5">
+              <Flame size={13} strokeWidth={1.75} /> Titas Gas
+            </span>
             <span className="font-mono text-[10px] text-slate-600 dark:text-slate-400">0.52 PSI Normal</span>
           </div>
         </div>
@@ -275,68 +282,68 @@ export const OwnerMonitorView: React.FC<OwnerMonitorViewProps> = ({ onBack, onSh
 
       {/* 3. Leak Alert Detected Banner */}
       {waterLeak && (
-        <div className="rounded-[28px] p-5 sm:p-6 bg-gradient-to-r from-[#FF4D2D] via-[#FF3B30] to-[#E63518] text-white shadow-xl shadow-red-500/20 space-y-4">
+        <div className="rounded-2xl p-5 sm:p-6 bg-rose-600 text-white shadow-lg shadow-rose-500/10 border border-rose-500 space-y-4">
           <div className="flex items-start gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center text-xl shrink-0 border border-white/20">
-              ⚠️
+            <div className="w-10 h-10 rounded-xl bg-white/15 backdrop-blur-md flex items-center justify-center shrink-0 border border-white/20">
+              <AlertTriangle size={20} strokeWidth={1.75} className="text-white" />
             </div>
             <div>
-              <h3 className="font-black text-base sm:text-lg tracking-tight">
+              <h3 className="font-semibold text-base sm:text-lg tracking-tight">
                 Leak Alert Detected
               </h3>
-              <p className="text-xs text-red-100 font-medium mt-0.5">
+              <p className="text-xs text-rose-100 font-medium mt-0.5">
                 Abnormal continuous water flow in Flat 1B (Karim Ahmed)
               </p>
             </div>
           </div>
 
           <div className="flex items-center justify-between gap-2 pt-1">
-            <span className="px-3 py-1.5 rounded-full bg-black/20 text-white text-xs font-black font-mono">
+            <span className="px-3 py-1.5 rounded-full bg-black/20 text-white text-xs font-semibold font-mono">
               420 L/day (↑235% Spike · Est. ৳6.93/day)
             </span>
 
             <button
               onClick={() => setShowLeakModal(true)}
-              className="px-4 py-2 rounded-xl bg-white text-[#FF3B30] hover:bg-red-50 font-black text-xs uppercase tracking-wider shadow active:scale-95 transition-all">
-              VIEW DETAILS
+              className="px-4 py-2 rounded-xl bg-white text-rose-600 hover:bg-rose-50 font-semibold text-xs uppercase tracking-wider shadow-sm active:scale-95 transition-all">
+              View Details
             </button>
           </div>
         </div>
       )}
 
       {/* 4. Filter Segmented Control */}
-      <div className="flex items-center justify-between p-1 rounded-2xl bg-white dark:bg-[#161B22] border border-slate-200 dark:border-slate-800 shadow-sm">
+      <div className="flex items-center justify-between p-1 rounded-xl bg-white dark:bg-[#161B22] border border-slate-200 dark:border-slate-800 shadow-sm">
         <button
           onClick={() => setFilter('both')}
-          className={`flex-1 py-2.5 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-1.5 ${
+          className={`flex-1 py-2 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1.5 ${
             filter === 'both'
-              ? 'bg-[#121632] text-white shadow-sm ring-1 ring-white/10'
+              ? 'bg-slate-900 text-white dark:bg-slate-800 dark:text-white shadow-sm'
               : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
           }`}>
-          <span className="w-2 h-2 rounded-full bg-gradient-to-r from-[#00B665] to-[#E58325]"></span>
-          Both (2 Lines)
+          <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+          Both (2 Streams)
         </button>
 
         <button
           onClick={() => setFilter('water')}
-          className={`flex-1 py-2.5 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-1.5 ${
+          className={`flex-1 py-2 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1.5 ${
             filter === 'water'
-              ? 'bg-[#00B665] text-white shadow-sm'
+              ? 'bg-emerald-600 text-white shadow-sm'
               : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
           }`}>
-          <span className="w-2 h-2 rounded-full bg-sky-400"></span>
-          💧 Water (L)
+          <Droplets size={13} strokeWidth={1.75} />
+          <span>Water (L)</span>
         </button>
 
         <button
           onClick={() => setFilter('electricity')}
-          className={`flex-1 py-2.5 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-1.5 ${
+          className={`flex-1 py-2 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1.5 ${
             filter === 'electricity'
-              ? 'bg-[#E58325] text-white shadow-sm'
+              ? 'bg-amber-600 text-white shadow-sm'
               : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
           }`}>
-          <span className="w-2 h-2 rounded-full bg-amber-300"></span>
-          ⚡ Electricity (kWh)
+          <Zap size={13} strokeWidth={1.75} />
+          <span>Electricity (kWh)</span>
         </button>
       </div>
 
@@ -355,17 +362,17 @@ export const OwnerMonitorView: React.FC<OwnerMonitorViewProps> = ({ onBack, onSh
           </div>
 
           {/* Interactive Legends */}
-          <div className="flex items-center gap-3 text-xs font-bold font-mono">
+          <div className="flex items-center gap-3 text-xs font-semibold font-mono">
             {(filter === 'both' || filter === 'water') && (
-              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 text-[#00B665] dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800/50">
-                <span className="w-2.5 h-1 rounded-full bg-[#00B665]"></span>
-                <span>💧 Water (L)</span>
+              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800/50">
+                <Droplets size={12} strokeWidth={1.75} />
+                <span>Water (L)</span>
               </div>
             )}
             {(filter === 'both' || filter === 'electricity') && (
-              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-amber-50 dark:bg-amber-950/40 text-[#E58325] dark:text-amber-400 border border-amber-200 dark:border-amber-800/50">
-                <span className="w-2.5 h-1 rounded-full bg-[#E58325]"></span>
-                <span>⚡ Elec (kWh)</span>
+              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 border border-amber-200 dark:border-amber-800/50">
+                <Zap size={12} strokeWidth={1.75} />
+                <span>Elec (kWh)</span>
               </div>
             )}
           </div>
@@ -450,8 +457,8 @@ export const OwnerMonitorView: React.FC<OwnerMonitorViewProps> = ({ onBack, onSh
                 x={padL - 6}
                 y={padT - 10}
                 textAnchor="end"
-                className="fill-[#00B665] font-black text-[9px] uppercase tracking-wider">
-                💧 Liter
+                className="fill-emerald-600 dark:fill-emerald-400 font-semibold text-[9px] uppercase tracking-wider">
+                Liters
               </text>
             )}
             {(filter === 'both' || filter === 'electricity') && (
@@ -459,8 +466,8 @@ export const OwnerMonitorView: React.FC<OwnerMonitorViewProps> = ({ onBack, onSh
                 x={svgW - padR + 6}
                 y={padT - 10}
                 textAnchor="start"
-                className="fill-[#E58325] font-black text-[9px] uppercase tracking-wider">
-                ⚡ kWh
+                className="fill-amber-600 dark:fill-amber-400 font-semibold text-[9px] uppercase tracking-wider">
+                kWh
               </text>
             )}
 
@@ -622,24 +629,24 @@ export const OwnerMonitorView: React.FC<OwnerMonitorViewProps> = ({ onBack, onSh
               {/* Water Metric */}
               <div className={`p-3 rounded-xl border ${
                 selectedData.isWaterLeak
-                  ? 'bg-red-500/10 border-red-400 dark:border-red-800'
+                  ? 'bg-rose-500/10 border-rose-400 dark:border-rose-800'
                   : 'bg-emerald-500/5 dark:bg-emerald-950/20 border-emerald-500/20'
               }`}>
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-extrabold text-[#00B665] flex items-center gap-1">
-                    💧 Water (DWASA)
+                  <span className="font-semibold text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
+                    <Droplets size={13} strokeWidth={1.75} /> Water (DWASA)
                   </span>
                   {selectedData.isWaterLeak && (
-                    <span className="bg-red-500 text-white text-[9px] font-black px-1.5 py-0.5 rounded-full uppercase animate-pulse">
-                      LEAK SPIKE
+                    <span className="bg-rose-600 text-white text-[9px] font-semibold px-1.5 py-0.5 rounded-full uppercase">
+                      Leak Spike
                     </span>
                   )}
                 </div>
-                <div className="text-lg font-black text-[#111827] dark:text-white font-mono mt-1">
+                <div className="text-lg font-bold text-slate-900 dark:text-white font-mono mt-1">
                   {selectedData.water} Liters
                 </div>
                 <div className="text-[11px] text-slate-500 dark:text-slate-400 font-mono mt-0.5">
-                  Est. Daily Cost: <strong className="text-emerald-600 dark:text-emerald-400">{selectedData.waterCost}</strong>
+                  Est. Daily Cost: <strong className="text-emerald-600 dark:text-emerald-400 font-semibold">{selectedData.waterCost}</strong>
                 </div>
               </div>
 
@@ -650,20 +657,20 @@ export const OwnerMonitorView: React.FC<OwnerMonitorViewProps> = ({ onBack, onSh
                   : 'bg-amber-500/5 dark:bg-amber-950/20 border-amber-500/20'
               }`}>
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-extrabold text-[#E58325] flex items-center gap-1">
-                    ⚡ Electricity (DESCO)
+                  <span className="font-semibold text-amber-600 dark:text-amber-400 flex items-center gap-1.5">
+                    <Zap size={13} strokeWidth={1.75} /> Electricity (DESCO)
                   </span>
                   {selectedData.isElecPeak && (
-                    <span className="bg-amber-500 text-white text-[9px] font-black px-1.5 py-0.5 rounded-full uppercase">
-                      PEAK LOAD
+                    <span className="bg-amber-600 text-white text-[9px] font-semibold px-1.5 py-0.5 rounded-full uppercase">
+                      Peak Load
                     </span>
                   )}
                 </div>
-                <div className="text-lg font-black text-[#111827] dark:text-white font-mono mt-1">
+                <div className="text-lg font-bold text-slate-900 dark:text-white font-mono mt-1">
                   {selectedData.elec} kWh
                 </div>
                 <div className="text-[11px] text-slate-500 dark:text-slate-400 font-mono mt-0.5">
-                  Est. Daily Cost: <strong className="text-amber-600 dark:text-amber-400">{selectedData.elecCost}</strong>
+                  Est. Daily Cost: <strong className="text-amber-600 dark:text-amber-400 font-semibold">{selectedData.elecCost}</strong>
                 </div>
               </div>
             </div>
@@ -730,11 +737,11 @@ export const OwnerMonitorView: React.FC<OwnerMonitorViewProps> = ({ onBack, onSh
                     </div>
 
                     <div className="flex items-center gap-3 text-xs text-slate-400 mt-0.5">
-                      <span className="flex items-center gap-1 font-mono text-[11px]">
-                        <span>💧</span> {sub.waterFlow} L/d
+                      <span className="flex items-center gap-1 font-mono text-[11px] text-sky-600 dark:text-sky-400">
+                        <Droplets size={12} strokeWidth={1.75} /> {sub.waterFlow} L/d
                       </span>
-                      <span className="flex items-center gap-1 font-mono text-[11px]">
-                        <span>⚡</span> {sub.elecUsage} kWh
+                      <span className="flex items-center gap-1 font-mono text-[11px] text-amber-600 dark:text-amber-400">
+                        <Zap size={12} strokeWidth={1.75} /> {sub.elecUsage} kWh
                       </span>
                       <span className="text-[10px]">· {sub.lastUpdated}</span>
                     </div>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ShieldCheck, X, Home, Users, Check, Share2 } from 'lucide-react';
 import { User } from '../types';
 
 interface DigitalGatePassModalProps {
@@ -24,12 +25,12 @@ export const DigitalGatePassModal: React.FC<DigitalGatePassModalProps> = ({ isOp
 
   return (
     <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-md flex items-end sm:items-center justify-center p-0 sm:p-4 animate-fade-in">
-      <div className="card-luxury w-full max-w-md bg-[var(--bg-surface)] p-5 sm:p-7 space-y-5 rounded-b-none sm:rounded-b-[28px] max-h-[92vh] overflow-y-auto">
+      <div className="card-luxury w-full max-w-md bg-[var(--bg-surface)] p-5 sm:p-7 space-y-5 rounded-b-none sm:rounded-2xl max-h-[92vh] overflow-y-auto">
         
         {/* Header */}
         <div className="flex items-center justify-between border-b border-[var(--border-main)] pb-3">
-          <div className="flex items-center gap-2">
-            <span className="text-2xl">🛡️</span>
+          <div className="flex items-center gap-2.5">
+            <ShieldCheck size={22} strokeWidth={1.75} className="text-emerald-500" />
             <div>
               <h3 className="font-extrabold text-base sm:text-lg text-[var(--text-main)]">
                 {lang === 'en' ? 'Digital Gate & Security Pass' : 'ডিজিটাল গেট ও সিকিউরিটি পাস'}
@@ -37,8 +38,8 @@ export const DigitalGatePassModal: React.FC<DigitalGatePassModalProps> = ({ isOp
               <p className="text-[11px] text-[var(--text-muted)]">Green Horizon Luxury Tower · Main Security Barrier</p>
             </div>
           </div>
-          <button onClick={onClose} className="p-1 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-main)] text-xl font-bold">
-            ✕
+          <button onClick={onClose} className="p-1 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-main)] font-bold">
+            <X size={18} strokeWidth={1.75} />
           </button>
         </div>
 
@@ -46,13 +47,15 @@ export const DigitalGatePassModal: React.FC<DigitalGatePassModalProps> = ({ isOp
         <div className="grid grid-cols-2 gap-2 bg-[var(--bg-input)] p-1 rounded-2xl border border-[var(--border-main)] text-xs font-bold">
           <button
             onClick={() => setPassType('resident')}
-            className={`py-2 rounded-xl transition-all ${passType === 'resident' ? 'bg-emerald-600 text-white shadow-sm' : 'text-[var(--text-muted)]'}`}>
-            🏠 {lang === 'en' ? 'My Resident Pass' : 'আমার বাসিন্দা পাস'}
+            className={`py-2 rounded-xl transition-all flex items-center justify-center gap-1.5 ${passType === 'resident' ? 'bg-emerald-600 text-white shadow-sm' : 'text-[var(--text-muted)]'}`}>
+            <Home size={14} strokeWidth={1.75} />
+            <span>{lang === 'en' ? 'My Resident Pass' : 'আমার বাসিন্দা পাস'}</span>
           </button>
           <button
             onClick={() => setPassType('visitor')}
-            className={`py-2 rounded-xl transition-all ${passType === 'visitor' ? 'bg-emerald-600 text-white shadow-sm' : 'text-[var(--text-muted)]'}`}>
-            👥 {lang === 'en' ? 'Guest / Visitor Pass' : 'গেস্ট / ভিজিটর পাস'}
+            className={`py-2 rounded-xl transition-all flex items-center justify-center gap-1.5 ${passType === 'visitor' ? 'bg-emerald-600 text-white shadow-sm' : 'text-[var(--text-muted)]'}`}>
+            <Users size={14} strokeWidth={1.75} />
+            <span>{lang === 'en' ? 'Guest / Visitor Pass' : 'গেস্ট / ভিজিটর পাস'}</span>
           </button>
         </div>
 
@@ -134,13 +137,16 @@ export const DigitalGatePassModal: React.FC<DigitalGatePassModalProps> = ({ isOp
                 <button
                   type="submit"
                   className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow active:scale-95 transition-all">
-                  Generate 24-Hour Guest QR Pass →
+                  Generate 24-Hour Guest QR Pass &rarr;
                 </button>
               </form>
             ) : (
               <div className="text-center space-y-3 animate-fade-in">
                 <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-700 dark:text-emerald-300">
-                  <p className="text-xs font-bold">✓ Visitor Pass Generated</p>
+                  <p className="text-xs font-bold flex items-center justify-center gap-1.5">
+                    <Check size={14} strokeWidth={2.5} />
+                    <span>Visitor Pass Generated</span>
+                  </p>
                   <p className="text-lg font-mono font-black mt-1">{generatedVisitorCode}</p>
                   <p className="text-[11px] mt-1 text-[var(--text-muted)]">Guest: <strong>{visitorName}</strong> ({visitorPhone})</p>
                 </div>
@@ -149,8 +155,9 @@ export const DigitalGatePassModal: React.FC<DigitalGatePassModalProps> = ({ isOp
                     const text = `Here is your 24-Hour Guest Gate Pass for Unit ${user.unitNumber || '4B'} at Green Horizon Tower: ${generatedVisitorCode}`;
                     window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
                   }}
-                  className="w-full py-2.5 bg-[#25D366] text-white font-bold text-xs rounded-xl flex items-center justify-center gap-2 shadow">
-                  📱 Share Guest Pass on WhatsApp
+                  className="w-full py-2.5 bg-[#25D366] hover:bg-[#1ebd59] text-white font-bold text-xs rounded-xl flex items-center justify-center gap-2 shadow active:scale-95 transition-all">
+                  <Share2 size={14} strokeWidth={1.75} />
+                  <span>Share Guest Pass on WhatsApp</span>
                 </button>
                 <button
                   onClick={() => setGeneratedVisitorCode(null)}

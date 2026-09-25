@@ -473,7 +473,7 @@ export const App: React.FC = () => {
         isOpen={showAddFlatModal}
         onClose={() => setShowAddFlatModal(false)}
         onSuccess={(unit) => {
-          showToast(`🎉 Flat ${unit.unitNumber} (${unit.status === 'vacant' ? (lang === 'bn' ? 'খালি' : 'Vacant') : (lang === 'bn' ? 'ভাড়া দেওয়া' : 'Occupied')}) published to portfolio!`);
+          showToast(`Flat ${unit.unitNumber} (${unit.status === 'vacant' ? (lang === 'bn' ? 'খালি' : 'Vacant') : (lang === 'bn' ? 'ভাড়া দেওয়া' : 'Occupied')}) published to portfolio!`);
         }}
       />
 
@@ -482,7 +482,7 @@ export const App: React.FC = () => {
         isOpen={showBroadcastModal}
         onClose={() => setShowBroadcastModal(false)}
         onSuccess={(title) => {
-          showToast(lang === 'bn' ? `📢 নোটিশ প্রকাশিত হয়েছে: ${title}` : `📢 Notice published: ${title}`);
+          showToast(lang === 'bn' ? `নোটিশ প্রকাশিত হয়েছে: ${title}` : `Notice published: ${title}`);
         }}
         lang={lang}
       />
@@ -497,7 +497,7 @@ export const App: React.FC = () => {
         isOwner={showDispatchModal}
         initialUnit={isOwnerView ? '2B' : (currentUser.unitNumber || '2B')}
         onSuccess={(trade, unit) => {
-          showToast(lang === 'bn' ? `🛠️ ${trade} মিস্ত্রি নির্ধারিত হয়েছে (ফ্ল্যাট ${unit})` : `🛠️ ${trade} Pro dispatched to Flat ${unit}`);
+          showToast(lang === 'bn' ? `${trade} মিস্ত্রি নির্ধারিত হয়েছে (ফ্ল্যাট ${unit})` : `${trade} Pro dispatched to Flat ${unit}`);
         }}
         lang={lang}
       />

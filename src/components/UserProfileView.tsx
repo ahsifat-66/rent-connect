@@ -1,4 +1,18 @@
 import React, { useState } from 'react';
+import { 
+  ArrowLeft, 
+  Edit3, 
+  X, 
+  Check, 
+  Building2, 
+  ShieldCheck, 
+  FileText, 
+  Settings, 
+  LogOut, 
+  Download, 
+  Landmark, 
+  Crown 
+} from 'lucide-react';
 import { User } from '../types';
 import { backend } from '../services/backend';
 import { Language, t } from '../utils/i18n';
@@ -33,7 +47,7 @@ export const UserProfileView: React.FC<UserProfileViewProps> = ({
     e.preventDefault();
     setIsEditing(false);
     if (onShowToast) {
-      onShowToast("✅ Profile details updated successfully!");
+      onShowToast("Profile details updated successfully!");
     }
   };
 
@@ -45,8 +59,8 @@ export const UserProfileView: React.FC<UserProfileViewProps> = ({
         <div className="flex items-center gap-3">
           <button
             onClick={onBack}
-            className="w-10 h-10 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 flex items-center justify-center font-bold text-base shadow-sm active:scale-95">
-            ←
+            className="w-10 h-10 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 flex items-center justify-center font-bold text-base shadow-sm active:scale-95 transition-all">
+            <ArrowLeft size={18} strokeWidth={1.75} />
           </button>
           <div>
             <h1 className="text-2xl sm:text-3xl font-extrabold text-[#111827] dark:text-white tracking-tight">
@@ -65,19 +79,20 @@ export const UserProfileView: React.FC<UserProfileViewProps> = ({
               ? 'bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-white'
               : 'bg-[#00B665] hover:bg-[#009E54] text-white'
           }`}>
-          <span>{isEditing ? '✕ Cancel' : '✏️ Edit'}</span>
+          {isEditing ? <X size={14} strokeWidth={2} /> : <Edit3 size={14} strokeWidth={1.75} />}
+          <span>{isEditing ? 'Cancel' : 'Edit'}</span>
         </button>
       </div>
 
       {/* 2. Luxury Profile Header Card */}
-      <div className="rounded-[32px] p-6 bg-gradient-to-br from-[#121632] via-[#1E2348] to-[#121632] text-white border border-slate-700 shadow-xl space-y-4 relative overflow-hidden">
+      <div className="rounded-2xl p-6 bg-gradient-to-br from-[#121632] via-[#1E2348] to-[#121632] text-white border border-slate-700 shadow-xl space-y-4 relative overflow-hidden">
         
         {/* Background glow circle */}
         <div className="absolute -right-10 -bottom-10 w-44 h-44 rounded-full bg-emerald-500/10 blur-2xl pointer-events-none"></div>
 
         <div className="flex flex-col sm:flex-row sm:items-center gap-4 relative z-10">
           {/* Avatar Ring */}
-          <div className="relative w-20 h-20 rounded-3xl overflow-hidden ring-4 ring-emerald-500/80 shadow-xl shrink-0 self-center sm:self-auto">
+          <div className="relative w-20 h-20 rounded-2xl overflow-hidden ring-4 ring-emerald-500/80 shadow-xl shrink-0 self-center sm:self-auto">
             <img
               src={user.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=60'}
               alt={user.name}
@@ -91,12 +106,13 @@ export const UserProfileView: React.FC<UserProfileViewProps> = ({
               <h2 className="text-lg sm:text-xl font-black truncate">
                 {name}
               </h2>
-              <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider ${
+              <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider flex items-center gap-1 ${
                 isOwner
                   ? 'bg-amber-500/20 text-amber-300 border border-amber-400/40'
                   : 'bg-emerald-500/20 text-emerald-300 border border-emerald-400/40'
               }`}>
-                {isOwner ? '👑 House Owner' : '🛡️ Verified Resident'}
+                {isOwner ? <Crown size={11} strokeWidth={2} /> : <ShieldCheck size={11} strokeWidth={2} />}
+                <span>{isOwner ? 'House Owner' : 'Verified Resident'}</span>
               </span>
             </div>
 
@@ -107,7 +123,10 @@ export const UserProfileView: React.FC<UserProfileViewProps> = ({
             <div className="flex items-center justify-center sm:justify-start gap-3 mt-2 text-[11px] text-slate-400 font-mono">
               <span>NID: {user.nid ? `${user.nid.slice(0, 4)}...${user.nid.slice(-4)}` : '1988...0452'}</span>
               <span>·</span>
-              <span className="text-emerald-400 font-bold">✓ NID Verified</span>
+              <span className="text-emerald-400 font-bold flex items-center gap-1">
+                <Check size={11} strokeWidth={2.5} />
+                <span>NID Verified</span>
+              </span>
             </div>
           </div>
         </div>
@@ -175,7 +194,7 @@ export const UserProfileView: React.FC<UserProfileViewProps> = ({
           <button
             type="submit"
             className="w-full py-3.5 rounded-2xl bg-[#00B665] hover:bg-[#009E54] active:scale-95 text-white font-black text-xs uppercase tracking-wider shadow transition-all">
-            Save Profile Changes →
+            Save Profile Changes &rarr;
           </button>
         </form>
       ) : (
@@ -189,10 +208,11 @@ export const UserProfileView: React.FC<UserProfileViewProps> = ({
           {!isOwner && (
             <>
               {/* Flat & Tenancy Summary */}
-              <div className="p-5 rounded-[28px] bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 shadow-sm space-y-3">
+              <div className="p-5 rounded-2xl bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 shadow-sm space-y-3">
                 <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-2.5">
                   <h3 className="font-extrabold text-sm text-[#111827] dark:text-white flex items-center gap-2">
-                    <span>🏢</span> Tenancy & Lease Specifications
+                    <Building2 size={16} strokeWidth={1.75} className="text-slate-400" />
+                    <span>Tenancy & Lease Specifications</span>
                   </h3>
                   <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 rounded-md">
                     ACTIVE LEASE
@@ -225,9 +245,10 @@ export const UserProfileView: React.FC<UserProfileViewProps> = ({
               </div>
 
               {/* Emergency Contact & Police Verification */}
-              <div className="p-5 rounded-[28px] bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 shadow-sm space-y-3 text-xs">
+              <div className="p-5 rounded-2xl bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 shadow-sm space-y-3 text-xs">
                 <h3 className="font-extrabold text-sm text-[#111827] dark:text-white flex items-center gap-2">
-                  <span>🛡️</span> DMP Verification & Emergency Contact
+                  <ShieldCheck size={16} strokeWidth={1.75} className="text-slate-400" />
+                  <span>DMP Verification & Emergency Contact</span>
                 </h3>
 
                 <div className="space-y-2">
@@ -252,10 +273,11 @@ export const UserProfileView: React.FC<UserProfileViewProps> = ({
           {isOwner && (
             <>
               {/* Portfolio Statistics */}
-              <div className="p-5 rounded-[28px] bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 shadow-sm space-y-3">
+              <div className="p-5 rounded-2xl bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 shadow-sm space-y-3">
                 <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-2.5">
                   <h3 className="font-extrabold text-sm text-[#111827] dark:text-white flex items-center gap-2">
-                    <span>🏛️</span> Real Estate Portfolio Overview
+                    <Landmark size={16} strokeWidth={1.75} className="text-slate-400" />
+                    <span>Real Estate Portfolio Overview</span>
                   </h3>
                   <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 rounded-md">
                     100% OCCUPIED
@@ -289,33 +311,39 @@ export const UserProfileView: React.FC<UserProfileViewProps> = ({
           <div className="lg:col-span-6 space-y-6">
 
           {/* 5. Document Vault Downloads */}
-          <div className="p-5 rounded-[28px] bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 shadow-sm space-y-3">
+          <div className="p-5 rounded-2xl bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 shadow-sm space-y-3">
             <h3 className="font-extrabold text-sm text-[#111827] dark:text-white flex items-center gap-2">
-              <span>📄</span> Official Documents Vault
+              <FileText size={16} strokeWidth={1.75} className="text-slate-400" />
+              <span>Official Documents Vault</span>
             </h3>
 
             <div className="space-y-2 text-xs">
               {[
-                { title: isOwner ? 'Registered Title Deed (Khatian / Porcha)' : 'Signed Tenancy Agreement (2026)', icon: '📜', status: 'VERIFIED' },
-                { title: isOwner ? 'Rajuk Approved Building Plan' : 'DMP Police Verification Certificate', icon: '🛡️', status: 'CLEARED' },
-                { title: 'Smart National ID Card (NID Front & Back)', icon: '🪪', status: 'AUTHENTICATED' }
+                { title: isOwner ? 'Registered Title Deed (Khatian / Porcha)' : 'Signed Tenancy Agreement (2026)', status: 'VERIFIED' },
+                { title: isOwner ? 'Rajuk Approved Building Plan' : 'DMP Police Verification Certificate', status: 'CLEARED' },
+                { title: 'Smart National ID Card (NID Front & Back)', status: 'AUTHENTICATED' }
               ].map((doc, idx) => (
                 <div
                   key={idx}
                   onClick={() => {
                     setActiveDocModal(doc.title);
-                    if (onShowToast) onShowToast(`📄 Opening ${doc.title}...`);
+                    if (onShowToast) onShowToast(`Opening ${doc.title}...`);
                   }}
                   className="p-3 rounded-2xl bg-slate-50 dark:bg-[#0D1117] border border-slate-100 dark:border-slate-800 hover:border-emerald-500/40 cursor-pointer flex justify-between items-center transition-all active:scale-98">
                   <div className="flex items-center gap-2.5">
-                    <span className="text-base">{doc.icon}</span>
+                    <div className="w-8 h-8 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+                      <FileText size={15} strokeWidth={1.75} />
+                    </div>
                     <div>
                       <span className="font-bold text-[#111827] dark:text-white block">{doc.title}</span>
-                      <span className="text-[9px] text-emerald-600 dark:text-emerald-400 font-bold">✓ {doc.status}</span>
+                      <span className="text-[9px] text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1">
+                        <Check size={10} strokeWidth={2.5} />
+                        <span>{doc.status}</span>
+                      </span>
                     </div>
                   </div>
                   <span className="text-xs text-sky-600 dark:text-sky-400 font-bold">
-                    View →
+                    View &rarr;
                   </span>
                 </div>
               ))}
@@ -323,9 +351,10 @@ export const UserProfileView: React.FC<UserProfileViewProps> = ({
           </div>
 
           {/* 6. Account & Security Settings */}
-          <div className="p-5 rounded-[28px] bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 shadow-sm space-y-4">
+          <div className="p-5 rounded-2xl bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 shadow-sm space-y-4">
             <h3 className="font-extrabold text-sm text-[#111827] dark:text-white flex items-center gap-2">
-              <span>⚙️</span> Security & Preferences
+              <Settings size={16} strokeWidth={1.75} className="text-slate-400" />
+              <span>Security & Preferences</span>
             </h3>
 
             <div className="space-y-3 text-xs">
@@ -367,7 +396,7 @@ export const UserProfileView: React.FC<UserProfileViewProps> = ({
           <button
             onClick={onLogout}
             className="w-full py-4 rounded-2xl bg-red-500/10 hover:bg-red-500/20 text-red-600 dark:text-red-400 font-extrabold text-xs uppercase tracking-wider border border-red-500/20 shadow-sm active:scale-95 transition-all flex items-center justify-center gap-2">
-            <span>🚪</span>
+            <LogOut size={16} strokeWidth={1.75} />
             <span>{t('logout', lang)} {t('brandName', lang)}</span>
           </button>
           </div>
@@ -378,13 +407,15 @@ export const UserProfileView: React.FC<UserProfileViewProps> = ({
       {/* Document Preview Modal */}
       {activeDocModal && (
         <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="w-full max-w-sm bg-white dark:bg-[#161B22] rounded-3xl p-6 space-y-4 border border-slate-200 dark:border-slate-800">
-            <div className="flex justify-between items-center border-b pb-2">
+          <div className="w-full max-w-sm bg-white dark:bg-[#161B22] rounded-2xl p-6 space-y-4 border border-slate-200 dark:border-slate-800">
+            <div className="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-2">
               <h3 className="font-extrabold text-sm">{activeDocModal}</h3>
-              <button onClick={() => setActiveDocModal(null)} className="font-bold">✕</button>
+              <button onClick={() => setActiveDocModal(null)} className="font-bold text-slate-400 hover:text-slate-600">
+                <X size={16} strokeWidth={2} />
+              </button>
             </div>
-            <div className="p-4 bg-slate-50 dark:bg-[#0D1117] rounded-2xl text-xs space-y-2 text-center">
-              <div className="text-3xl">📄</div>
+            <div className="p-4 bg-slate-50 dark:bg-[#0D1117] rounded-xl text-xs space-y-2 text-center">
+              <FileText size={32} strokeWidth={1.75} className="mx-auto text-emerald-600 dark:text-emerald-400" />
               <p className="font-bold text-slate-700 dark:text-slate-300">{activeDocModal}</p>
               <p className="text-[10px] text-slate-400">Digitally authenticated by RentConnect DMP Vault</p>
             </div>
@@ -393,8 +424,9 @@ export const UserProfileView: React.FC<UserProfileViewProps> = ({
                 setActiveDocModal(null);
                 window.print();
               }}
-              className="w-full py-3 bg-[#00B665] text-white font-bold text-xs rounded-2xl">
-              ⬇️ Download / Print Official Copy
+              className="w-full py-3 bg-[#00B665] text-white font-bold text-xs rounded-xl flex items-center justify-center gap-1.5 shadow-sm active:scale-95 transition-all">
+              <Download size={14} strokeWidth={1.75} />
+              <span>Download / Print Official Copy</span>
             </button>
           </div>
         </div>

@@ -1,4 +1,14 @@
 import React, { useState } from 'react';
+import { 
+  ArrowLeft, 
+  Plus, 
+  ShoppingBag, 
+  Building2, 
+  Share2, 
+  Calendar, 
+  X, 
+  Check 
+} from 'lucide-react';
 import { Unit, User } from '../types';
 
 interface CommunityItem {
@@ -111,7 +121,7 @@ export const TenantMarketplaceView: React.FC<TenantMarketplaceViewProps> = ({
     setNewPrice('');
     setNewDesc('');
     if (onShowToast) {
-      onShowToast("🎉 Item listed on Resident Marketplace!");
+      onShowToast("Item listed on Resident Marketplace!");
     }
   };
 
@@ -123,8 +133,8 @@ export const TenantMarketplaceView: React.FC<TenantMarketplaceViewProps> = ({
         <div className="flex items-center gap-3">
           <button
             onClick={onBack}
-            className="w-10 h-10 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 flex items-center justify-center font-bold text-base shadow-sm active:scale-95">
-            ←
+            className="w-10 h-10 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 flex items-center justify-center font-bold text-base shadow-sm active:scale-95 transition-all">
+            <ArrowLeft size={18} strokeWidth={1.75} />
           </button>
           <div>
             <h1 className="text-2xl sm:text-3xl font-extrabold text-[#111827] dark:text-white tracking-tight">
@@ -139,7 +149,8 @@ export const TenantMarketplaceView: React.FC<TenantMarketplaceViewProps> = ({
         <button
           onClick={() => setShowPostModal(true)}
           className="px-3.5 py-2 rounded-2xl bg-[#00B665] hover:bg-[#009E54] active:scale-95 text-white font-extrabold text-xs shadow-md transition-all flex items-center gap-1.5 shrink-0">
-          <span>+</span> List Item
+          <Plus size={14} strokeWidth={2} />
+          <span>List Item</span>
         </button>
       </div>
 
@@ -152,7 +163,8 @@ export const TenantMarketplaceView: React.FC<TenantMarketplaceViewProps> = ({
               ? 'bg-[#121632] text-white shadow-sm ring-1 ring-white/10'
               : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
           }`}>
-          <span>🛍️</span> Resident Buy & Sell ({communityItems.length})
+          <ShoppingBag size={14} strokeWidth={1.75} />
+          <span>Resident Buy & Sell ({communityItems.length})</span>
         </button>
 
         <button
@@ -162,7 +174,8 @@ export const TenantMarketplaceView: React.FC<TenantMarketplaceViewProps> = ({
               ? 'bg-[#121632] text-white shadow-sm ring-1 ring-white/10'
               : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
           }`}>
-          <span>🏢</span> Vacant Flats ({units.length})
+          <Building2 size={14} strokeWidth={1.75} />
+          <span>Vacant Flats ({units.length})</span>
         </button>
       </div>
 
@@ -233,7 +246,8 @@ export const TenantMarketplaceView: React.FC<TenantMarketplaceViewProps> = ({
                       target="_blank"
                       rel="noopener noreferrer"
                       className="px-3.5 py-1.5 rounded-xl bg-[#25D366] hover:bg-[#1ebd59] text-white font-bold text-xs flex items-center gap-1.5 shadow-sm active:scale-95 transition-all">
-                      <span>📱</span> WhatsApp
+                      <Share2 size={13} strokeWidth={1.75} />
+                      <span>WhatsApp</span>
                     </a>
                   </div>
 
@@ -273,7 +287,7 @@ export const TenantMarketplaceView: React.FC<TenantMarketplaceViewProps> = ({
               return (
                 <div
                   key={unit.id || `u-${unit.unitNumber}`}
-                  className="rounded-[28px] overflow-hidden bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-md transition-all">
+                  className="rounded-2xl overflow-hidden bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-md transition-all">
                   
                   <div className="relative h-48 sm:h-52 overflow-hidden">
                     <img
@@ -283,11 +297,11 @@ export const TenantMarketplaceView: React.FC<TenantMarketplaceViewProps> = ({
                     />
                     <span className={`absolute top-2.5 left-2.5 text-[10px] font-black uppercase px-3 py-1 rounded-full shadow-md flex items-center gap-1.5 ${
                       isVacant 
-                        ? 'bg-emerald-600 text-white animate-pulse' 
+                        ? 'bg-emerald-600 text-white' 
                         : 'bg-slate-900/80 text-white'
                     }`}>
                       <span className={`w-1.5 h-1.5 rounded-full ${isVacant ? 'bg-white' : 'bg-amber-400'}`}></span>
-                      {isVacant ? '🟢 VACANT · READY TO MOVE' : 'OCCUPIED · LEASED'}
+                      {isVacant ? 'VACANT · READY TO MOVE' : 'OCCUPIED · LEASED'}
                     </span>
                     <div className="absolute bottom-2.5 right-2.5 bg-black/80 backdrop-blur-md px-3 py-1.5 rounded-xl text-white font-mono font-bold text-xs border border-white/20">
                       ৳ {rent.toLocaleString()} / mo
@@ -326,10 +340,11 @@ export const TenantMarketplaceView: React.FC<TenantMarketplaceViewProps> = ({
                       {isVacant ? (
                         <button
                           onClick={() => {
-                            if (onShowToast) onShowToast(`📅 Viewing request submitted for Flat ${unit.unitNumber}! Owner notified.`);
+                            if (onShowToast) onShowToast(`Viewing request submitted for Flat ${unit.unitNumber}! Owner notified.`);
                           }}
-                          className="py-2.5 px-3 rounded-xl bg-[#121632] hover:bg-[#1c224b] text-white font-extrabold text-xs active:scale-95 transition-all shadow-sm">
-                          📅 Book Viewing
+                          className="py-2.5 px-3 rounded-xl bg-[#121632] hover:bg-[#1c224b] text-white font-extrabold text-xs active:scale-95 transition-all shadow-sm flex items-center justify-center gap-1.5">
+                          <Calendar size={13} strokeWidth={1.75} />
+                          <span>Book Viewing</span>
                         </button>
                       ) : (
                         <button
@@ -346,7 +361,8 @@ export const TenantMarketplaceView: React.FC<TenantMarketplaceViewProps> = ({
                         target="_blank"
                         rel="noopener noreferrer"
                         className="py-2.5 px-3 bg-[#25D366] hover:bg-[#1ebd59] text-white font-extrabold text-xs rounded-xl flex items-center justify-center gap-1.5 active:scale-95 shadow transition-all">
-                        <span>📱</span> WhatsApp
+                        <Share2 size={13} strokeWidth={1.75} />
+                        <span>WhatsApp</span>
                       </a>
                     </div>
 
@@ -376,7 +392,7 @@ export const TenantMarketplaceView: React.FC<TenantMarketplaceViewProps> = ({
               <button
                 onClick={() => setShowPostModal(false)}
                 className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 font-bold flex items-center justify-center">
-                ✕
+                <X size={16} strokeWidth={1.75} />
               </button>
             </div>
 

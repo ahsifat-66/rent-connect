@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Check, FileText, Download, ShieldCheck } from 'lucide-react';
 import { User } from '../types';
 import { ContractPdfModal } from './ContractPdfModal';
 
@@ -51,14 +52,14 @@ export const TenantLeaseView: React.FC<TenantLeaseViewProps> = ({ user, onOpenDm
               
               {/* Step 1: Lease Started (Completed) */}
               <div className="flex items-start gap-4 relative">
-                <div className="absolute left-[13px] top-7 bottom-[-24px] w-[2px] bg-[#00B665]"></div>
+                <div className="absolute left-[13px] top-7 bottom-[-24px] w-[2px] bg-emerald-500"></div>
                 
-                <div className="w-7 h-7 rounded-full bg-[#00B665] text-white flex items-center justify-center text-xs font-bold shrink-0 z-10 shadow-sm">
-                  ✓
+                <div className="w-7 h-7 rounded-full bg-emerald-500 text-white flex items-center justify-center shrink-0 z-10 shadow-sm">
+                  <Check size={12} strokeWidth={2.5} />
                 </div>
 
                 <div>
-                  <h4 className="font-extrabold text-sm text-[#111827] dark:text-white leading-tight">
+                  <h4 className="font-semibold text-sm text-slate-900 dark:text-white leading-tight">
                     Lease Started
                   </h4>
                   <p className="text-xs text-slate-400 font-medium mt-0.5">
@@ -69,14 +70,14 @@ export const TenantLeaseView: React.FC<TenantLeaseViewProps> = ({ user, onOpenDm
 
               {/* Step 2: First Payment (Completed) */}
               <div className="flex items-start gap-4 relative">
-                <div className="absolute left-[13px] top-7 bottom-[-24px] w-[2px] bg-[#00B665]"></div>
+                <div className="absolute left-[13px] top-7 bottom-[-24px] w-[2px] bg-emerald-500"></div>
 
-                <div className="w-7 h-7 rounded-full bg-[#00B665] text-white flex items-center justify-center text-xs font-bold shrink-0 z-10 shadow-sm">
-                  ✓
+                <div className="w-7 h-7 rounded-full bg-emerald-500 text-white flex items-center justify-center shrink-0 z-10 shadow-sm">
+                  <Check size={12} strokeWidth={2.5} />
                 </div>
 
                 <div>
-                  <h4 className="font-extrabold text-sm text-[#111827] dark:text-white leading-tight">
+                  <h4 className="font-semibold text-sm text-slate-900 dark:text-white leading-tight">
                     First Payment
                   </h4>
                   <p className="text-xs text-slate-400 font-medium mt-0.5">
@@ -85,16 +86,16 @@ export const TenantLeaseView: React.FC<TenantLeaseViewProps> = ({ user, onOpenDm
                 </div>
               </div>
 
-              {/* Step 3: Current Period (In Progress - Orange Ring) */}
+              {/* Step 3: Current Period (In Progress) */}
               <div className="flex items-start gap-4 relative">
                 <div className="absolute left-[13px] top-7 bottom-[-24px] w-[2px] bg-slate-200 dark:border-slate-800"></div>
 
-                <div className="w-7 h-7 rounded-full bg-white dark:bg-[#161B22] border-[2.5px] border-[#E89E3A] flex items-center justify-center shrink-0 z-10">
-                  <div className="w-2 h-2 rounded-full bg-[#E89E3A]"></div>
+                <div className="w-7 h-7 rounded-full bg-white dark:bg-[#161B22] border-[2px] border-amber-500 flex items-center justify-center shrink-0 z-10">
+                  <div className="w-2 h-2 rounded-full bg-amber-500"></div>
                 </div>
 
                 <div>
-                  <h4 className="font-extrabold text-sm text-[#111827] dark:text-white leading-tight">
+                  <h4 className="font-semibold text-sm text-slate-900 dark:text-white leading-tight">
                     Current Period
                   </h4>
                   <p className="text-xs text-slate-400 font-medium mt-0.5">
@@ -103,14 +104,14 @@ export const TenantLeaseView: React.FC<TenantLeaseViewProps> = ({ user, onOpenDm
                 </div>
               </div>
 
-              {/* Step 4: Lease Renewal (Upcoming - Grey Ring) */}
+              {/* Step 4: Lease Renewal (Upcoming) */}
               <div className="flex items-start gap-4 relative">
                 <div className="w-7 h-7 rounded-full bg-slate-100 dark:bg-slate-800 border-[2px] border-slate-300 dark:border-slate-700 flex items-center justify-center shrink-0 z-10">
-                  <div className="w-2 h-2 rounded-full bg-slate-300 dark:bg-slate-600"></div>
+                  <div className="w-2 h-2 rounded-full bg-slate-400 dark:bg-slate-600"></div>
                 </div>
 
                 <div>
-                  <h4 className="font-bold text-sm text-slate-400 dark:text-slate-500 leading-tight">
+                  <h4 className="font-medium text-sm text-slate-400 dark:text-slate-500 leading-tight">
                     Lease Renewal
                   </h4>
                   <p className="text-xs text-slate-400 font-medium mt-0.5">
@@ -126,56 +127,59 @@ export const TenantLeaseView: React.FC<TenantLeaseViewProps> = ({ user, onOpenDm
 
         {/* Right Column (5 cols): Lease Agreement & Verification Details */}
         <div className="lg:col-span-5 space-y-6">
-          {/* 2. Dark Navy Lease Agreement Download Card */}
-          <div className="rounded-[28px] p-5 sm:p-6 bg-gradient-to-br from-[#121632] via-[#161B3D] to-[#1C224B] text-white shadow-xl space-y-4">
+          {/* 2. Lease Agreement Download Card */}
+          <div className="rounded-2xl p-5 sm:p-6 bg-slate-900 dark:bg-[#161B22] border border-slate-200 dark:border-slate-800 text-white shadow-sm space-y-4">
             <div className="flex items-center gap-3.5">
-              <div className="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center text-xl shrink-0">
-                📄
+              <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0">
+                <FileText size={18} strokeWidth={1.75} className="text-white" />
               </div>
               <div>
-                <h3 className="font-extrabold text-base leading-snug">
+                <h3 className="font-semibold text-base leading-snug">
                   Lease Agreement
                 </h3>
-                <p className="text-xs text-slate-300 font-medium">
+                <p className="text-xs text-slate-400 font-medium">
                   Signed: Jan 1, 2026 · Flat {user.unitNumber || '2B'}
                 </p>
               </div>
             </div>
 
-            <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 space-y-2 text-xs">
+            <div className="p-3.5 rounded-xl bg-white/5 border border-white/10 space-y-2 text-xs">
               <div className="flex justify-between">
-                <span className="text-slate-300">Monthly Rent:</span>
-                <span className="font-bold font-mono">৳{user.rentAmount?.toLocaleString() || '28,000'}</span>
+                <span className="text-slate-400">Monthly Rent:</span>
+                <span className="font-semibold font-mono">৳{user.rentAmount?.toLocaleString() || '28,000'}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-slate-300">Security Deposit:</span>
-                <span className="font-bold font-mono">৳{user.securityDeposit?.toLocaleString() || '56,000'}</span>
+                <span className="text-slate-400">Security Deposit:</span>
+                <span className="font-semibold font-mono">৳{user.securityDeposit?.toLocaleString() || '56,000'}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-slate-300">Term:</span>
-                <span className="font-bold">{user.leaseStartDate || 'Jan 1, 2026'} - {user.leaseEndDate || 'Dec 31, 2026'}</span>
+                <span className="text-slate-400">Term:</span>
+                <span className="font-medium">{user.leaseStartDate || 'Jan 1, 2026'} - {user.leaseEndDate || 'Dec 31, 2026'}</span>
               </div>
             </div>
 
             <button
               onClick={() => setShowContractModal(true)}
-              className="w-full py-3.5 rounded-2xl bg-white/10 hover:bg-white/15 active:scale-98 border border-white/20 text-white font-bold text-xs flex items-center justify-center gap-2 transition-all shadow-sm">
-              <span>⬇️</span> View & Download PDF Agreement
+              className="w-full py-3 rounded-xl bg-white/10 hover:bg-white/15 active:scale-98 border border-white/20 text-white font-semibold text-xs flex items-center justify-center gap-2 transition-all shadow-sm">
+              <Download size={14} strokeWidth={1.75} />
+              <span>View & Download PDF Agreement</span>
             </button>
           </div>
 
           {onOpenDmpForm && (
-            <div className="rounded-[28px] p-5 bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 shadow-sm flex items-center justify-between">
+            <div className="rounded-2xl p-5 bg-white dark:bg-[#161B22] border border-slate-200/80 dark:border-slate-800 shadow-sm flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <span className="text-2xl">👮‍♂️</span>
+                <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+                  <ShieldCheck size={20} strokeWidth={1.75} />
+                </div>
                 <div>
-                  <h4 className="font-extrabold text-xs sm:text-sm text-[#111827] dark:text-white">DMP Police Verification</h4>
+                  <h4 className="font-semibold text-xs sm:text-sm text-slate-900 dark:text-white">DMP Police Verification</h4>
                   <p className="text-[11px] text-slate-400">Citizen registry record verified</p>
                 </div>
               </div>
               <button
                 onClick={onOpenDmpForm}
-                className="px-3.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-200">
+                className="px-3.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700">
                 View DMP
               </button>
             </div>

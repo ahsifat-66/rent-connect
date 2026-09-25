@@ -1,4 +1,5 @@
 import React from 'react';
+import { TrendingUp, ShieldCheck, Activity, Users, User } from 'lucide-react';
 import { Language, t } from '../utils/i18n';
 
 interface OwnerBottomNavProps {
@@ -19,61 +20,61 @@ export const OwnerBottomNav: React.FC<OwnerBottomNavProps> = ({
         {/* 1. Home Tab */}
         <button
           onClick={() => setActiveTab('home')}
-          className={`flex flex-col items-center py-1.5 px-3 rounded-2xl transition-all ${
+          className={`flex flex-col items-center justify-center min-h-[44px] py-1.5 px-3 rounded-xl transition-all ${
             activeTab === 'home'
-              ? 'text-[#111827] dark:text-white font-extrabold scale-105'
-              : 'text-slate-400 dark:text-slate-500 hover:text-slate-600'
+              ? 'text-slate-900 dark:text-white font-semibold'
+              : 'text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300'
           }`}>
-          <span className="text-xl">📈</span>
-          <span className="text-[11px] mt-0.5 font-bold">{t('navHome', lang)}</span>
+          <TrendingUp size={18} strokeWidth={1.75} className={activeTab === 'home' ? 'text-emerald-600 dark:text-emerald-400' : ''} />
+          <span className="text-[10px] mt-1 font-medium tracking-tight">{t('navHome', lang)}</span>
         </button>
 
         {/* 2. Vault Tab */}
         <button
           onClick={() => setActiveTab('vault')}
-          className={`flex flex-col items-center py-1.5 px-3 rounded-2xl transition-all ${
+          className={`flex flex-col items-center justify-center min-h-[44px] py-1.5 px-3 rounded-xl transition-all ${
             activeTab === 'vault'
-              ? 'text-[#111827] dark:text-white font-extrabold scale-105'
-              : 'text-slate-400 dark:text-slate-500 hover:text-slate-600'
+              ? 'text-slate-900 dark:text-white font-semibold'
+              : 'text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300'
           }`}>
-          <span className="text-xl">🛡️</span>
-          <span className="text-[11px] mt-0.5 font-bold">{t('navVault', lang)}</span>
+          <ShieldCheck size={18} strokeWidth={1.75} className={activeTab === 'vault' ? 'text-emerald-600 dark:text-emerald-400' : ''} />
+          <span className="text-[10px] mt-1 font-medium tracking-tight">{t('navVault', lang)}</span>
         </button>
 
         {/* 3. Monitor Tab */}
         <button
           onClick={() => setActiveTab('monitor')}
-          className={`flex flex-col items-center py-1.5 px-3 rounded-2xl transition-all ${
+          className={`flex flex-col items-center justify-center min-h-[44px] py-1.5 px-3 rounded-xl transition-all ${
             activeTab === 'monitor'
-              ? 'text-[#111827] dark:text-white font-extrabold scale-105'
-              : 'text-slate-400 dark:text-slate-500 hover:text-slate-600'
+              ? 'text-slate-900 dark:text-white font-semibold'
+              : 'text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300'
           }`}>
-          <span className="text-xl">📊</span>
-          <span className="text-[11px] mt-0.5 font-bold">{t('navMonitor', lang)}</span>
+          <Activity size={18} strokeWidth={1.75} className={activeTab === 'monitor' ? 'text-emerald-600 dark:text-emerald-400' : ''} />
+          <span className="text-[10px] mt-1 font-medium tracking-tight">{t('navMonitor', lang)}</span>
         </button>
 
         {/* 4. Security Tab */}
         <button
           onClick={() => setActiveTab('security')}
-          className={`flex flex-col items-center py-1.5 px-3 rounded-2xl transition-all ${
+          className={`flex flex-col items-center justify-center min-h-[44px] py-1.5 px-3 rounded-xl transition-all ${
             activeTab === 'security'
-              ? 'text-[#111827] dark:text-white font-extrabold scale-105'
-              : 'text-slate-400 dark:text-slate-500 hover:text-slate-600'
+              ? 'text-slate-900 dark:text-white font-semibold'
+              : 'text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300'
           }`}>
-          <span className="text-xl">👥</span>
-          <span className="text-[11px] mt-0.5 font-bold">{t('navSecurity', lang)}</span>
+          <Users size={18} strokeWidth={1.75} className={activeTab === 'security' ? 'text-emerald-600 dark:text-emerald-400' : ''} />
+          <span className="text-[10px] mt-1 font-medium tracking-tight">{t('navSecurity', lang)}</span>
         </button>
 
         {/* 5. Profile Tab */}
         <button
           onClick={() => setActiveTab('profile')}
-          className={`flex flex-col items-center py-1.5 px-3 rounded-2xl transition-all ${
+          className={`flex flex-col items-center justify-center min-h-[44px] py-1.5 px-3 rounded-xl transition-all ${
             activeTab === 'profile'
-              ? 'text-[#111827] dark:text-white font-extrabold scale-105'
-              : 'text-slate-400 dark:text-slate-500 hover:text-slate-600'
+              ? 'text-slate-900 dark:text-white font-semibold'
+              : 'text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300'
           }`}>
-          <span className="text-xl">👤</span>
-          <span className="text-[11px] mt-0.5 font-bold">{t('navProfile', lang)}</span>
+          <User size={18} strokeWidth={1.75} className={activeTab === 'profile' ? 'text-emerald-600 dark:text-emerald-400' : ''} />
+          <span className="text-[10px] mt-1 font-medium tracking-tight">{t('navProfile', lang)}</span>
         </button>
 
       </div>

@@ -1,4 +1,14 @@
 import React, { useState } from 'react';
+import { 
+  Wrench, 
+  Droplets, 
+  Zap, 
+  Snowflake, 
+  Hammer, 
+  Sparkles, 
+  ShieldCheck, 
+  X 
+} from 'lucide-react';
 import { backend } from '../services/backend';
 
 interface DispatchProModalProps {
@@ -45,23 +55,23 @@ export const DispatchProModal: React.FC<DispatchProModalProps> = ({
   };
 
   const tradeOptions = [
-    { name: 'Plumber', icon: '🚰', bn: 'প্লাম্বার' },
-    { name: 'Electrician', icon: '⚡', bn: 'ইলেকট্রিশিয়ান' },
-    { name: 'HVAC / AC Pro', icon: '❄️', bn: 'এসি মেকানিক' },
-    { name: 'Carpenter', icon: '🪚', bn: 'কাঠমিস্ত্রি' },
-    { name: 'Deep Cleaning', icon: '🧹', bn: 'ডিপ ক্লিনিং' },
-    { name: 'Pest Control', icon: '🛡️', bn: 'পোকামাকড় দমন' }
+    { name: 'Plumber', icon: Droplets, bn: 'প্লাম্বার' },
+    { name: 'Electrician', icon: Zap, bn: 'ইলেকট্রিশিয়ান' },
+    { name: 'HVAC / AC Pro', icon: Snowflake, bn: 'এসি মেকানিক' },
+    { name: 'Carpenter', icon: Hammer, bn: 'কাঠমিস্ত্রি' },
+    { name: 'Deep Cleaning', icon: Sparkles, bn: 'ডিপ ক্লিনিং' },
+    { name: 'Pest Control', icon: ShieldCheck, bn: 'পোকামাকড় দমন' }
   ];
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
-      <div className="bg-white dark:bg-[#121624] w-full max-w-lg rounded-[28px] shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden flex flex-col max-h-[90vh]">
+      <div className="bg-white dark:bg-[#121624] w-full max-w-lg rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden flex flex-col max-h-[90vh]">
         
         {/* Header */}
         <div className="p-5 sm:p-6 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center text-xl font-bold">
-              🛠️
+            <div className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold">
+              <Wrench size={20} strokeWidth={1.75} />
             </div>
             <div>
               <h3 className="text-lg sm:text-xl font-extrabold text-[#111827] dark:text-white">
@@ -78,7 +88,7 @@ export const DispatchProModal: React.FC<DispatchProModalProps> = ({
           <button
             onClick={onClose}
             className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-slate-900 dark:hover:text-white flex items-center justify-center font-bold text-sm">
-            ✕
+            <X size={16} strokeWidth={1.75} />
           </button>
         </div>
 
@@ -91,20 +101,25 @@ export const DispatchProModal: React.FC<DispatchProModalProps> = ({
               {lang === 'en' ? 'Select Trade / Specialty' : 'মিস্ত্রির ক্যাটাগরি নির্বাচন'} *
             </label>
             <div className="grid grid-cols-3 gap-2">
-              {tradeOptions.map(t => (
-                <button
-                  type="button"
-                  key={t.name}
-                  onClick={() => setTrade(t.name)}
-                  className={`p-2.5 rounded-2xl border text-center transition-all text-xs font-bold ${
-                    trade === t.name
-                      ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 shadow-sm'
-                      : 'border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:border-slate-300'
-                  }`}>
-                  <div className="text-lg mb-0.5">{t.icon}</div>
-                  <div>{lang === 'en' ? t.name : t.bn}</div>
-                </button>
-              ))}
+              {tradeOptions.map(t => {
+                const IconComponent = t.icon;
+                return (
+                  <button
+                    type="button"
+                    key={t.name}
+                    onClick={() => setTrade(t.name)}
+                    className={`p-2.5 rounded-xl border text-center transition-all text-xs font-bold ${
+                      trade === t.name
+                        ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 shadow-sm'
+                        : 'border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:border-slate-300'
+                    }`}>
+                    <div className="flex justify-center mb-1 text-slate-700 dark:text-slate-200">
+                      <IconComponent size={18} strokeWidth={1.75} />
+                    </div>
+                    <div>{lang === 'en' ? t.name : t.bn}</div>
+                  </button>
+                );
+              })}
             </div>
           </div>
 
@@ -131,10 +146,10 @@ export const DispatchProModal: React.FC<DispatchProModalProps> = ({
                 value={priority}
                 onChange={(e) => setPriority(e.target.value as any)}
                 className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-xs sm:text-sm text-[#111827] dark:text-white">
-                <option value="urgent">🔴 Urgent (Immediate)</option>
-                <option value="high">🟠 High (Within 2 hrs)</option>
-                <option value="medium">🟡 Medium (Same Day)</option>
-                <option value="low">🟢 Low (Scheduled)</option>
+                <option value="urgent">Urgent (Immediate)</option>
+                <option value="high">High (Within 2 hrs)</option>
+                <option value="medium">Medium (Same Day)</option>
+                <option value="low">Low (Scheduled)</option>
               </select>
             </div>
           </div>
@@ -171,7 +186,7 @@ export const DispatchProModal: React.FC<DispatchProModalProps> = ({
 
           {/* Security Gate Pass Clearance Note */}
           <div className="p-3 rounded-2xl bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 text-xs text-blue-900 dark:text-blue-200 flex items-center gap-2">
-            <span>🛡️</span>
+            <ShieldCheck size={16} strokeWidth={1.75} className="shrink-0 text-blue-600 dark:text-blue-400" />
             <span>{lang === 'en' ? 'Automated visitor gate pass generated for technician with turnstile authorization.' : 'টেকনিশিয়ানের জন্য স্বয়ংক্রিয় গেট পাস ও সিকিউরিটি ক্লিয়ারেন্স ইস্যু হবে।'}</span>
           </div>
 
@@ -180,14 +195,14 @@ export const DispatchProModal: React.FC<DispatchProModalProps> = ({
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 py-3 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-600 dark:text-slate-300">
+              className="flex-1 py-3 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
               {lang === 'en' ? 'Cancel' : 'বাতিল'}
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="flex-1 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-lg shadow-blue-600/30 active:scale-98 disabled:opacity-50">
-              {isSubmitting ? (lang === 'en' ? 'Dispatching...' : 'পাঠানো হচ্ছে...') : (lang === 'en' ? 'Confirm Dispatch 🛠️' : 'মিস্ত্রি নিশ্চিত করুন 🛠️')}
+              className="flex-1 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-lg shadow-blue-600/30 active:scale-98 disabled:opacity-50 transition-all flex items-center justify-center gap-1.5">
+              <span>{isSubmitting ? (lang === 'en' ? 'Dispatching...' : 'পাঠানো হচ্ছে...') : (lang === 'en' ? 'Confirm Dispatch' : 'মিস্ত্রি নিশ্চিত করুন')}</span>
             </button>
           </div>
         </form>

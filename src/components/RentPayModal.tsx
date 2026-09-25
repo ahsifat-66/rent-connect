@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { CreditCard, X, ShieldCheck, Loader2 } from 'lucide-react';
 import { User, RentReceipt } from '../types';
 import { backend } from '../services/backend';
 
@@ -43,12 +44,12 @@ export const RentPayModal: React.FC<RentPayModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-md flex items-end sm:items-center justify-center p-0 sm:p-4 animate-fade-in">
-      <div className="card-luxury w-full max-w-md bg-[var(--bg-surface)] p-5 sm:p-7 space-y-5 rounded-b-none sm:rounded-b-[28px] max-h-[92vh] overflow-y-auto">
+      <div className="card-luxury w-full max-w-md bg-[var(--bg-surface)] p-5 sm:p-7 space-y-5 rounded-b-none sm:rounded-2xl max-h-[92vh] overflow-y-auto">
         
         {/* Header */}
         <div className="flex items-center justify-between border-b border-[var(--border-main)] pb-3">
-          <div className="flex items-center gap-2">
-            <span className="text-2xl">💳</span>
+          <div className="flex items-center gap-2.5">
+            <CreditCard size={22} strokeWidth={1.75} className="text-emerald-500" />
             <div>
               <h3 className="font-extrabold text-base sm:text-lg text-[var(--text-main)]">
                 {lang === 'en' ? 'Rent & Utility Checkout' : 'ভাড়া ও ইউটিলিটি পরিশোধ'}
@@ -56,8 +57,8 @@ export const RentPayModal: React.FC<RentPayModalProps> = ({
               <p className="text-[11px] text-[var(--text-muted)]">Secure Automated Landlord Settlement</p>
             </div>
           </div>
-          <button onClick={onClose} className="p-1 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-main)] text-xl font-bold">
-            ✕
+          <button onClick={onClose} className="p-1 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-main)] font-bold">
+            <X size={18} strokeWidth={1.75} />
           </button>
         </div>
 
@@ -156,9 +157,9 @@ export const RentPayModal: React.FC<RentPayModalProps> = ({
             disabled={isProcessing}
             className="w-full py-4 rounded-2xl bg-[#00B665] hover:bg-[#009E54] text-white font-black text-sm shadow-lg shadow-emerald-500/25 flex items-center justify-center gap-2 active:scale-98 transition-all disabled:opacity-50">
             {isProcessing ? (
-              <span className="animate-spin text-lg">⚙️</span>
+              <Loader2 size={16} strokeWidth={2} className="animate-spin" />
             ) : (
-              <span>🛡️</span>
+              <ShieldCheck size={16} strokeWidth={1.75} />
             )}
             <span>
               {isProcessing

@@ -1,4 +1,20 @@
 import React, { useState, useEffect } from 'react';
+import { 
+  Sun, 
+  Check, 
+  AlertTriangle, 
+  Megaphone, 
+  Building2, 
+  MessageSquare, 
+  Wrench, 
+  ShieldCheck, 
+  Activity, 
+  Lock, 
+  Unlock, 
+  History, 
+  Info, 
+  AlertCircle 
+} from 'lucide-react';
 import { User } from '../types';
 import { backend, BackendState } from '../services/backend';
 import { Language, t } from '../utils/i18n';
@@ -59,18 +75,18 @@ export const OwnerHomeView: React.FC<OwnerHomeViewProps> = ({
 
         {/* Right Badges: Weather Pill & Profile Icon */}
         <div className="flex items-center gap-2">
-          <div className="px-3 py-1.5 rounded-full bg-sky-50 dark:bg-sky-950/50 border border-sky-200 dark:border-sky-800 text-sky-700 dark:text-sky-300 text-xs font-bold flex items-center gap-1.5 shadow-sm">
-            <span>🌤️</span>
+          <div className="px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold flex items-center gap-1.5 shadow-sm">
+            <Sun size={14} strokeWidth={1.75} className="text-amber-500" />
             <span>32°C Dhaka</span>
           </div>
 
           <div 
             onClick={() => onNavigateTab('profile')}
             title="Click to open Owner Profile"
-            className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gradient-to-tr from-purple-600 to-indigo-500 text-white font-extrabold text-xs sm:text-sm flex items-center justify-center shadow-md cursor-pointer active:scale-95 transition-transform hover:scale-105">
+            className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-slate-900 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-white font-semibold text-xs sm:text-sm flex items-center justify-center shadow-sm cursor-pointer active:scale-95 transition-transform hover:scale-105">
             MA
-            <span className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-amber-400 border-2 border-white dark:border-slate-900 rounded-full flex items-center justify-center text-[7px] text-slate-900 font-black">
-              ✓
+            <span className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-emerald-500 border-2 border-white dark:border-slate-900 rounded-full flex items-center justify-center text-white">
+              <Check size={8} strokeWidth={2.5} />
             </span>
           </div>
         </div>
@@ -78,16 +94,16 @@ export const OwnerHomeView: React.FC<OwnerHomeViewProps> = ({
 
       {/* 2. CRITICAL ALERT Card (Full Width) */}
       {gasAlert && (
-        <div className="rounded-[24px] p-4 sm:p-5 bg-gradient-to-r from-[#FF4D2D] via-[#FF3B30] to-[#E63518] text-white shadow-lg shadow-red-500/20 flex items-center justify-between gap-3 animate-pulse">
+        <div className="rounded-2xl p-4 sm:p-5 bg-rose-600 text-white shadow-lg shadow-rose-500/10 border border-rose-500 flex items-center justify-between gap-3">
           <div className="flex items-center gap-3 min-w-0">
-            <div className="w-10 h-10 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center text-xl shrink-0 border border-white/20">
-              ⚠️
+            <div className="w-10 h-10 rounded-xl bg-white/15 backdrop-blur-md flex items-center justify-center shrink-0 border border-white/20">
+              <AlertTriangle size={20} strokeWidth={1.75} className="text-white" />
             </div>
             <div className="min-w-0">
-              <h3 className="font-black text-xs sm:text-sm uppercase tracking-wider truncate">
+              <h3 className="font-semibold text-xs sm:text-sm uppercase tracking-wider truncate">
                 {t('criticalAlert', lang)}
               </h3>
-              <p className="text-xs text-red-100 font-medium truncate">
+              <p className="text-xs text-rose-100 font-medium truncate">
                 {t('gasLeakAlert', lang)}
               </p>
             </div>
@@ -95,7 +111,7 @@ export const OwnerHomeView: React.FC<OwnerHomeViewProps> = ({
 
           <button
             onClick={handleGasShutoff}
-            className="px-4 py-2 rounded-xl bg-white text-[#FF3B30] hover:bg-red-50 font-black text-xs uppercase tracking-wider shadow active:scale-95 shrink-0 transition-all">
+            className="px-4 py-2 rounded-xl bg-white text-rose-600 hover:bg-rose-50 font-semibold text-xs uppercase tracking-wider shadow active:scale-95 shrink-0 transition-all">
             {t('shutoff', lang)}
           </button>
         </div>
@@ -204,11 +220,11 @@ export const OwnerHomeView: React.FC<OwnerHomeViewProps> = ({
               {/* Card 1: Broadcast Notice */}
               <div
                 onClick={onOpenBroadcast}
-                className="rounded-[24px] p-4 sm:p-5 bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-md transition-all flex flex-col items-center text-center space-y-2 cursor-pointer group active:scale-95 hover:border-emerald-500/30">
-                <div className="w-12 h-12 rounded-2xl bg-sky-50 dark:bg-sky-950/50 group-hover:bg-sky-100 text-sky-600 dark:text-sky-400 flex items-center justify-center text-2xl transition-colors">
-                  📣
+                className="rounded-2xl p-4 sm:p-5 bg-white dark:bg-[#161B22] border border-slate-200/80 dark:border-slate-800 shadow-sm hover:shadow-md transition-all flex flex-col items-center text-center space-y-2 cursor-pointer group active:scale-95 hover:border-emerald-500/30">
+                <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 group-hover:bg-slate-200 dark:group-hover:bg-slate-700 text-slate-700 dark:text-slate-300 flex items-center justify-center transition-colors">
+                  <Megaphone size={18} strokeWidth={1.75} />
                 </div>
-                <span className="font-extrabold text-xs sm:text-sm text-[#111827] dark:text-white">
+                <span className="font-semibold text-xs sm:text-sm text-slate-900 dark:text-white">
                   {lang === 'bn' ? 'জরুরী নোটিশ' : 'Notice Board'}
                 </span>
                 <span className="text-[10px] text-slate-400 font-medium">Publish Alerts</span>
@@ -217,12 +233,12 @@ export const OwnerHomeView: React.FC<OwnerHomeViewProps> = ({
               {/* Card 2: Marketplace */}
               <div
                 onClick={onOpenMarketplace}
-                className="rounded-[24px] p-4 sm:p-5 bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-md transition-all flex flex-col items-center text-center space-y-2 cursor-pointer group relative active:scale-95 hover:border-emerald-500/30">
-                <span className="absolute top-3.5 right-3.5 w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse"></span>
-                <div className="w-12 h-12 rounded-2xl bg-amber-50 dark:bg-amber-950/50 group-hover:bg-amber-100 text-amber-600 dark:text-amber-400 flex items-center justify-center text-2xl transition-colors">
-                  🏢
+                className="rounded-2xl p-4 sm:p-5 bg-white dark:bg-[#161B22] border border-slate-200/80 dark:border-slate-800 shadow-sm hover:shadow-md transition-all flex flex-col items-center text-center space-y-2 cursor-pointer group relative active:scale-95 hover:border-emerald-500/30">
+                <span className="absolute top-3 right-3 w-2 h-2 rounded-full bg-emerald-500"></span>
+                <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 group-hover:bg-slate-200 dark:group-hover:bg-slate-700 text-slate-700 dark:text-slate-300 flex items-center justify-center transition-colors">
+                  <Building2 size={18} strokeWidth={1.75} />
                 </div>
-                <span className="font-extrabold text-xs sm:text-sm text-[#111827] dark:text-white">
+                <span className="font-semibold text-xs sm:text-sm text-slate-900 dark:text-white">
                   {t('buildingPortfolio', lang)}
                 </span>
                 <span className="text-[10px] text-slate-400 font-medium">Vacants & Leases</span>
@@ -231,12 +247,12 @@ export const OwnerHomeView: React.FC<OwnerHomeViewProps> = ({
               {/* Card 3: Messenger */}
               <div
                 onClick={onOpenMessenger}
-                className="rounded-[24px] p-4 sm:p-5 bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-md transition-all flex flex-col items-center text-center space-y-2 cursor-pointer group relative active:scale-95 hover:border-emerald-500/30">
-                <span className="absolute top-3.5 right-3.5 w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse"></span>
-                <div className="w-12 h-12 rounded-2xl bg-purple-50 dark:bg-purple-950/50 group-hover:bg-purple-100 text-purple-600 dark:text-purple-400 flex items-center justify-center text-2xl transition-colors">
-                  💬
+                className="rounded-2xl p-4 sm:p-5 bg-white dark:bg-[#161B22] border border-slate-200/80 dark:border-slate-800 shadow-sm hover:shadow-md transition-all flex flex-col items-center text-center space-y-2 cursor-pointer group relative active:scale-95 hover:border-emerald-500/30">
+                <span className="absolute top-3 right-3 w-2 h-2 rounded-full bg-sky-500"></span>
+                <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 group-hover:bg-slate-200 dark:group-hover:bg-slate-700 text-slate-700 dark:text-slate-300 flex items-center justify-center transition-colors">
+                  <MessageSquare size={18} strokeWidth={1.75} />
                 </div>
-                <span className="font-extrabold text-xs sm:text-sm text-[#111827] dark:text-white">
+                <span className="font-semibold text-xs sm:text-sm text-slate-900 dark:text-white">
                   {t('navChat', lang)}
                 </span>
                 <span className="text-[10px] text-slate-400 font-medium">Direct Resident Line</span>
@@ -245,11 +261,11 @@ export const OwnerHomeView: React.FC<OwnerHomeViewProps> = ({
               {/* Card 4: Hire Pro */}
               <div
                 onClick={onOpenHirePro}
-                className="rounded-[24px] p-4 sm:p-5 bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-md transition-all flex flex-col items-center text-center space-y-2 cursor-pointer group active:scale-95 hover:border-emerald-500/30">
-                <div className="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-emerald-950/50 group-hover:bg-emerald-100 text-[#00B665] flex items-center justify-center text-2xl transition-colors">
-                  🔧
+                className="rounded-2xl p-4 sm:p-5 bg-white dark:bg-[#161B22] border border-slate-200/80 dark:border-slate-800 shadow-sm hover:shadow-md transition-all flex flex-col items-center text-center space-y-2 cursor-pointer group active:scale-95 hover:border-emerald-500/30">
+                <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 group-hover:bg-slate-200 dark:group-hover:bg-slate-700 text-slate-700 dark:text-slate-300 flex items-center justify-center transition-colors">
+                  <Wrench size={18} strokeWidth={1.75} />
                 </div>
-                <span className="font-extrabold text-xs sm:text-sm text-[#111827] dark:text-white">
+                <span className="font-semibold text-xs sm:text-sm text-slate-900 dark:text-white">
                   {t('navHirePro', lang)}
                 </span>
                 <span className="text-[10px] text-slate-400 font-medium">Contractor Dispatch</span>
@@ -258,11 +274,11 @@ export const OwnerHomeView: React.FC<OwnerHomeViewProps> = ({
               {/* Card 5: NID Vault */}
               <div
                 onClick={() => onNavigateTab('vault')}
-                className="rounded-[24px] p-4 sm:p-5 bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-md transition-all flex flex-col items-center text-center space-y-2 cursor-pointer group active:scale-95 hover:border-emerald-500/30">
-                <div className="w-12 h-12 rounded-2xl bg-slate-100 dark:bg-slate-800 group-hover:bg-slate-200 text-slate-700 dark:text-slate-200 flex items-center justify-center text-2xl transition-colors">
-                  🛡️
+                className="rounded-2xl p-4 sm:p-5 bg-white dark:bg-[#161B22] border border-slate-200/80 dark:border-slate-800 shadow-sm hover:shadow-md transition-all flex flex-col items-center text-center space-y-2 cursor-pointer group active:scale-95 hover:border-emerald-500/30">
+                <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 group-hover:bg-slate-200 dark:group-hover:bg-slate-700 text-slate-700 dark:text-slate-300 flex items-center justify-center transition-colors">
+                  <ShieldCheck size={18} strokeWidth={1.75} />
                 </div>
-                <span className="font-extrabold text-xs sm:text-sm text-[#111827] dark:text-white">
+                <span className="font-semibold text-xs sm:text-sm text-slate-900 dark:text-white">
                   {t('navVault', lang)}
                 </span>
                 <span className="text-[10px] text-slate-400 font-medium">Tenant Directory</span>
@@ -271,11 +287,11 @@ export const OwnerHomeView: React.FC<OwnerHomeViewProps> = ({
               {/* Card 6: Submeter Monitor */}
               <div
                 onClick={() => onNavigateTab('monitor')}
-                className="rounded-[24px] p-4 sm:p-5 bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-md transition-all flex flex-col items-center text-center space-y-2 cursor-pointer group active:scale-95 hover:border-emerald-500/30">
-                <div className="w-12 h-12 rounded-2xl bg-amber-50 dark:bg-amber-950/50 group-hover:bg-amber-100 text-amber-600 dark:text-amber-400 flex items-center justify-center text-2xl transition-colors">
-                  📊
+                className="rounded-2xl p-4 sm:p-5 bg-white dark:bg-[#161B22] border border-slate-200/80 dark:border-slate-800 shadow-sm hover:shadow-md transition-all flex flex-col items-center text-center space-y-2 cursor-pointer group active:scale-95 hover:border-emerald-500/30">
+                <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 group-hover:bg-slate-200 dark:group-hover:bg-slate-700 text-slate-700 dark:text-slate-300 flex items-center justify-center transition-colors">
+                  <Activity size={18} strokeWidth={1.75} />
                 </div>
-                <span className="font-extrabold text-xs sm:text-sm text-[#111827] dark:text-white">
+                <span className="font-semibold text-xs sm:text-sm text-slate-900 dark:text-white">
                   {t('ghostBillMonitor', lang)}
                 </span>
                 <span className="text-[10px] text-slate-400 font-medium">WASA & DESCO IoT</span>
@@ -293,22 +309,28 @@ export const OwnerHomeView: React.FC<OwnerHomeViewProps> = ({
           <div className="card-luxury p-5 space-y-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className="text-lg">🛡️</span>
-                <h3 className="font-extrabold text-sm sm:text-base text-[#111827] dark:text-white">
+                <ShieldCheck size={18} strokeWidth={1.75} className="text-emerald-600 dark:text-emerald-400" />
+                <h3 className="font-semibold text-sm sm:text-base text-slate-900 dark:text-white">
                   Building Security Controls
                 </h3>
               </div>
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600">
+              <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">
                 Gate 24/7 Live
               </span>
             </div>
 
-            <div className="p-4 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-md flex items-center justify-between">
+            <div className="p-4 rounded-xl bg-slate-900 dark:bg-slate-800 text-white shadow-sm flex items-center justify-between border border-slate-800 dark:border-slate-700">
               <div className="flex items-center gap-3">
-                <span className="text-2xl">🔒</span>
+                <div className="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center shrink-0">
+                  {backendState.rooftopLocked ? (
+                    <Lock size={18} strokeWidth={1.75} className="text-amber-400" />
+                  ) : (
+                    <Unlock size={18} strokeWidth={1.75} className="text-emerald-400" />
+                  )}
+                </div>
                 <div>
-                  <h4 className="font-black text-xs sm:text-sm leading-tight">Rooftop Smart Lock</h4>
-                  <p className="text-[11px] text-amber-100 mt-0.5">
+                  <h4 className="font-semibold text-xs sm:text-sm leading-tight">Rooftop Smart Lock</h4>
+                  <p className="text-[11px] text-slate-400 mt-0.5">
                     {backendState.rooftopLocked ? 'Status: Securely Locked' : 'Status: Unlocked (Open)'}
                   </p>
                 </div>
@@ -318,7 +340,7 @@ export const OwnerHomeView: React.FC<OwnerHomeViewProps> = ({
                   const locked = backend.toggleRooftopLock();
                   if (onShowToast) onShowToast(`Rooftop access is now ${locked ? 'Locked' : 'Unlocked'}`);
                 }}
-                className="px-3.5 py-2 rounded-xl bg-white text-amber-700 hover:bg-amber-50 font-black text-xs uppercase tracking-wider shadow active:scale-95 transition-all">
+                className="px-3.5 py-2 rounded-xl bg-white text-slate-900 hover:bg-slate-100 font-semibold text-xs uppercase tracking-wider shadow-sm active:scale-95 transition-all">
                 {backendState.rooftopLocked ? 'Unlock' : 'Lock'}
               </button>
             </div>
@@ -328,8 +350,8 @@ export const OwnerHomeView: React.FC<OwnerHomeViewProps> = ({
           <div className="card-luxury p-5 sm:p-6 space-y-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className="text-lg">📈</span>
-                <h3 className="font-extrabold text-base text-[#111827] dark:text-white">
+                <History size={18} strokeWidth={1.75} className="text-slate-500" />
+                <h3 className="font-semibold text-base text-slate-900 dark:text-white">
                   {lang === 'bn' ? 'সাম্প্রতিক কার্যক্রম' : 'Recent Audit Activity'}
                 </h3>
               </div>
@@ -340,19 +362,25 @@ export const OwnerHomeView: React.FC<OwnerHomeViewProps> = ({
               {backendState.recentActivities.slice(0, 6).map(act => (
                 <div
                   key={act.id}
-                  className="p-3.5 rounded-2xl bg-slate-50 dark:bg-[#0D1117] border border-slate-100 dark:border-slate-800 flex items-center gap-3">
-                  <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ${
+                  className="p-3.5 rounded-xl bg-slate-50 dark:bg-[#161B22] border border-slate-200/80 dark:border-slate-800 flex items-center gap-3">
+                  <div className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 ${
                     act.type === 'success'
                       ? 'bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400'
                       : act.type === 'warning'
                       ? 'bg-amber-100 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400'
                       : 'bg-sky-100 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400'
                   }`}>
-                    {act.type === 'success' ? '✓' : act.type === 'warning' ? '!' : 'ℹ'}
+                    {act.type === 'success' ? (
+                      <Check size={14} strokeWidth={2} />
+                    ) : act.type === 'warning' ? (
+                      <AlertCircle size={14} strokeWidth={2} />
+                    ) : (
+                      <Info size={14} strokeWidth={2} />
+                    )}
                   </div>
 
                   <div className="flex-1 min-w-0">
-                    <h4 className="font-bold text-xs sm:text-sm text-[#111827] dark:text-white truncate">
+                    <h4 className="font-semibold text-xs sm:text-sm text-slate-900 dark:text-white truncate">
                       {act.text}
                     </h4>
                     <p className="text-[11px] text-slate-400 font-medium mt-0.5">

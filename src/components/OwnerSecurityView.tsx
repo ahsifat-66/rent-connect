@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Lock, Unlock, QrCode, Check, Clock } from 'lucide-react';
 import { backend, BackendState } from '../services/backend';
 
 interface OwnerSecurityViewProps {
@@ -54,23 +55,27 @@ export const OwnerSecurityView: React.FC<OwnerSecurityViewProps> = ({
         {/* Left Column (5 cols): Quick Controls & Metrics */}
         <div className="lg:col-span-5 space-y-6">
           {/* 2. Quick Controls Card */}
-          <div className="rounded-[28px] p-5 sm:p-6 bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 shadow-[0_8px_30px_rgb(0,0,0,0.04)] space-y-4">
-            <h3 className="font-extrabold text-base text-[#111827] dark:text-white">
+          <div className="rounded-2xl p-5 sm:p-6 bg-white dark:bg-[#161B22] border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-4">
+            <h3 className="font-semibold text-base text-slate-900 dark:text-white">
               Quick Controls
             </h3>
 
             {/* Rooftop Access Card */}
-            <div className="rounded-2xl p-4 bg-gradient-to-r from-[#E58325] to-[#D97706] text-white shadow-md flex items-center justify-between">
+            <div className="rounded-xl p-4 bg-slate-900 dark:bg-slate-800 text-white shadow-sm flex items-center justify-between border border-slate-800 dark:border-slate-700">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center text-xl shrink-0">
-                  🔒
+                <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center shrink-0">
+                  {backendState.rooftopLocked ? (
+                    <Lock size={18} strokeWidth={1.75} className="text-amber-400" />
+                  ) : (
+                    <Unlock size={18} strokeWidth={1.75} className="text-emerald-400" />
+                  )}
                 </div>
                 <div>
-                  <h4 className="font-extrabold text-sm leading-tight">
+                  <h4 className="font-semibold text-sm leading-tight text-white">
                     Rooftop Access
                   </h4>
-                  <p className="text-xs text-amber-100 font-medium mt-0.5">
-                    {backendState.rooftopLocked ? 'Locked' : 'Unlocked (Open)'}
+                  <p className="text-xs text-slate-400 mt-0.5">
+                    {backendState.rooftopLocked ? 'Status: Securely Locked' : 'Status: Unlocked (Open)'}
                   </p>
                 </div>
               </div>
@@ -80,17 +85,18 @@ export const OwnerSecurityView: React.FC<OwnerSecurityViewProps> = ({
                 type="button"
                 onClick={handleToggleRooftop}
                 className={`w-14 h-8 rounded-full transition-colors p-1 flex items-center ${
-                  backendState.rooftopLocked ? 'bg-white/30 justify-end' : 'bg-white/80 justify-start'
+                  backendState.rooftopLocked ? 'bg-amber-600 justify-end' : 'bg-emerald-600 justify-start'
                 }`}>
-                <div className="w-6 h-6 rounded-full bg-white shadow-md"></div>
+                <div className="w-6 h-6 rounded-full bg-white shadow-sm" />
               </button>
             </div>
 
             {/* Generate Guest QR Code Button */}
             <button
               onClick={onOpenGuestQrModal}
-              className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-[#6366F1] to-[#8B5CF6] hover:opacity-95 text-white font-extrabold text-sm shadow-md flex items-center justify-center gap-2 transition-all active:scale-98">
-              <span>📱</span> Generate Guest QR Code
+              className="w-full py-3 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-slate-800 dark:hover:bg-slate-700 text-white font-semibold text-xs tracking-wider shadow-sm flex items-center justify-center gap-2 transition-all active:scale-98">
+              <QrCode size={15} strokeWidth={1.75} />
+              <span>Generate Guest QR Code</span>
             </button>
           </div>
 
@@ -152,16 +158,17 @@ export const OwnerSecurityView: React.FC<OwnerSecurityViewProps> = ({
 
                   <div className="text-right shrink-0 space-y-1">
                     {log.isLive ? (
-                      <span className="inline-block bg-emerald-50 text-emerald-600 dark:bg-emerald-950/60 dark:text-emerald-300 text-[10px] font-black uppercase px-2 py-0.5 rounded-full border border-emerald-500/20">
+                      <span className="inline-block bg-emerald-50 text-emerald-600 dark:bg-emerald-950/60 dark:text-emerald-300 text-[10px] font-semibold uppercase px-2 py-0.5 rounded-full border border-emerald-500/20">
                         LIVE
                       </span>
                     ) : (
-                      <span className="inline-block text-emerald-600 text-xs font-bold">
-                        ✓
+                      <span className="inline-flex items-center text-emerald-600 dark:text-emerald-400">
+                        <Check size={14} strokeWidth={2} />
                       </span>
                     )}
-                    <div className="text-[11px] font-semibold text-slate-400 font-mono">
-                      ⏱️ {log.time}
+                    <div className="text-[11px] font-semibold text-slate-400 font-mono flex items-center justify-end gap-1">
+                      <Clock size={11} strokeWidth={1.75} />
+                      <span>{log.time}</span>
                     </div>
                   </div>
 

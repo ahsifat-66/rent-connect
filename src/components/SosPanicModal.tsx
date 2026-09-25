@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { AlertTriangle, Check } from 'lucide-react';
 import { User } from '../types';
 
 interface SosPanicModalProps {
@@ -30,11 +31,11 @@ export const SosPanicModal: React.FC<SosPanicModalProps> = ({ isOpen, onClose, u
 
   return (
     <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-lg flex items-end sm:items-center justify-center p-0 sm:p-4 animate-fade-in">
-      <div className="card-luxury w-full max-w-md bg-[var(--bg-surface)] p-6 sm:p-8 space-y-5 rounded-b-none sm:rounded-b-[28px] border-2 border-red-500 shadow-2xl text-center">
+      <div className="card-luxury w-full max-w-md bg-[var(--bg-surface)] p-6 sm:p-8 space-y-5 rounded-b-none sm:rounded-2xl border-2 border-red-500 shadow-2xl text-center">
         
         {/* Red Siren Icon */}
-        <div className="w-20 h-20 rounded-full bg-red-500/10 border-2 border-red-500 text-red-500 mx-auto flex items-center justify-center text-3xl animate-bounce">
-          🚨
+        <div className="w-20 h-20 rounded-full bg-red-500/10 border-2 border-red-500 text-red-500 mx-auto flex items-center justify-center">
+          <AlertTriangle size={36} strokeWidth={2} className="animate-pulse" />
         </div>
 
         <div>
@@ -57,20 +58,20 @@ export const SosPanicModal: React.FC<SosPanicModalProps> = ({ isOpen, onClose, u
             <p className="text-[11px] text-slate-400">Cancel within {countdown}s if triggered by accident</p>
             <button
               onClick={onClose}
-              className="w-full py-3.5 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 text-[var(--text-main)] font-black text-xs uppercase tracking-wider rounded-2xl">
+              className="w-full py-3.5 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 text-[var(--text-main)] font-black text-xs uppercase tracking-wider rounded-xl transition-all active:scale-98">
               CANCEL SOS ALARM
             </button>
           </div>
         ) : (
           <div className="space-y-3 pt-2">
-            <div className="p-3.5 rounded-2xl bg-red-500/10 border border-red-500/30 text-xs text-red-700 dark:text-red-300 font-bold space-y-1">
-              <p>✓ Guard Desk Notified (Siren Active)</p>
-              <p>✓ SMS & Call Dispatched to Building Manager</p>
-              <p>✓ Police Dispatch Hotline Prepared (999)</p>
+            <div className="p-3.5 rounded-xl bg-red-500/10 border border-red-500/30 text-xs text-red-700 dark:text-red-300 font-bold space-y-1.5 text-left">
+              <p className="flex items-center gap-1.5"><Check size={13} strokeWidth={2.5} className="shrink-0 text-red-600 dark:text-red-400" /> Guard Desk Notified (Siren Active)</p>
+              <p className="flex items-center gap-1.5"><Check size={13} strokeWidth={2.5} className="shrink-0 text-red-600 dark:text-red-400" /> SMS & Call Dispatched to Building Manager</p>
+              <p className="flex items-center gap-1.5"><Check size={13} strokeWidth={2.5} className="shrink-0 text-red-600 dark:text-red-400" /> Police Dispatch Hotline Prepared (999)</p>
             </div>
             <button
               onClick={onClose}
-              className="w-full py-3.5 bg-emerald-600 text-white font-bold text-xs rounded-2xl shadow">
+              className="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow active:scale-98 transition-all">
               Dismiss Emergency State
             </button>
           </div>

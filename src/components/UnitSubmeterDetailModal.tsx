@@ -1,4 +1,13 @@
 import React, { useState } from 'react';
+import { 
+  Droplets, 
+  Zap, 
+  Flame, 
+  X, 
+  AlertTriangle, 
+  Check, 
+  Wrench 
+} from 'lucide-react';
 
 export interface UnitSubmeterData {
   unit: string;
@@ -47,12 +56,12 @@ export const UnitSubmeterDetailModal: React.FC<UnitSubmeterDetailModalProps> = (
 
   return (
     <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-end sm:items-center justify-center p-0 sm:p-4 animate-fade-in">
-      <div className="card-luxury w-full max-w-lg bg-white dark:bg-[#161B22] p-5 sm:p-7 rounded-b-none sm:rounded-b-[28px] space-y-5 border border-slate-200 dark:border-slate-800 shadow-2xl max-h-[92vh] overflow-y-auto">
+      <div className="card-luxury w-full max-w-lg bg-white dark:bg-[#161B22] p-5 sm:p-7 rounded-b-none sm:rounded-2xl space-y-5 border border-slate-200 dark:border-slate-800 shadow-2xl max-h-[92vh] overflow-y-auto">
         
         {/* Header */}
         <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3.5">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#121632] to-[#00B665] text-white flex items-center justify-center font-black text-sm shadow">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#121632] to-[#00B665] text-white flex items-center justify-center font-black text-sm shadow">
               {data.unit}
             </div>
             <div>
@@ -64,8 +73,8 @@ export const UnitSubmeterDetailModal: React.FC<UnitSubmeterDetailModalProps> = (
               </p>
             </div>
           </div>
-          <button onClick={onClose} className="p-1 text-slate-400 hover:text-slate-900 dark:hover:text-white text-xl font-bold">
-            ✕
+          <button onClick={onClose} className="p-1 text-slate-400 hover:text-slate-900 dark:hover:text-white font-bold">
+            <X size={18} strokeWidth={1.75} />
           </button>
         </div>
 
@@ -77,7 +86,8 @@ export const UnitSubmeterDetailModal: React.FC<UnitSubmeterDetailModalProps> = (
             className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
               activeTab === 'water' ? 'bg-sky-500 text-white shadow' : 'text-slate-500 hover:text-slate-900 dark:text-slate-400'
             }`}>
-            <span>💧</span> Water (DWASA)
+            <Droplets size={14} strokeWidth={1.75} />
+            <span>Water (DWASA)</span>
           </button>
           <button
             type="button"
@@ -85,7 +95,8 @@ export const UnitSubmeterDetailModal: React.FC<UnitSubmeterDetailModalProps> = (
             className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
               activeTab === 'electricity' ? 'bg-amber-500 text-white shadow' : 'text-slate-500 hover:text-slate-900 dark:text-slate-400'
             }`}>
-            <span>⚡</span> Electricity (DESCO)
+            <Zap size={14} strokeWidth={1.75} />
+            <span>Electricity (DESCO)</span>
           </button>
           <button
             type="button"
@@ -93,7 +104,8 @@ export const UnitSubmeterDetailModal: React.FC<UnitSubmeterDetailModalProps> = (
             className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
               activeTab === 'gas' ? 'bg-purple-600 text-white shadow' : 'text-slate-500 hover:text-slate-900 dark:text-slate-400'
             }`}>
-            <span>🔥</span> Gas (Titas)
+            <Flame size={14} strokeWidth={1.75} />
+            <span>Gas (Titas)</span>
           </button>
         </div>
 
@@ -126,9 +138,17 @@ export const UnitSubmeterDetailModal: React.FC<UnitSubmeterDetailModalProps> = (
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-slate-500 dark:text-slate-400">Acoustic Vibration Signature:</span>
-                <span className={`font-bold ${data.waterStatus === 'leak' ? 'text-red-600' : 'text-emerald-600'}`}>
-                  {data.waterStatus === 'leak' ? '⚠️ Continuous Micro-flow Leak Detected' : '✓ Normal Intermittent Flow'}
-                </span>
+                {data.waterStatus === 'leak' ? (
+                  <span className="text-rose-600 dark:text-rose-400 font-bold flex items-center gap-1.5">
+                    <AlertTriangle size={14} strokeWidth={1.75} />
+                    Continuous Micro-flow Leak Detected
+                  </span>
+                ) : (
+                  <span className="text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1.5">
+                    <Check size={14} strokeWidth={2} />
+                    Normal Intermittent Flow
+                  </span>
+                )}
               </div>
             </div>
 
@@ -177,7 +197,10 @@ export const UnitSubmeterDetailModal: React.FC<UnitSubmeterDetailModalProps> = (
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-slate-500 dark:text-slate-400">Standby Generator Auto-switch:</span>
-                <span className="text-emerald-600 font-bold">✓ Ready (Diesel Sub-panel Armed)</span>
+                <span className="text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1.5">
+                  <Check size={14} strokeWidth={2} />
+                  Ready (Diesel Sub-panel Armed)
+                </span>
               </div>
             </div>
           </div>
@@ -197,11 +220,17 @@ export const UnitSubmeterDetailModal: React.FC<UnitSubmeterDetailModalProps> = (
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-slate-500 dark:text-slate-400">Methane PPM Sensor:</span>
-                <span className="text-emerald-600 font-bold">✓ 3.2 ppm (Safe & Zero Leak)</span>
+                <span className="text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1.5">
+                  <Check size={14} strokeWidth={2} />
+                  3.2 ppm (Safe & Zero Leak)
+                </span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-slate-500 dark:text-slate-400">Emergency Solenoid Trip:</span>
-                <span className="text-emerald-600 font-bold">✓ Auto-shutoff Linked to Fire Alarm</span>
+                <span className="text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1.5">
+                  <Check size={14} strokeWidth={2} />
+                  Auto-shutoff Linked to Fire Alarm
+                </span>
               </div>
             </div>
           </div>
@@ -226,7 +255,8 @@ export const UnitSubmeterDetailModal: React.FC<UnitSubmeterDetailModalProps> = (
               onClose();
             }}
             className="flex-1 py-3.5 rounded-2xl bg-[#00B665] hover:bg-[#009E54] text-white font-bold text-xs shadow flex items-center justify-center gap-1.5 active:scale-95 transition-all">
-            <span>🔧</span> Dispatch {activeTab === 'water' ? 'Plumber' : activeTab === 'electricity' ? 'Electrician' : 'Gas Tech'}
+            <Wrench size={16} strokeWidth={1.75} />
+            Dispatch {activeTab === 'water' ? 'Plumber' : activeTab === 'electricity' ? 'Electrician' : 'Gas Tech'}
           </button>
 
           <button

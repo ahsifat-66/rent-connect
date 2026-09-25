@@ -1,4 +1,5 @@
 import React from 'react';
+import { ShieldCheck, Check, X, FileText } from 'lucide-react';
 import { User } from '../types';
 
 interface DmpFormModalProps {
@@ -13,25 +14,26 @@ export const DmpFormModal: React.FC<DmpFormModalProps> = ({ isOpen, onClose, use
 
   return (
     <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-md flex items-end sm:items-center justify-center p-0 sm:p-4 animate-fade-in">
-      <div className="card-luxury w-full max-w-2xl bg-[var(--bg-surface)] p-5 sm:p-7 space-y-4 rounded-b-none sm:rounded-b-[28px] max-h-[92vh] overflow-y-auto">
+      <div className="card-luxury w-full max-w-2xl bg-[var(--bg-surface)] p-5 sm:p-7 space-y-4 rounded-b-none sm:rounded-2xl max-h-[92vh] overflow-y-auto">
         
         {/* Header */}
         <div className="flex items-center justify-between border-b border-[var(--border-main)] pb-3">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-emerald-600/10 text-emerald-600 flex items-center justify-center text-xl font-bold">
-              👮
+            <div className="w-10 h-10 rounded-xl bg-emerald-600/10 text-emerald-600 flex items-center justify-center font-bold">
+              <ShieldCheck size={20} strokeWidth={1.75} />
             </div>
             <div>
               <h3 className="font-extrabold text-base sm:text-lg text-[var(--text-main)]">
                 ঢাকা মেট্রোপলিটন পুলিশ (DMP) — নাগরিক/ভাড়াটিয়া তথ্য ফরম
               </h3>
-              <p className="text-[11px] text-emerald-600 font-semibold">
-                ✓ Gulshan Police Station Digital Registry Verified · Thana Code #GL-2026
+              <p className="text-[11px] text-emerald-600 font-semibold flex items-center gap-1">
+                <Check size={12} strokeWidth={2.5} />
+                <span>Gulshan Police Station Digital Registry Verified · Thana Code #GL-2026</span>
               </p>
             </div>
           </div>
-          <button onClick={onClose} className="p-1 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-main)] text-xl font-bold">
-            ✕
+          <button onClick={onClose} className="p-1 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-main)] font-bold">
+            <X size={18} strokeWidth={1.75} />
           </button>
         </div>
 
@@ -93,7 +95,8 @@ export const DmpFormModal: React.FC<DmpFormModalProps> = ({ isOpen, onClose, use
               window.print();
             }}
             className="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow active:scale-95 transition-all flex items-center gap-1.5">
-            <span>📄</span> Download / Print DMP PDF
+            <FileText size={14} strokeWidth={1.75} />
+            <span>Download / Print DMP PDF</span>
           </button>
           <button
             onClick={onClose}

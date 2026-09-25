@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Megaphone, X } from 'lucide-react';
 import { backend } from '../services/backend';
 
 interface PublishBroadcastModalProps {
@@ -42,13 +43,13 @@ export const PublishBroadcastModal: React.FC<PublishBroadcastModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
-      <div className="bg-white dark:bg-[#121624] w-full max-w-lg rounded-[28px] shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden flex flex-col max-h-[90vh]">
+      <div className="bg-white dark:bg-[#121624] w-full max-w-lg rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden flex flex-col max-h-[90vh]">
         
         {/* Header */}
         <div className="p-5 sm:p-6 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-xl font-bold">
-              📢
+            <div className="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold">
+              <Megaphone size={20} strokeWidth={1.75} />
             </div>
             <div>
               <h3 className="text-lg sm:text-xl font-extrabold text-[#111827] dark:text-white">
@@ -62,7 +63,7 @@ export const PublishBroadcastModal: React.FC<PublishBroadcastModalProps> = ({
           <button
             onClick={onClose}
             className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-slate-900 dark:hover:text-white flex items-center justify-center font-bold text-sm">
-            ✕
+            <X size={16} strokeWidth={1.75} />
           </button>
         </div>
 
@@ -121,10 +122,10 @@ export const PublishBroadcastModal: React.FC<PublishBroadcastModalProps> = ({
                 value={category}
                 onChange={(e) => setCategory(e.target.value as any)}
                 className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-xs sm:text-sm text-[#111827] dark:text-white">
-                <option value="maintenance">🛠️ Maintenance</option>
-                <option value="security">🛡️ Security</option>
-                <option value="financial">💰 Financial</option>
-                <option value="general">📋 General</option>
+                <option value="maintenance">Maintenance</option>
+                <option value="security">Security</option>
+                <option value="financial">Financial</option>
+                <option value="general">General</option>
               </select>
             </div>
             <div>
@@ -181,14 +182,14 @@ export const PublishBroadcastModal: React.FC<PublishBroadcastModalProps> = ({
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 py-3 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-600 dark:text-slate-300">
+              className="flex-1 py-3 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
               {lang === 'en' ? 'Cancel' : 'বাতিল'}
             </button>
             <button
               type="submit"
               disabled={isSubmitting || !title.trim() || !body.trim()}
-              className="flex-1 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-lg shadow-emerald-600/30 active:scale-98 disabled:opacity-50">
-              {isSubmitting ? (lang === 'en' ? 'Publishing...' : 'প্রকাশ হচ্ছে...') : (lang === 'en' ? 'Publish Notice 📢' : 'নোটিশ প্রকাশ করুন 📢')}
+              className="flex-1 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-lg shadow-emerald-600/30 active:scale-98 disabled:opacity-50 transition-all flex items-center justify-center gap-1.5">
+              <span>{isSubmitting ? (lang === 'en' ? 'Publishing...' : 'প্রকাশ হচ্ছে...') : (lang === 'en' ? 'Publish Notice' : 'নোটিশ প্রকাশ করুন')}</span>
             </button>
           </div>
         </form>

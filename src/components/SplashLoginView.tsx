@@ -1,4 +1,19 @@
 import React, { useState } from 'react';
+import { 
+  Sun, 
+  Moon, 
+  Droplets, 
+  ShieldCheck, 
+  CreditCard, 
+  DoorClosed, 
+  Zap, 
+  Building2, 
+  Home, 
+  KeyRound, 
+  UserPlus, 
+  ScanFace, 
+  Fingerprint 
+} from 'lucide-react';
 import { backend } from '../services/backend';
 import { Language, t } from '../utils/i18n';
 
@@ -140,26 +155,26 @@ export const SplashLoginView: React.FC<SplashLoginViewProps> = ({
           </div>
 
           {/* Tactile Theme Switcher */}
-          <div className="flex items-center bg-white dark:bg-[#1A1D3D] p-1 rounded-2xl border border-slate-200 dark:border-slate-700/50 shadow-sm">
+          <div className="flex items-center bg-white dark:bg-[#161B22] p-1 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
             <button
               type="button"
               onClick={() => setTheme('light')}
-              className={`px-2 py-1 rounded-xl text-xs font-black transition-all flex items-center gap-1 ${
+              className={`p-1.5 rounded-lg text-xs font-semibold transition-all flex items-center justify-center ${
                 theme === 'light'
                   ? 'bg-slate-900 text-white shadow-sm'
                   : 'text-slate-400 hover:text-slate-700 dark:text-slate-400'
               }`}>
-              <span>☀️</span>
+              <Sun size={14} strokeWidth={1.75} />
             </button>
             <button
               type="button"
               onClick={() => setTheme('dark')}
-              className={`px-2 py-1 rounded-xl text-xs font-black transition-all flex items-center gap-1 ${
+              className={`p-1.5 rounded-lg text-xs font-semibold transition-all flex items-center justify-center ${
                 theme === 'dark'
-                  ? 'bg-[#2B2F5C] text-white shadow-sm'
+                  ? 'bg-slate-800 text-white shadow-sm'
                   : 'text-slate-500 hover:text-slate-900 dark:text-slate-400'
               }`}>
-              <span>🌙</span>
+              <Moon size={14} strokeWidth={1.75} />
             </button>
           </div>
         </div>
@@ -224,36 +239,36 @@ export const SplashLoginView: React.FC<SplashLoginViewProps> = ({
 
           {/* Feature Highlights Grid */}
           <div className="grid grid-cols-2 gap-3.5 max-w-xl">
-            <div className="p-4 rounded-2xl bg-white/80 dark:bg-[#1A1D3D]/70 border border-slate-200/80 dark:border-slate-700/50 shadow-sm backdrop-blur-sm space-y-1">
-              <div className="flex items-center gap-2 text-[#00B665] font-black text-sm">
-                <span>💧</span> DWASA & DESCO IoT
+            <div className="p-4 rounded-xl bg-white/80 dark:bg-[#161B22]/70 border border-slate-200/80 dark:border-slate-800 shadow-sm backdrop-blur-sm space-y-1">
+              <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-semibold text-sm">
+                <Droplets size={16} strokeWidth={1.75} /> DWASA & DESCO IoT
               </div>
               <p className="text-xs text-slate-500 dark:text-slate-400 leading-snug">
                 Live submeter flow rates, peak kWh alerts & leak detection.
               </p>
             </div>
 
-            <div className="p-4 rounded-2xl bg-white/80 dark:bg-[#1A1D3D]/70 border border-slate-200/80 dark:border-slate-700/50 shadow-sm backdrop-blur-sm space-y-1">
-              <div className="flex items-center gap-2 text-sky-500 font-black text-sm">
-                <span>🛡️</span> DMP Citizen Auth
+            <div className="p-4 rounded-xl bg-white/80 dark:bg-[#161B22]/70 border border-slate-200/80 dark:border-slate-800 shadow-sm backdrop-blur-sm space-y-1">
+              <div className="flex items-center gap-2 text-sky-600 dark:text-sky-400 font-semibold text-sm">
+                <ShieldCheck size={16} strokeWidth={1.75} /> DMP Citizen Auth
               </div>
               <p className="text-xs text-slate-500 dark:text-slate-400 leading-snug">
                 Automated tenant police verification with NID barcode sync.
               </p>
             </div>
 
-            <div className="p-4 rounded-2xl bg-white/80 dark:bg-[#1A1D3D]/70 border border-slate-200/80 dark:border-slate-700/50 shadow-sm backdrop-blur-sm space-y-1">
-              <div className="flex items-center gap-2 text-amber-500 font-black text-sm">
-                <span>৳</span> Instant Rent Escrow
+            <div className="p-4 rounded-xl bg-white/80 dark:bg-[#161B22]/70 border border-slate-200/80 dark:border-slate-800 shadow-sm backdrop-blur-sm space-y-1">
+              <div className="flex items-center gap-2 text-amber-600 dark:text-amber-400 font-semibold text-sm">
+                <CreditCard size={16} strokeWidth={1.75} /> Instant Rent Escrow
               </div>
               <p className="text-xs text-slate-500 dark:text-slate-400 leading-snug">
                 bKash, Nagad, Visa & bank transfer with instant automated receipts.
               </p>
             </div>
 
-            <div className="p-4 rounded-2xl bg-white/80 dark:bg-[#1A1D3D]/70 border border-slate-200/80 dark:border-slate-700/50 shadow-sm backdrop-blur-sm space-y-1">
-              <div className="flex items-center gap-2 text-purple-500 font-black text-sm">
-                <span>🚪</span> Contactless Gates
+            <div className="p-4 rounded-xl bg-white/80 dark:bg-[#161B22]/70 border border-slate-200/80 dark:border-slate-800 shadow-sm backdrop-blur-sm space-y-1">
+              <div className="flex items-center gap-2 text-purple-600 dark:text-purple-400 font-semibold text-sm">
+                <DoorClosed size={16} strokeWidth={1.75} /> Contactless Gates
               </div>
               <p className="text-xs text-slate-500 dark:text-slate-400 leading-snug">
                 QR visitor passes, guard desk intercom & rooftop electronic locks.
@@ -286,12 +301,12 @@ export const SplashLoginView: React.FC<SplashLoginViewProps> = ({
         {/* ========================================================================= */}
         {/* --- 1. PROMINENT 1-CLICK DEMO QUICK-ACTION BUTTONS --- */}
         {/* ========================================================================= */}
-        <div className="space-y-2 p-3 sm:p-3.5 rounded-[24px] bg-white/90 dark:bg-[#1D2040]/80 border border-slate-200/80 dark:border-slate-700/60 shadow-lg backdrop-blur-md">
+        <div className="space-y-2 p-3 sm:p-3.5 rounded-2xl bg-white/90 dark:bg-[#161B22]/90 border border-slate-200/80 dark:border-slate-800 shadow-sm backdrop-blur-md">
           <div className="flex items-center justify-between px-1">
-            <span className="text-[11px] font-black uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1">
-              <span>🚀</span> Instant 1-Click Demo
+            <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
+              <Zap size={13} strokeWidth={2} className="text-amber-500" /> Instant 1-Click Demo
             </span>
-            <span className="text-[10px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold px-2 py-0.5 rounded-full">
+            <span className="text-[10px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-medium px-2 py-0.5 rounded-full border border-emerald-500/20">
               Zero-Typing Friction
             </span>
           </div>
@@ -301,15 +316,15 @@ export const SplashLoginView: React.FC<SplashLoginViewProps> = ({
             <button
               type="button"
               onClick={onJoinAsOwner}
-              className="p-3 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white text-left shadow-md shadow-amber-500/20 active:scale-95 transition-all group flex items-center gap-2.5">
-              <span className="w-9 h-9 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center text-lg shrink-0 group-hover:scale-110 transition-transform">
-                👑
+              className="p-3 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-amber-600 dark:hover:bg-amber-500 text-white text-left shadow-sm active:scale-95 transition-all group flex items-center gap-2.5">
+              <span className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                <Building2 size={16} strokeWidth={1.75} />
               </span>
               <div className="min-w-0">
-                <span className="font-black text-xs block leading-tight truncate">
+                <span className="font-semibold text-xs block leading-tight truncate">
                   {t('demoOwner', lang)}
                 </span>
-                <span className="text-[10px] text-amber-100/90 truncate block">
+                <span className="text-[10px] text-slate-300 dark:text-amber-100/90 truncate block">
                   {t('demoOwnerSub', lang)}
                 </span>
               </div>
@@ -319,12 +334,12 @@ export const SplashLoginView: React.FC<SplashLoginViewProps> = ({
             <button
               type="button"
               onClick={onJoinAsTenant}
-              className="p-3 rounded-2xl bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white text-left shadow-md shadow-emerald-500/20 active:scale-95 transition-all group flex items-center gap-2.5">
-              <span className="w-9 h-9 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center text-lg shrink-0 group-hover:scale-110 transition-transform">
-                🏠
+              className="p-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-left shadow-sm active:scale-95 transition-all group flex items-center gap-2.5">
+              <span className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                <Home size={16} strokeWidth={1.75} />
               </span>
               <div className="min-w-0">
-                <span className="font-black text-xs block leading-tight truncate">
+                <span className="font-semibold text-xs block leading-tight truncate">
                   {t('demoTenant', lang)}
                 </span>
                 <span className="text-[10px] text-emerald-100/90 truncate block">
@@ -336,27 +351,27 @@ export const SplashLoginView: React.FC<SplashLoginViewProps> = ({
         </div>
 
         {/* Mode Switcher: Sign In vs Sign Up */}
-        <div className="p-1 rounded-2xl bg-white dark:bg-[#1A1D3D] border border-slate-200 dark:border-slate-700/60 flex items-center shadow-sm">
+        <div className="p-1 rounded-xl bg-white dark:bg-[#161B22] border border-slate-200 dark:border-slate-800 flex items-center shadow-sm">
           <button
             type="button"
             onClick={() => setAuthMode('login')}
-            className={`flex-1 py-2 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-1.5 ${
+            className={`flex-1 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1.5 ${
               authMode === 'login'
-                ? 'bg-slate-900 text-white dark:bg-[#2B2F5C] dark:text-white shadow-sm'
+                ? 'bg-slate-900 text-white dark:bg-slate-800 dark:text-white shadow-sm'
                 : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200'
             }`}>
-            <span>🔑</span>
+            <KeyRound size={13} strokeWidth={1.75} />
             <span>{t('signIn', lang)}</span>
           </button>
           <button
             type="button"
             onClick={() => setAuthMode('signup')}
-            className={`flex-1 py-2 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-1.5 ${
+            className={`flex-1 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1.5 ${
               authMode === 'signup'
-                ? 'bg-[#00B665] text-white shadow-sm'
+                ? 'bg-emerald-600 text-white shadow-sm'
                 : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200'
             }`}>
-            <span>📝</span>
+            <UserPlus size={13} strokeWidth={1.75} />
             <span>{t('signUp', lang)}</span>
           </button>
         </div>
@@ -366,14 +381,14 @@ export const SplashLoginView: React.FC<SplashLoginViewProps> = ({
           <button
             type="button"
             onClick={() => setSelectedRole('owner')}
-            className={`p-2.5 sm:p-3 rounded-2xl border text-center transition-all flex items-center justify-center gap-2 ${
+            className={`p-2.5 sm:p-3 rounded-xl border text-center transition-all flex items-center justify-center gap-2.5 ${
               selectedRole === 'owner'
-                ? 'border-amber-500 bg-amber-50 dark:bg-amber-500/15 text-slate-900 dark:text-white ring-2 ring-amber-500/40 shadow-sm'
-                : 'border-slate-200 dark:border-slate-700/50 bg-white dark:bg-[#1D2040]/70 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-[#1D2040]'
+                ? 'border-amber-500/50 bg-amber-500/10 text-slate-900 dark:text-white ring-1 ring-amber-500/30 shadow-sm'
+                : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161B22]/70 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-[#161B22]'
             }`}>
-            <span className="text-xl">🏛️</span>
+            <Building2 size={18} strokeWidth={1.75} className="text-amber-600 dark:text-amber-400 shrink-0" />
             <div className="text-left min-w-0">
-              <span className="font-extrabold text-xs block leading-tight text-[#111827] dark:text-white truncate">
+              <span className="font-semibold text-xs block leading-tight text-slate-900 dark:text-white truncate">
                 {t('houseOwner', lang)}
               </span>
               <span className="text-[10px] text-slate-500 dark:text-slate-400 truncate block">
@@ -385,14 +400,14 @@ export const SplashLoginView: React.FC<SplashLoginViewProps> = ({
           <button
             type="button"
             onClick={() => setSelectedRole('tenant')}
-            className={`p-2.5 sm:p-3 rounded-2xl border text-center transition-all flex items-center justify-center gap-2 ${
+            className={`p-2.5 sm:p-3 rounded-xl border text-center transition-all flex items-center justify-center gap-2.5 ${
               selectedRole === 'tenant'
-                ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-500/15 text-slate-900 dark:text-white ring-2 ring-emerald-500/40 shadow-sm'
-                : 'border-slate-200 dark:border-slate-700/50 bg-white dark:bg-[#1D2040]/70 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-[#1D2040]'
+                ? 'border-emerald-500/50 bg-emerald-500/10 text-slate-900 dark:text-white ring-1 ring-emerald-500/30 shadow-sm'
+                : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161B22]/70 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-[#161B22]'
             }`}>
-            <span className="text-xl">🏠</span>
+            <Home size={18} strokeWidth={1.75} className="text-emerald-600 dark:text-emerald-400 shrink-0" />
             <div className="text-left min-w-0">
-              <span className="font-extrabold text-xs block leading-tight text-[#111827] dark:text-white truncate">
+              <span className="font-semibold text-xs block leading-tight text-slate-900 dark:text-white truncate">
                 {t('residentTenant', lang)}
               </span>
               <span className="text-[10px] text-slate-500 dark:text-slate-400 truncate block">
@@ -463,16 +478,16 @@ export const SplashLoginView: React.FC<SplashLoginViewProps> = ({
                   <button
                     type="button"
                     onClick={() => handleBiometricClick(selectedRole, 'face')}
-                    className="py-2.5 px-3 rounded-2xl bg-slate-50 hover:bg-slate-100 dark:bg-[#2B2F5C]/80 dark:hover:bg-[#383D75] active:scale-95 text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center justify-center gap-2 border border-slate-200 dark:border-slate-600/40 transition-all shadow-sm">
-                    <span className="text-[#00B665] font-mono text-sm">⛶</span>
+                    className="py-2.5 px-3 rounded-xl bg-slate-50 hover:bg-slate-100 dark:bg-[#161B22] dark:hover:bg-[#1f2633] active:scale-95 text-xs font-semibold text-slate-800 dark:text-slate-200 flex items-center justify-center gap-2 border border-slate-200 dark:border-slate-800 transition-all shadow-sm">
+                    <ScanFace size={16} strokeWidth={1.75} className="text-emerald-600 dark:text-emerald-400" />
                     <span>{t('faceId', lang)}</span>
                   </button>
 
                   <button
                     type="button"
                     onClick={() => handleBiometricClick(selectedRole, 'touch')}
-                    className="py-2.5 px-3 rounded-2xl bg-slate-50 hover:bg-slate-100 dark:bg-[#2B2F5C]/80 dark:hover:bg-[#383D75] active:scale-95 text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center justify-center gap-2 border border-slate-200 dark:border-slate-600/40 transition-all shadow-sm">
-                    <span className="text-[#00B665] text-base">🪪</span>
+                    className="py-2.5 px-3 rounded-xl bg-slate-50 hover:bg-slate-100 dark:bg-[#161B22] dark:hover:bg-[#1f2633] active:scale-95 text-xs font-semibold text-slate-800 dark:text-slate-200 flex items-center justify-center gap-2 border border-slate-200 dark:border-slate-800 transition-all shadow-sm">
+                    <Fingerprint size={16} strokeWidth={1.75} className="text-emerald-600 dark:text-emerald-400" />
                     <span>{t('touchId', lang)}</span>
                   </button>
                 </div>
@@ -674,12 +689,12 @@ export const SplashLoginView: React.FC<SplashLoginViewProps> = ({
       {/* Biometric Scanning Overlay Animation */}
       {biometricScanning && (
         <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex flex-col items-center justify-center space-y-4 animate-fade-in">
-          <div className="w-20 h-20 rounded-full border-4 border-emerald-500/30 border-t-emerald-500 animate-spin flex items-center justify-center">
-            <span className="text-2xl animate-pulse">✨</span>
+          <div className="w-16 h-16 rounded-full border-2 border-emerald-500/30 border-t-emerald-500 animate-spin flex items-center justify-center">
+            <Fingerprint size={24} strokeWidth={1.75} className="text-emerald-400 animate-pulse" />
           </div>
           <div className="text-center">
-            <h4 className="font-extrabold text-sm text-white">{t('loading', lang)}</h4>
-            <p className="text-xs text-slate-300 mt-0.5">{t('dhakaHandshake', lang)}</p>
+            <h4 className="font-semibold text-sm text-white">{t('loading', lang)}</h4>
+            <p className="text-xs text-slate-400 mt-0.5">{t('dhakaHandshake', lang)}</p>
           </div>
         </div>
       )}

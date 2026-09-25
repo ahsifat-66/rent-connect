@@ -1,4 +1,16 @@
 import React, { useState } from 'react';
+import { 
+  ShieldCheck, 
+  Droplets, 
+  Zap, 
+  Flame, 
+  Wrench, 
+  ShoppingBag, 
+  MessageSquare, 
+  QrCode, 
+  X, 
+  Calendar 
+} from 'lucide-react';
 import { User } from '../types';
 import { UnitSubmeterDetailModal, UnitSubmeterData } from './UnitSubmeterDetailModal';
 import { Language, t } from '../utils/i18n';
@@ -53,7 +65,7 @@ export const TenantHomeView: React.FC<TenantHomeViewProps> = ({
     { day: lang === 'bn' ? 'বুধ' : 'Wed', water: 125, waterCost: '৳2.06', elec: 44, elecCost: '৳360.80', isWaterLeak: false, isElecPeak: false, desc: 'Geyser & laundry cycle' },
     { day: lang === 'bn' ? 'বৃহঃ' : 'Thu', water: 120, waterCost: '৳1.98', elec: 39, elecCost: '৳319.80', isWaterLeak: false, isElecPeak: false, desc: 'Normal weekday baseline' },
     { day: lang === 'bn' ? 'শুক্র' : 'Fri', water: 135, waterCost: '৳2.23', elec: 48, elecCost: '৳393.60', isWaterLeak: false, isElecPeak: false, desc: 'Weekend family cooking' },
-    { day: lang === 'bn' ? 'শনি' : 'Sat', water: 142, waterCost: '৳2.34', elec: 52, elecCost: '৳426.40', isWaterLeak: false, isElecPeak: true, desc: '⚡ Weekend Inverter AC Peak (52 kWh)' },
+    { day: lang === 'bn' ? 'শনি' : 'Sat', water: 142, waterCost: '৳2.34', elec: 52, elecCost: '৳426.40', isWaterLeak: false, isElecPeak: true, desc: 'Weekend Inverter AC Peak (52 kWh)' },
     { day: lang === 'bn' ? 'রবি' : 'Sun', water: 128, waterCost: '৳2.11', elec: 45, elecCost: '৳369.00', isWaterLeak: false, isElecPeak: false, desc: 'Routine household baseline' }
   ];
 
@@ -130,23 +142,23 @@ export const TenantHomeView: React.FC<TenantHomeViewProps> = ({
         </div>
       </div>
 
-      {/* 2. Verified Resident Status Card (Vibrant Green) */}
-      <div className="rounded-[28px] p-5 sm:p-6 bg-gradient-to-r from-[#00B665] to-[#009E54] text-white shadow-lg shadow-emerald-500/20 flex items-center justify-between">
+      {/* 2. Verified Resident Status Card */}
+      <div className="rounded-2xl p-5 sm:p-6 bg-slate-900 dark:bg-[#161B22] border border-slate-200 dark:border-slate-800 text-white shadow-sm flex items-center justify-between">
         <div className="flex items-center gap-3.5">
-          <div className="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center text-2xl shrink-0 border border-white/20">
-            🛡️
+          <div className="w-11 h-11 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0">
+            <ShieldCheck size={22} strokeWidth={1.75} className="text-emerald-400" />
           </div>
           <div>
-            <h3 className="font-extrabold text-base sm:text-lg leading-tight">
+            <h3 className="font-semibold text-base sm:text-lg leading-tight text-white">
               {t('verifiedResident', lang)}
             </h3>
-            <p className="text-xs text-emerald-100 font-medium mt-0.5">
+            <p className="text-xs text-slate-400 font-medium mt-0.5">
               {t('nidAuthComplete', lang)} · Flat {user.unitNumber || '2B'}
             </p>
           </div>
         </div>
 
-        <span className="bg-white/25 backdrop-blur-md text-white text-xs font-black px-3.5 py-1.5 rounded-full border border-white/30 uppercase tracking-wider">
+        <span className="bg-emerald-500/10 text-emerald-400 text-xs font-semibold px-3 py-1 rounded-full border border-emerald-500/20 uppercase tracking-wider">
           {t('activeStatus', lang)}
         </span>
       </div>
@@ -162,31 +174,37 @@ export const TenantHomeView: React.FC<TenantHomeViewProps> = ({
             {/* Section Header */}
             <div className="flex items-center justify-between px-1">
               <div>
-                <h3 className="font-extrabold text-base text-[#111827] dark:text-white">
+                <h3 className="font-semibold text-base text-slate-900 dark:text-white">
                   {t('telemetryAnalytics', lang)}
                 </h3>
                 <p className="text-xs text-slate-400">
                   {t('telemetrySub', lang)}
                 </p>
               </div>
-              <span className="flex items-center gap-1 text-emerald-600 font-bold text-xs">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+              <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 font-medium text-xs">
+                <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
                 {t('online', lang)}
               </span>
             </div>
 
             {/* Live Infrastructure Pulse Status Bar */}
-            <div className="p-3 rounded-2xl bg-white dark:bg-[#161B22] border border-slate-200 dark:border-slate-800 shadow-sm grid grid-cols-3 gap-2 text-[11px]">
-              <div className="p-2 rounded-xl bg-sky-50 dark:bg-sky-950/40 border border-sky-100 dark:border-sky-900/50">
-                <span className="text-sky-700 dark:text-sky-300 font-bold block">💧 DWASA Water</span>
+            <div className="p-3 rounded-xl bg-white dark:bg-[#161B22] border border-slate-200/80 dark:border-slate-800 shadow-sm grid grid-cols-3 gap-2 text-[11px]">
+              <div className="p-2 rounded-lg bg-slate-50 dark:bg-slate-900/60 border border-slate-200/60 dark:border-slate-800">
+                <div className="flex items-center gap-1.5 text-sky-600 dark:text-sky-400 font-semibold mb-0.5">
+                  <Droplets size={13} strokeWidth={1.75} /> DWASA Water
+                </div>
                 <span className="font-mono text-[10px] text-slate-600 dark:text-slate-400">12.2 L/min · 2.8 bar</span>
               </div>
-              <div className="p-2 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-100 dark:border-amber-900/50">
-                <span className="text-amber-700 dark:text-amber-300 font-bold block">⚡ DESCO Grid</span>
+              <div className="p-2 rounded-lg bg-slate-50 dark:bg-slate-900/60 border border-slate-200/60 dark:border-slate-800">
+                <div className="flex items-center gap-1.5 text-amber-600 dark:text-amber-400 font-semibold mb-0.5">
+                  <Zap size={13} strokeWidth={1.75} /> DESCO Grid
+                </div>
                 <span className="font-mono text-[10px] text-slate-600 dark:text-slate-400">228.1V · PF 0.99</span>
               </div>
-              <div className="p-2 rounded-xl bg-purple-50 dark:bg-purple-950/40 border border-purple-100 dark:border-purple-900/50">
-                <span className="text-purple-700 dark:text-purple-300 font-bold block">🔥 Titas Gas</span>
+              <div className="p-2 rounded-lg bg-slate-50 dark:bg-slate-900/60 border border-slate-200/60 dark:border-slate-800">
+                <div className="flex items-center gap-1.5 text-purple-600 dark:text-purple-400 font-semibold mb-0.5">
+                  <Flame size={13} strokeWidth={1.75} /> Titas Gas
+                </div>
                 <span className="font-mono text-[10px] text-slate-600 dark:text-slate-400">0.52 PSI Normal</span>
               </div>
             </div>
@@ -241,17 +259,17 @@ export const TenantHomeView: React.FC<TenantHomeViewProps> = ({
                   </p>
                 </div>
 
-                <div className="flex items-center gap-2 text-xs font-bold font-mono">
+                <div className="flex items-center gap-2 text-xs font-semibold font-mono">
                   {(utilityFilter === 'both' || utilityFilter === 'water') && (
-                    <div className="flex items-center gap-1 px-2 py-0.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 text-[#00B665] dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800/50 text-[10px]">
-                      <span className="w-2 h-1 rounded-full bg-[#00B665]"></span>
-                      <span>💧 Water (L)</span>
+                    <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800/50 text-[10px]">
+                      <Droplets size={12} strokeWidth={1.75} />
+                      <span>Water (L)</span>
                     </div>
                   )}
                   {(utilityFilter === 'both' || utilityFilter === 'electricity') && (
-                    <div className="flex items-center gap-1 px-2 py-0.5 rounded-lg bg-amber-50 dark:bg-amber-950/40 text-[#E58325] dark:text-amber-400 border border-amber-200 dark:border-amber-800/50 text-[10px]">
-                      <span className="w-2 h-1 rounded-full bg-[#E58325]"></span>
-                      <span>⚡ Elec (kWh)</span>
+                    <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-lg bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 border border-amber-200 dark:border-amber-800/50 text-[10px]">
+                      <Zap size={12} strokeWidth={1.75} />
+                      <span>Elec (kWh)</span>
                     </div>
                   )}
                 </div>
@@ -326,13 +344,13 @@ export const TenantHomeView: React.FC<TenantHomeViewProps> = ({
 
                   {/* Y-Axis Titles */}
                   {(utilityFilter === 'both' || utilityFilter === 'water') && (
-                    <text x={padL - 6} y={padT - 10} textAnchor="end" className="fill-[#00B665] font-black text-[9px] uppercase tracking-wider">
-                      💧 Liter
+                    <text x={padL - 6} y={padT - 10} textAnchor="end" className="fill-[#00B665] font-semibold text-[9px] uppercase tracking-wider">
+                      Liters
                     </text>
                   )}
                   {(utilityFilter === 'both' || utilityFilter === 'electricity') && (
-                    <text x={svgW - padR + 6} y={padT - 10} textAnchor="start" className="fill-[#E58325] font-black text-[9px] uppercase tracking-wider">
-                      ⚡ kWh
+                    <text x={svgW - padR + 6} y={padT - 10} textAnchor="start" className="fill-[#E58325] font-semibold text-[9px] uppercase tracking-wider">
+                      kWh
                     </text>
                   )}
 
@@ -466,23 +484,27 @@ export const TenantHomeView: React.FC<TenantHomeViewProps> = ({
                   <div className="grid grid-cols-2 gap-3 pt-1">
                     {/* Water */}
                     <div className="p-3 rounded-xl bg-emerald-500/5 dark:bg-emerald-950/20 border border-emerald-500/20">
-                      <span className="font-extrabold text-xs text-[#00B665] block">💧 Water (DWASA)</span>
-                      <div className="text-lg font-black text-[#111827] dark:text-white font-mono mt-1">
+                      <span className="font-semibold text-xs text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5 mb-1">
+                        <Droplets size={13} strokeWidth={1.75} /> Water (DWASA)
+                      </span>
+                      <div className="text-lg font-bold text-slate-900 dark:text-white font-mono mt-1">
                         {selectedData.water} Liters
                       </div>
                       <span className="text-[11px] text-slate-400 font-mono block mt-0.5">
-                        Est. Cost: <strong className="text-emerald-600 dark:text-emerald-400">{selectedData.waterCost}</strong>
+                        Est. Cost: <strong className="text-emerald-600 dark:text-emerald-400 font-semibold">{selectedData.waterCost}</strong>
                       </span>
                     </div>
 
                     {/* Electricity */}
                     <div className="p-3 rounded-xl bg-amber-500/5 dark:bg-amber-950/20 border border-amber-500/20">
-                      <span className="font-extrabold text-xs text-[#E58325] block">⚡ Electricity (DESCO)</span>
-                      <div className="text-lg font-black text-[#111827] dark:text-white font-mono mt-1">
+                      <span className="font-semibold text-xs text-amber-600 dark:text-amber-400 flex items-center gap-1.5 mb-1">
+                        <Zap size={13} strokeWidth={1.75} /> Electricity (DESCO)
+                      </span>
+                      <div className="text-lg font-bold text-slate-900 dark:text-white font-mono mt-1">
                         {selectedData.elec} kWh
                       </div>
                       <span className="text-[11px] text-slate-400 font-mono block mt-0.5">
-                        Est. Cost: <strong className="text-amber-600 dark:text-amber-400">{selectedData.elecCost}</strong>
+                        Est. Cost: <strong className="text-amber-600 dark:text-amber-400 font-semibold">{selectedData.elecCost}</strong>
                       </span>
                     </div>
                   </div>
@@ -655,15 +677,15 @@ export const TenantHomeView: React.FC<TenantHomeViewProps> = ({
               {/* 1. Hire Pro */}
               <div
                 onClick={() => onNavigateTab('hirepro')}
-                className="p-3.5 sm:p-4 rounded-[24px] bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 hover:border-emerald-500/40 shadow-sm hover:shadow-md cursor-pointer active:scale-95 transition-all text-center flex flex-col items-center justify-between space-y-2 group">
-                <div className="w-11 h-11 rounded-2xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
-                  🛠️
+                className="p-3.5 sm:p-4 rounded-xl bg-white dark:bg-[#161B22] border border-slate-200/80 dark:border-slate-800 hover:border-emerald-500/40 shadow-sm hover:shadow-md cursor-pointer active:scale-95 transition-all text-center flex flex-col items-center justify-between space-y-2 group">
+                <div className="w-10 h-10 rounded-lg bg-slate-100 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 flex items-center justify-center transition-colors">
+                  <Wrench size={18} strokeWidth={1.75} />
                 </div>
                 <div>
-                  <h4 className="font-extrabold text-xs sm:text-sm text-[#111827] dark:text-white leading-tight">
+                  <h4 className="font-semibold text-xs sm:text-sm text-slate-900 dark:text-white leading-tight">
                     {t('navHirePro', lang)}
                   </h4>
-                  <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold block mt-0.5">
+                  <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-medium block mt-0.5">
                     {t('acPlumber', lang)}
                   </span>
                 </div>
@@ -672,15 +694,15 @@ export const TenantHomeView: React.FC<TenantHomeViewProps> = ({
               {/* 2. Marketplace */}
               <div
                 onClick={() => onNavigateTab('marketplace')}
-                className="p-3.5 sm:p-4 rounded-[24px] bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 hover:border-emerald-500/40 shadow-sm hover:shadow-md cursor-pointer active:scale-95 transition-all text-center flex flex-col items-center justify-between space-y-2 group">
-                <div className="w-11 h-11 rounded-2xl bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
-                  🛍️
+                className="p-3.5 sm:p-4 rounded-xl bg-white dark:bg-[#161B22] border border-slate-200/80 dark:border-slate-800 hover:border-emerald-500/40 shadow-sm hover:shadow-md cursor-pointer active:scale-95 transition-all text-center flex flex-col items-center justify-between space-y-2 group">
+                <div className="w-10 h-10 rounded-lg bg-slate-100 dark:bg-slate-800 text-amber-600 dark:text-amber-400 flex items-center justify-center transition-colors">
+                  <ShoppingBag size={18} strokeWidth={1.75} />
                 </div>
                 <div>
-                  <h4 className="font-extrabold text-xs sm:text-sm text-[#111827] dark:text-white leading-tight">
+                  <h4 className="font-semibold text-xs sm:text-sm text-slate-900 dark:text-white leading-tight">
                     {t('marketplace', lang)}
                   </h4>
-                  <span className="text-[10px] text-amber-600 dark:text-amber-400 font-bold block mt-0.5">
+                  <span className="text-[10px] text-amber-600 dark:text-amber-400 font-medium block mt-0.5">
                     {t('buySellBay', lang)}
                   </span>
                 </div>
@@ -689,16 +711,16 @@ export const TenantHomeView: React.FC<TenantHomeViewProps> = ({
               {/* 3. Chat to Owner */}
               <div
                 onClick={() => onNavigateTab('chat')}
-                className="p-3.5 sm:p-4 rounded-[24px] bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 hover:border-emerald-500/40 shadow-sm hover:shadow-md cursor-pointer active:scale-95 transition-all text-center flex flex-col items-center justify-between space-y-2 group">
-                <div className="w-11 h-11 rounded-2xl bg-sky-50 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform relative">
-                  💬
-                  <span className="absolute top-1 right-1 w-2.5 h-2.5 rounded-full bg-emerald-500 border border-white dark:border-[#161B22]"></span>
+                className="p-3.5 sm:p-4 rounded-xl bg-white dark:bg-[#161B22] border border-slate-200/80 dark:border-slate-800 hover:border-emerald-500/40 shadow-sm hover:shadow-md cursor-pointer active:scale-95 transition-all text-center flex flex-col items-center justify-between space-y-2 group">
+                <div className="w-10 h-10 rounded-lg bg-slate-100 dark:bg-slate-800 text-sky-600 dark:text-sky-400 flex items-center justify-center transition-colors relative">
+                  <MessageSquare size={18} strokeWidth={1.75} />
+                  <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-emerald-500 border border-white dark:border-[#161B22]"></span>
                 </div>
                 <div>
-                  <h4 className="font-extrabold text-xs sm:text-sm text-[#111827] dark:text-white leading-tight">
+                  <h4 className="font-semibold text-xs sm:text-sm text-slate-900 dark:text-white leading-tight">
                     {t('chatOwner', lang)}
                   </h4>
-                  <span className="text-[10px] text-sky-600 dark:text-sky-400 font-bold block mt-0.5">
+                  <span className="text-[10px] text-sky-600 dark:text-sky-400 font-medium block mt-0.5">
                     {t('directLine', lang)}
                   </span>
                 </div>
@@ -708,13 +730,13 @@ export const TenantHomeView: React.FC<TenantHomeViewProps> = ({
           </div>
 
           {/* 7. Gate Security Status Card */}
-          <div className="rounded-[28px] p-5 sm:p-6 bg-white dark:bg-[#161B22] border border-slate-100 dark:border-slate-800 shadow-[0_8px_30px_rgb(0,0,0,0.04)] space-y-4">
+          <div className="rounded-2xl p-5 sm:p-6 bg-white dark:bg-[#161B22] border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-4">
             <div className="flex items-center justify-between">
-              <h3 className="font-extrabold text-base text-[#111827] dark:text-white">
+              <h3 className="font-semibold text-base text-slate-900 dark:text-white">
                 Gate Security
               </h3>
-              <span className="flex items-center gap-1.5 text-xs text-emerald-600 dark:text-emerald-400 font-bold">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+              <span className="flex items-center gap-1.5 text-xs text-emerald-600 dark:text-emerald-400 font-medium">
+                <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
                 LIVE
               </span>
             </div>
@@ -722,15 +744,16 @@ export const TenantHomeView: React.FC<TenantHomeViewProps> = ({
             <div className="flex items-center justify-between pt-1">
               <div className="space-y-0.5">
                 <span className="text-xs text-slate-400 font-medium">Main Gate Access</span>
-                <div className="text-sm font-extrabold text-[#111827] dark:text-white">
+                <div className="text-sm font-semibold text-slate-900 dark:text-white">
                   Contactless Barrier Ready
                 </div>
               </div>
 
               <button
                 onClick={onOpenGatePass}
-                className="px-4 py-2.5 rounded-2xl bg-[#00B665] hover:bg-[#009E54] active:scale-95 text-white font-black text-xs uppercase tracking-wider shadow transition-all flex items-center gap-1.5">
-                <span>📱</span> Gate Pass
+                className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-semibold text-xs tracking-wider shadow-sm transition-all flex items-center gap-1.5">
+                <QrCode size={14} strokeWidth={1.75} />
+                <span>Gate Pass</span>
               </button>
             </div>
           </div>
@@ -750,10 +773,10 @@ export const TenantHomeView: React.FC<TenantHomeViewProps> = ({
       {/* Interactive Building Notice Detail Modal */}
       {selectedNotice && (
         <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-md flex items-end sm:items-center justify-center p-0 sm:p-4 animate-fade-in">
-          <div className="w-full max-w-md bg-white dark:bg-[#161B22] rounded-t-[32px] sm:rounded-[32px] p-6 space-y-4 border border-slate-200 dark:border-slate-800 shadow-2xl animate-slide-up">
+          <div className="w-full max-w-md bg-white dark:bg-[#161B22] rounded-t-3xl sm:rounded-2xl p-6 space-y-4 border border-slate-200 dark:border-slate-800 shadow-2xl animate-slide-up">
             <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
               <div className="flex items-center gap-2">
-                <span className={`px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider ${
+                <span className={`px-2.5 py-1 rounded-full text-[10px] font-semibold uppercase tracking-wider ${
                   selectedNotice.categoryColor === 'amber'
                     ? 'bg-amber-500/20 text-amber-600 dark:text-amber-400 border border-amber-400/30'
                     : selectedNotice.categoryColor === 'emerald'
@@ -766,17 +789,18 @@ export const TenantHomeView: React.FC<TenantHomeViewProps> = ({
               </div>
               <button
                 onClick={() => setSelectedNotice(null)}
-                className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 font-bold flex items-center justify-center hover:bg-slate-200">
-                ✕
+                className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-slate-800 dark:hover:text-white flex items-center justify-center">
+                <X size={16} strokeWidth={1.75} />
               </button>
             </div>
 
             <div className="space-y-2">
-              <h3 className="text-base sm:text-lg font-black text-[#111827] dark:text-white leading-snug">
+              <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white leading-snug">
                 {selectedNotice.title}
               </h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400 font-mono">
-                📅 {selectedNotice.date}
+              <p className="text-xs text-slate-500 dark:text-slate-400 font-mono flex items-center gap-1.5">
+                <Calendar size={13} strokeWidth={1.75} />
+                <span>{selectedNotice.date}</span>
               </p>
             </div>
 

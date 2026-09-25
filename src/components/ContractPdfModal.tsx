@@ -1,4 +1,5 @@
 import React from 'react';
+import { FileText, X, Download } from 'lucide-react';
 import { User } from '../types';
 
 interface ContractPdfModalProps {
@@ -16,21 +17,21 @@ export const ContractPdfModal: React.FC<ContractPdfModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-end sm:items-center justify-center p-0 sm:p-4 animate-fade-in">
-      <div className="card-luxury w-full max-w-lg bg-white dark:bg-[#161B22] p-6 rounded-b-none sm:rounded-b-[28px] space-y-5 border border-slate-200 dark:border-slate-800 shadow-2xl max-h-[92vh] overflow-y-auto">
+      <div className="card-luxury w-full max-w-lg bg-white dark:bg-[#161B22] p-6 rounded-b-none sm:rounded-2xl space-y-5 border border-slate-200 dark:border-slate-800 shadow-2xl max-h-[92vh] overflow-y-auto">
         
         {/* Header */}
         <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3.5">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#121632] to-[#00B665] text-white flex items-center justify-center font-bold text-sm shadow">
-              📄
+            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#121632] to-[#00B665] text-white flex items-center justify-center shadow">
+              <FileText size={16} strokeWidth={1.75} />
             </div>
             <div>
               <h3 className="font-extrabold text-base text-[#111827] dark:text-white">Tenancy Agreement Contract</h3>
               <p className="text-[11px] text-slate-400">Gulshan Luxury Tower · Unit {user.unitNumber || '2B'}</p>
             </div>
           </div>
-          <button onClick={onClose} className="p-1 text-slate-400 hover:text-slate-900 dark:hover:text-white font-bold text-xl">
-            ✕
+          <button onClick={onClose} className="p-1 text-slate-400 hover:text-slate-900 dark:hover:text-white font-bold">
+            <X size={18} strokeWidth={1.75} />
           </button>
         </div>
 
@@ -82,12 +83,13 @@ export const ContractPdfModal: React.FC<ContractPdfModalProps> = ({
             onClick={() => {
               window.print();
             }}
-            className="flex-1 py-3.5 rounded-2xl bg-[#00B665] text-white font-bold text-xs shadow flex items-center justify-center gap-1.5 active:scale-95">
-            <span>⬇️</span> Download Signed PDF Deed
+            className="flex-1 py-3.5 rounded-2xl bg-[#00B665] hover:bg-[#009E54] text-white font-bold text-xs shadow flex items-center justify-center gap-1.5 active:scale-95 transition-all">
+            <Download size={14} strokeWidth={1.75} />
+            <span>Download Signed PDF Deed</span>
           </button>
           <button
             onClick={onClose}
-            className="px-5 py-3.5 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-bold text-xs hover:bg-slate-200 active:scale-95">
+            className="px-5 py-3.5 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-bold text-xs hover:bg-slate-200 active:scale-95 transition-all">
             Close
           </button>
         </div>

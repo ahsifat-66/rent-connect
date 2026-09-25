@@ -1,4 +1,5 @@
 import React from 'react';
+import { Check, X, Landmark, ShieldCheck, Printer } from 'lucide-react';
 import { RentReceipt } from '../types';
 
 interface QuickReceiptModalProps {
@@ -20,21 +21,21 @@ export const QuickReceiptModal: React.FC<QuickReceiptModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-end sm:items-center justify-center p-0 sm:p-4 animate-fade-in">
-      <div className="card-luxury w-full max-w-md bg-white dark:bg-[#161B22] p-6 rounded-b-none sm:rounded-b-[28px] space-y-5 border border-slate-200 dark:border-slate-800 shadow-2xl max-h-[92vh] overflow-y-auto">
+      <div className="card-luxury w-full max-w-md bg-white dark:bg-[#161B22] p-6 rounded-b-none sm:rounded-2xl space-y-5 border border-slate-200 dark:border-slate-800 shadow-2xl max-h-[92vh] overflow-y-auto">
         
         {/* Header */}
         <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3.5">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-[#00B665] text-white flex items-center justify-center font-bold text-sm shadow">
-              ✓
+            <div className="w-8 h-8 rounded-xl bg-[#00B665] text-white flex items-center justify-center shadow">
+              <Check size={16} strokeWidth={2.5} />
             </div>
             <div>
               <h3 className="font-extrabold text-base text-[#111827] dark:text-white">Official Rent Receipt</h3>
               <p className="text-[11px] text-slate-400">Gulshan Luxury Tower Estate</p>
             </div>
           </div>
-          <button onClick={onClose} className="p-1 text-slate-400 hover:text-slate-900 dark:hover:text-white font-bold text-xl">
-            ✕
+          <button onClick={onClose} className="p-1 text-slate-400 hover:text-slate-900 dark:hover:text-white font-bold">
+            <X size={18} strokeWidth={1.75} />
           </button>
         </div>
 
@@ -42,8 +43,8 @@ export const QuickReceiptModal: React.FC<QuickReceiptModalProps> = ({
         <div className="p-5 rounded-2xl bg-slate-50 dark:bg-[#0D1117] border border-slate-200 dark:border-slate-800 text-xs space-y-3 font-sans relative overflow-hidden">
           
           {/* Watermark badge */}
-          <div className="absolute right-4 bottom-4 opacity-10 pointer-events-none text-6xl">
-            🏛️
+          <div className="absolute right-4 bottom-4 opacity-10 pointer-events-none text-slate-400">
+            <Landmark size={64} strokeWidth={1} />
           </div>
 
           <div className="flex justify-between items-start border-b border-slate-200 dark:border-slate-800 pb-3">
@@ -86,7 +87,7 @@ export const QuickReceiptModal: React.FC<QuickReceiptModalProps> = ({
           </div>
 
           <div className="pt-2 text-center text-[10px] text-emerald-600 dark:text-emerald-400 font-bold flex items-center justify-center gap-1.5">
-            <span>🛡️</span>
+            <ShieldCheck size={14} strokeWidth={1.75} />
             <span>Cryptographically Verified & DMP Landlord Registry Logged</span>
           </div>
 
@@ -98,12 +99,13 @@ export const QuickReceiptModal: React.FC<QuickReceiptModalProps> = ({
             onClick={() => {
               window.print();
             }}
-            className="flex-1 py-3 rounded-2xl bg-[#121632] text-white font-bold text-xs shadow flex items-center justify-center gap-1.5 active:scale-95">
-            <span>🖨️</span> Print Receipt
+            className="flex-1 py-3 rounded-2xl bg-[#121632] hover:bg-[#1a2046] text-white font-bold text-xs shadow flex items-center justify-center gap-1.5 active:scale-95 transition-all">
+            <Printer size={14} strokeWidth={1.75} />
+            <span>Print Receipt</span>
           </button>
           <button
             onClick={onClose}
-            className="px-5 py-3 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-bold text-xs hover:bg-slate-200 active:scale-95">
+            className="px-5 py-3 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-bold text-xs hover:bg-slate-200 active:scale-95 transition-all">
             Close
           </button>
         </div>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { X, Check, Users } from 'lucide-react';
 import { backend } from '../services/backend';
 import { Unit } from '../types';
 
@@ -127,7 +128,7 @@ export const AddFlatModal: React.FC<AddFlatModalProps> = ({ isOpen, onClose, onS
           <button
             onClick={onClose}
             className="w-9 h-9 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold flex items-center justify-center hover:bg-slate-200 active:scale-95 transition-all">
-            ✕
+            <X size={16} strokeWidth={1.75} />
           </button>
         </div>
 
@@ -149,7 +150,7 @@ export const AddFlatModal: React.FC<AddFlatModalProps> = ({ isOpen, onClose, onS
                     : 'bg-slate-50 dark:bg-[#0D1117] text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-800'
                 }`}>
                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-300 animate-pulse"></span>
-                <span>🟢 Vacant (খালি ফ্ল্যাট)</span>
+                <span>Vacant (খালি ফ্ল্যাট)</span>
               </button>
 
               <button
@@ -160,7 +161,8 @@ export const AddFlatModal: React.FC<AddFlatModalProps> = ({ isOpen, onClose, onS
                     ? 'bg-[#121632] text-white border-slate-700 shadow-md'
                     : 'bg-slate-50 dark:bg-[#0D1117] text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-800'
                 }`}>
-                <span>👥 Occupied (ভাড়া দেওয়া)</span>
+                <Users size={14} strokeWidth={1.75} />
+                <span>Occupied (ভাড়া দেওয়া)</span>
               </button>
             </div>
           </div>
@@ -312,13 +314,13 @@ export const AddFlatModal: React.FC<AddFlatModalProps> = ({ isOpen, onClose, onS
                     key={am}
                     type="button"
                     onClick={() => toggleAmenity(am)}
-                    className={`px-2.5 py-1 rounded-xl text-[11px] font-bold border transition-all ${
+                    className={`px-2.5 py-1 rounded-xl text-[11px] font-bold border transition-all flex items-center gap-1 ${
                       isSelected
                         ? 'bg-emerald-500/15 border-emerald-500 text-emerald-700 dark:text-emerald-300'
                         : 'bg-slate-50 dark:bg-[#0D1117] border-slate-200 dark:border-slate-800 text-slate-500'
                     }`}>
-                    {isSelected ? '✓ ' : '+ '}
-                    {am}
+                    {isSelected ? <Check size={11} strokeWidth={2.5} /> : <span>+</span>}
+                    <span>{am}</span>
                   </button>
                 );
               })}
@@ -337,7 +339,7 @@ export const AddFlatModal: React.FC<AddFlatModalProps> = ({ isOpen, onClose, onS
               type="submit"
               disabled={isSubmitting}
               className="flex-[2] py-3.5 rounded-2xl bg-gradient-to-r from-[#00B665] to-[#009E54] hover:from-[#00A35B] hover:to-[#008C4A] text-white font-black text-xs uppercase tracking-wider shadow-lg shadow-emerald-600/30 active:scale-95 transition-all flex items-center justify-center gap-2">
-              <span>✓</span>
+              <Check size={16} strokeWidth={2} />
               <span>Publish Flat to Portfolio</span>
             </button>
           </div>
